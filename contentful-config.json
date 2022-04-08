@@ -1,0 +1,18 @@
+{
+  "exportDir": "./contentful",
+  "space-id": "1ce9szswwbn5",
+  "saveFile": true,
+  "contentFile": "export.json",
+  "includeDrafts": false,
+  "includeArchived": false,
+  "skipContentModel": false,
+  "skipContent": false,
+  "skipRoles": false,
+  "skipWebhooks": false,
+  "contentOnly": false,
+  "host": "api.contentful.com",
+  "rawProxy": false,
+  "maxAllowedLimit": 1000,
+  "errorLogFile": "./contentful/error.log",
+  "useVerboseRenderer": false
+}

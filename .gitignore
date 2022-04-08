@@ -28,8 +28,13 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# env files
+.env
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
+
+/contentful/error.log
