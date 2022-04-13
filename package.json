@@ -14,9 +14,11 @@
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.12.0",
     "contentful": "^9.1.19",
+    "framer-motion": "^6.2.10",
     "next": "12.1.4",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "react-use": "^17.3.2"
   },
   "devDependencies": {
     "@types/node": "17.0.23",

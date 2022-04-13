@@ -1,18 +1,27 @@
 import Image from 'next/image'
+import { FC } from 'react';
+import { ISingleImage } from '../@types/image';
 
-const contentfulLoader = (src: string, width: number, height: number, quality: number): string => {
-  return `${src}?w=${width}&h=${height}&q=${quality}`
+export interface IImageComponent {
+  data: ISingleImage,
+  windowWidth: number,
 }
 
-const ContentfulImage = ({data}) => {
+const ContentfulImage: FC<IImageComponent> = ({data, windowWidth}) => {
   const photo = data.fields.photo.fields.file;
-  console.log("🚀 ~ file: Image.tsx ~ line 10 ~ ContentfulImage ~ photo", photo)
   const src = photo.url;
   const width = photo.details.image.width;
   const height = photo.details.image.height;
+  const ratio = width / height;
+  const resultWidth = windowWidth || width;
   const quality = 75;
 
-  return src && <Image src={`https:${src}`} width={width} height={height} quality={quality} />
+  if (!src) {
+    console.error("no src for image found", photo);
+    return null;
+  }
+
+  return <Image src={`https:${src}`} width={resultWidth} height={resultWidth/ratio} quality={quality} alt={data.fields.title} />
 }
 
 export default ContentfulImage
