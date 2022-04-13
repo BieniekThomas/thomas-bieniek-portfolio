@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
-import { ISingleImage } from "../@types/image";
+import { IImage } from "../@types/generated/contentful";
 import ContentfulImage from "./Image";
 
 interface IGallery {
-  imageArray: ISingleImage[];
+  imageArray: IImage[];
 }
 
 const Gallery: FC<IGallery> = ({imageArray}) => {
@@ -16,7 +16,7 @@ const Gallery: FC<IGallery> = ({imageArray}) => {
   }, [width])
 
   return (
-    imageArray?.map(image => {
+    imageArray.map(image => {
       return (<ContentfulImage key={image.fields.title} data={image} windowWidth={windowWidth} />)
     })
   )

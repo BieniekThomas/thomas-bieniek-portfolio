@@ -1,14 +1,19 @@
 import Image from 'next/image'
 import { FC } from 'react';
-import { ISingleImage } from '../@types/image';
+import { IImage } from '../@types/generated/contentful';
 
-export interface IImageComponent {
-  data: ISingleImage,
+interface IImageComponent {
+  data: IImage,
   windowWidth: number,
 }
 
 const ContentfulImage: FC<IImageComponent> = ({data, windowWidth}) => {
-  const photo = data.fields.photo.fields.file;
+  const photo = data?.fields?.photo?.fields?.file;
+
+  if (!photo || !photo.details.image) {
+    return null;
+  }
+
   const src = photo.url;
   const width = photo.details.image.width;
   const height = photo.details.image.height;
