@@ -17,7 +17,8 @@ const Gallery: FC<IGallery> = ({imageArray}) => {
 
   return (
     imageArray.map(image => {
-      return (<ContentfulImage key={image.fields.title} data={image} windowWidth={windowWidth} />)
+      const title = image.fields.title;
+      return (<ContentfulImage key={title} data={image} windowWidth={windowWidth} />)
     })
   )
 }

@@ -7,22 +7,6 @@ import Layout from '../components/Layout'
 import { FC } from 'react'
 import { IPhotoGallery } from '../@types/generated/contentful'
 
-const PHOTO_GALLERY_ID = "photoGallery";
-
-export const getStaticProps: GetStaticProps = async () => {
-  const photoGallery = await fetchEntries({content_type: PHOTO_GALLERY_ID})
-  if (!photoGallery) {
-    return {
-      props: {}
-    }
-  }
-  return {
-    props: {
-      photoGallery: photoGallery[0]
-    }
-  }
-}
-
 interface IHome {
   photoGallery: IPhotoGallery
 }
@@ -43,4 +27,21 @@ const Home: FC<IHome> = ({photoGallery}) => {
   )
 }
 
-export default Home
+export default Home;
+
+
+const PHOTO_GALLERY_ID = "photoGallery";
+export const getStaticProps: GetStaticProps = async () => {
+  const photoGallery = await fetchEntries({content_type: PHOTO_GALLERY_ID})
+  if (!photoGallery) {
+    console.error("photogallery not available")
+    return {
+      props: {}
+    }
+  }
+  return {
+    props: {
+      photoGallery: photoGallery[0]
+    }
+  }
+}
