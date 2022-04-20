@@ -1,7 +1,8 @@
 import Image from 'next/image'
+import NoScrollLink from '../NoScrollLink/NoScrollLink';
+
 import { FC } from 'react';
-import { IImage } from '../@types/generated/contentful';
-import NoScrollLink from './NoScrollLink';
+import { IImage } from '../../@types/generated/contentful';
 
 interface IImageComponent {
   data: IImage,
@@ -26,7 +27,7 @@ const ContentfulImage: FC<IImageComponent> = ({data, windowWidth}) => {
 
   return (
     <NoScrollLink url={`/photo/${id}`}>
-      <Image src={`https:${src}`} width={resultWidth} height={resultWidth/ratio} quality={quality} alt={title} />
+      <Image  src={`https:${src}`} width={resultWidth} height={resultWidth/ratio} quality={quality} alt={title} />
     </NoScrollLink>
   )
 }

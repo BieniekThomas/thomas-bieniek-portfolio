@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useWindowSize } from "react-use";
-import { IImage } from "../@types/generated/contentful";
-import ContentfulImage from "./Image";
+import { IImage } from "../../@types/generated/contentful";
+import ContentfulImage from "../Image/Image";
 
 interface IGallery {
   imageArray: IImage[];

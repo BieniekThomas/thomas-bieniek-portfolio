@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FC, ReactNode } from "react";
-import { framer_default_variants } from "../lib/framer";
+import { framer_default_variants } from "../../lib/framer";
+import Navigation from "../Navigation/Navigation";
 
 interface ILayout {
   children: ReactNode
@@ -15,6 +16,7 @@ const Layout: FC<ILayout> = ({children}) => {
       variants={framer_default_variants}
       transition={{ type: 'linear' }}
     >
+      <Navigation />
       {children}
     </motion.main>
   )

@@ -1,7 +1,7 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { AnimatePresence } from 'framer-motion'
-import Cursor from '../components/Cursor'
+import Cursor from '../components/Cursor/Cursor'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return  (
@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         // key={url}
       />
     </AnimatePresence>
-    )
+  )
 }
 
 export default MyApp

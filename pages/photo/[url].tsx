@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import { FC } from "react";
-import Layout from "../../components/Layout";
+import Layout from "../../components/_Layout/Layout";
 
 interface IPhoto {}
 

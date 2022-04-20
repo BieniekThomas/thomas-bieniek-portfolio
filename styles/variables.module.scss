@@ -1,0 +1,18 @@
+$background-color: #fcf1e1;
+$primary-color: rgb(36, 31, 31);
+$secondary-color: rgb(70, 17, 167);
+$text-color: $primary-color;
+
+// fonts
+$displayPrimary: 'Bebas Neue', cursive;
+$displaySecondary: 'Rubik Puddles', cursive;
+$text: 'Rubik', sans-serif;
+
+// sizes
+$innerCursorSize: 16px;
+$outerCursorSize: $innerCursorSize*3;
+
+:export {
+  primaryColor: $primary-color;
+  backgroundColor: $background-color;
+}

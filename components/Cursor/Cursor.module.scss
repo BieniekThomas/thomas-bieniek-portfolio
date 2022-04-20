@@ -1,0 +1,27 @@
+@import '../../styles/variables.module';
+
+.fixed {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.smallBall {
+  width: $innerCursorSize;
+  height: $innerCursorSize;
+  border-radius: 100%;
+  background-color: $text-color;
+  transform: translate(-($innerCursorSize/2),-($innerCursorSize/2));
+  mix-blend-mode: difference;
+}
+
+.bigBall {
+  width: $outerCursorSize;
+  height: $outerCursorSize;
+  border-radius: 100%;
+  border: 1px solid $text-color;
+  transform: translate(-($outerCursorSize/2),-($outerCursorSize/2));
+  mix-blend-mode: difference;
+}

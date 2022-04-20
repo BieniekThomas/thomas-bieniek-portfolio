@@ -1,0 +1,28 @@
+@import './variables.module';
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: $text;
+  background: $background-color;
+  color: $text-color;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: $displayPrimary;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: bold;
+  color: $secondary-color;
+}
+
+* {
+  box-sizing: border-box;
+  cursor: none;
+}

@@ -1,5 +1,6 @@
 import { useMotionValue, motion, useSpring } from "framer-motion";
 import { forwardRef, useEffect } from "react";
+import styles from './Cursor.module.scss';
 
 
 const Cursor = forwardRef<HTMLInputElement>(() => {
@@ -24,18 +25,18 @@ const Cursor = forwardRef<HTMLInputElement>(() => {
 
   return (
     <>
-      <motion.div className="fixed" style={{
+      <motion.div className={styles.fixed} style={{
         translateX: cursorX,
         translateY: cursorY
       }}>
-        <div className="smallBall" />
+        <div className={styles.smallBall} />
       </motion.div>
       
-      <motion.div className="fixed" style={{
+      <motion.div className={styles.fixed} style={{
         translateX: cursorXSpring,
         translateY: cursorYSpring,
       }}>
-        <div className="bigBall" />
+        <div className={styles.bigBall} />
       </motion.div>
     </>
   )
