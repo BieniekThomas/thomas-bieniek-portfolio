@@ -34,7 +34,10 @@ const Home: FC<IHome> = ({photoGallery}) => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam obcaecati quas dolor? Eligendi 
           perspiciatis eius obcaecati ipsum fugit, cupiditate amet quos eum 
           quam laborum illum dignissimos repudiandae, nostrum, voluptate nulla.
-          </p>
+        </p>
+        <span className="material-icons-sharp">
+          done
+        </span>
         {images && <Gallery imageArray={images} />}
       </div>
     </Layout>
