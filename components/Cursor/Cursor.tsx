@@ -1,9 +1,10 @@
 import { useMotionValue, motion, useSpring } from "framer-motion";
-import { forwardRef, useEffect } from "react";
-import styles from './Cursor.module.scss';
+import { useEffect } from "react";
+import styles from "./Cursor.module.scss";
+import { useCursorContext, ICursorSizes } from "./CursorManager";
 
-
-const Cursor = forwardRef<HTMLInputElement>(() => {
+const Cursor = () => {
+  const { size } = useCursorContext();
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const springConfig = { damping: 25, stiffness: 300 };
@@ -23,24 +24,39 @@ const Cursor = forwardRef<HTMLInputElement>(() => {
     };
   }, [cursorX, cursorY]);
 
+  const getClassName = () => {
+    switch (size) {
+      case "small":
+        return styles.small;
+      case "big":
+        return styles.big;
+    }
+  };
+
   return (
     <>
-      <motion.div className={styles.fixed} style={{
-        translateX: cursorX,
-        translateY: cursorY
-      }}>
+      <motion.div
+        className={`${styles.fixed} ${getClassName()}`}
+        style={{
+          translateX: cursorX,
+          translateY: cursorY,
+        }}
+      >
         <div className={styles.smallBall} />
       </motion.div>
-      
-      <motion.div className={styles.fixed} style={{
-        translateX: cursorXSpring,
-        translateY: cursorYSpring,
-      }}>
+
+      <motion.div
+        className={`${styles.fixed} ${getClassName()}`}
+        style={{
+          translateX: cursorXSpring,
+          translateY: cursorYSpring,
+        }}
+      >
         <div className={styles.bigBall} />
       </motion.div>
     </>
-  )
-})
+  );
+};
 
 Cursor.displayName = "Cursor";
 

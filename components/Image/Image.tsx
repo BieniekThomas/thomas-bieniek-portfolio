@@ -1,15 +1,15 @@
-import Image from 'next/image'
-import NoScrollLink from '../NoScrollLink/NoScrollLink';
+import Image from "next/image";
+import NoScrollLink from "../NoScrollLink/NoScrollLink";
 
-import { FC } from 'react';
-import { IImage } from '../../@types/generated/contentful';
+import { FC } from "react";
+import { IImage } from "../../@types/generated/contentful";
 
 interface IImageComponent {
-  data: IImage,
-  windowWidth: number,
+  data: IImage;
+  windowWidth: number;
 }
 
-const ContentfulImage: FC<IImageComponent> = ({data, windowWidth}) => {
+const ContentfulImage: FC<IImageComponent> = ({ data, windowWidth }) => {
   const photo = data?.fields?.photo?.fields?.file;
   const id = data.sys.id;
   if (!photo || !photo.details.image) {
@@ -27,9 +27,15 @@ const ContentfulImage: FC<IImageComponent> = ({data, windowWidth}) => {
 
   return (
     <NoScrollLink url={`/photo/${id}`}>
-      <Image  src={`https:${src}`} width={resultWidth} height={resultWidth/ratio} quality={quality} alt={title} />
+      <Image
+        src={`https:${src}`}
+        width={resultWidth}
+        height={resultWidth / ratio}
+        quality={quality}
+        alt={title}
+      />
     </NoScrollLink>
-  )
-}
+  );
+};
 
-export default ContentfulImage
+export default ContentfulImage;

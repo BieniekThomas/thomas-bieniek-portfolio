@@ -6,22 +6,38 @@
   top: 0;
   z-index: 999;
   pointer-events: none;
+  // mix-blend-mode: difference;
 }
 
 .smallBall {
   width: $innerCursorSize;
   height: $innerCursorSize;
+  transition: all .25s ease-in-out;
   border-radius: 100%;
   background-color: $text-color;
   transform: translate(-($innerCursorSize/2),-($innerCursorSize/2));
-  mix-blend-mode: difference;
+  border: 1px solid $text-color;
 }
 
 .bigBall {
   width: $outerCursorSize;
   height: $outerCursorSize;
+  transition: all .25s ease-in-out;
   border-radius: 100%;
   border: 1px solid $text-color;
   transform: translate(-($outerCursorSize/2),-($outerCursorSize/2));
-  mix-blend-mode: difference;
+}
+
+.big {
+  .smallBall {
+    width: $outerCursorSize;
+    height: $outerCursorSize;
+    transform: translate(-($outerCursorSize/2), -($outerCursorSize/2));
+    border-color: $text-color;
+    background-color: transparent;
+  }
+
+  .bigBall {
+    opacity: 0;
+  }
 }

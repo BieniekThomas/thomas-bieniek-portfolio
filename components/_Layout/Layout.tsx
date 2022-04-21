@@ -4,22 +4,22 @@ import { framer_default_variants } from "../../lib/framer";
 import Navigation from "../Navigation/Navigation";
 
 interface ILayout {
-  children: ReactNode
+  children: ReactNode;
 }
 
-const Layout: FC<ILayout> = ({children}) => {
+const Layout: FC<ILayout> = ({ children }) => {
   return (
     <motion.main
       initial="hidden"
       animate="enter"
       exit="exit"
       variants={framer_default_variants}
-      transition={{ type: 'linear' }}
+      transition={{ type: "linear" }}
     >
       <Navigation />
       {children}
     </motion.main>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

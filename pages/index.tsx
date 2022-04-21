@@ -1,21 +1,22 @@
-import type { GetStaticProps } from 'next'
-import Head from 'next/head'
-import { fetchEntries } from '../lib/api'
-import Gallery from '../components/Gallery/Gallery'
-import Layout from '../components/_Layout/Layout'
+import type { GetStaticProps } from "next";
+import Head from "next/head";
+import { fetchEntries } from "../lib/api";
+import Gallery from "../components/Gallery/Gallery";
+import Layout from "../components/_Layout/Layout";
 
 // typeImports
-import { FC } from 'react'
-import { IPhotoGallery } from '../@types/generated/contentful'
+import { FC } from "react";
+import { IPhotoGallery } from "../@types/generated/contentful";
 
 // styleImports
-import styles from '../styles/Home.module.css'
+import styles from "../styles/Home.module.css";
+import { Icon } from "../components/Icon/Icon";
 
 interface IHome {
-  photoGallery: IPhotoGallery
+  photoGallery: IPhotoGallery;
 }
 
-const Home: FC<IHome> = ({photoGallery}) => {
+const Home: FC<IHome> = ({ photoGallery }) => {
   const images = photoGallery.fields.images;
   return (
     <Layout>
@@ -26,39 +27,39 @@ const Home: FC<IHome> = ({photoGallery}) => {
         </Head>
         <h1>Photography</h1>
         <h3>by Thomas Bieniek</h3>
-        <p><a href="#">show me a link</a></p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-          Voluptas vel tempore laborum mollitia quia quo qui doloremque pariatur? 
-          Voluptatem at ullam maxime ex veritatis sint esse dolor ipsum itaque quis?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam obcaecati quas dolor? Eligendi 
-          perspiciatis eius obcaecati ipsum fugit, cupiditate amet quos eum 
-          quam laborum illum dignissimos repudiandae, nostrum, voluptate nulla.
+          <a href="#">show me a link</a>
         </p>
-        <span className="material-icons-sharp">
-          done
-        </span>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas vel
+          tempore laborum mollitia quia quo qui doloremque pariatur? Voluptatem
+          at ullam maxime ex veritatis sint esse dolor ipsum itaque quis? Lorem
+          ipsum dolor sit amet consectetur adipisicing elit. Quam obcaecati quas
+          dolor? Eligendi perspiciatis eius obcaecati ipsum fugit, cupiditate
+          amet quos eum quam laborum illum dignissimos repudiandae, nostrum,
+          voluptate nulla.
+        </p>
+        <Icon iconName="done" hoverAnimation />
         {images && <Gallery imageArray={images} />}
       </div>
     </Layout>
-  )
-}
+  );
+};
 
 export default Home;
 
-
 const PHOTO_GALLERY_ID = "photoGallery";
 export const getStaticProps: GetStaticProps = async () => {
-  const photoGallery = await fetchEntries({content_type: PHOTO_GALLERY_ID})
+  const photoGallery = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
   if (!photoGallery) {
-    console.error("photogallery not available")
+    console.error("photogallery not available");
     return {
-      props: {}
-    }
+      props: {},
+    };
   }
   return {
     props: {
-      photoGallery: photoGallery[0]
-    }
-  }
-}
+      photoGallery: photoGallery[0],
+    },
+  };
+};
