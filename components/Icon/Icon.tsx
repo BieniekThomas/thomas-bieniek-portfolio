@@ -10,8 +10,8 @@ export function Icon({ hoverAnimation = false, iconName }: IIconProps) {
   return (
     <span
       className={`material-icons-sharp`}
-      onMouseEnter={() => setSize("big")}
-      onMouseLeave={() => setSize("small")}
+      onMouseEnter={() => hoverAnimation && setSize("big")}
+      onMouseLeave={() => hoverAnimation && setSize("small")}
     >
       {iconName}
     </span>

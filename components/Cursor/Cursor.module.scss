@@ -8,7 +8,6 @@
   pointer-events: none;
   // mix-blend-mode: difference;
 }
-
 .smallBall {
   width: $innerCursorSize;
   height: $innerCursorSize;
@@ -28,6 +27,20 @@
   transform: translate(-($outerCursorSize/2),-($outerCursorSize/2));
 }
 
+.small {
+  .smallBall {
+    width: $innerCursorSize;
+    height: $innerCursorSize;
+    transform: translate(-($innerCursorSize/2), -($innerCursorSize/2));
+  }
+
+  .bigBall {
+    width: $outerCursorSize;
+    height: $outerCursorSize;
+    transform: translate(-($outerCursorSize/2), -($outerCursorSize/2));
+  }
+}
+
 .big {
   .smallBall {
     width: $outerCursorSize;
@@ -38,6 +51,9 @@
   }
 
   .bigBall {
-    opacity: 0;
+    $outerCursorSizeBig: $outerCursorSize * 1.2;
+    width: $outerCursorSizeBig;
+    height: $outerCursorSizeBig;
+    transform: translate(-($outerCursorSizeBig/2), -($outerCursorSizeBig/2));
   }
 }
