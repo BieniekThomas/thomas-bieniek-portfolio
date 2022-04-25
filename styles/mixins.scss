@@ -1,0 +1,14 @@
+@import './variables.module.scss';
+
+@mixin inner-space {
+  padding: 20px 80px;
+}
+
+@mixin headline {
+  font-family: $displayPrimary;
+  font-size: $fontSize_highlight;
+  letter-spacing: 3px;
+  line-height: $fontSize_highlight;
+  font-weight: bold;
+  text-transform: uppercase;
+}

@@ -1,0 +1,8 @@
+@import '../../styles/variables.module.scss';
+
+.spacer {
+  padding-top: 80px;
+  @media (min-width: $screen_md) {
+    padding-top: 100px;
+  }
+}

@@ -1,0 +1,42 @@
+@import '../../styles/variables.module.scss';
+@import '../../styles/mixins';
+
+.outerWrapper {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  z-index: 30;
+  mix-blend-mode: difference;
+  color: $background-color;
+}
+
+.innerWrapper {
+  @include inner-space;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  width: 200px;
+  @include headline;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-weight: bold;
+  text-transform: uppercase;
+  @include headline;
+}
+
+.spacer {
+  &:last-child {
+    display: none;
+  }
+
+  border-left: 1px solid $text-color;
+  height: 30px;
+  margin: 0 16px 0 16px;
+}

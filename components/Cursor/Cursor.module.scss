@@ -1,4 +1,10 @@
-@import '../../styles/variables.module';
+@import '../../styles/variables.module.scss';
+
+@mixin setSize($size) {
+  width: $size;
+  height: $size;
+  transform: translate(-($size/2), -($size/2));
+}
 
 .fixed {
   position: fixed;
@@ -6,54 +12,110 @@
   top: 0;
   z-index: 999;
   pointer-events: none;
-  // mix-blend-mode: difference;
-}
-.smallBall {
-  width: $innerCursorSize;
-  height: $innerCursorSize;
-  transition: all .25s ease-in-out;
-  border-radius: 100%;
-  background-color: $text-color;
-  transform: translate(-($innerCursorSize/2),-($innerCursorSize/2));
-  border: 1px solid $text-color;
+  mix-blend-mode: difference;
 }
 
-.bigBall {
-  width: $outerCursorSize;
-  height: $outerCursorSize;
-  transition: all .25s ease-in-out;
+.smallBall:after {
+  content: '';
+  inset: 0;
+  position: absolute;
+  @include setSize($innerCursorSize);
+  transition: all .25s cubic-bezier(0.62, 0.05, 0.01, 0.99);
+  background-color: $background-color;
+  border: 1px solid $background-color;
   border-radius: 100%;
-  border: 1px solid $text-color;
-  transform: translate(-($outerCursorSize/2),-($outerCursorSize/2));
+}
+
+.bigBall:after {
+  content: '';
+  inset: 0;
+  position: absolute;
+  @include setSize($outerCursorSize);
+  transition: all .25s cubic-bezier(0.62, 0.05, 0.01, 0.99);
+  border: 1px solid $background-color;
+  border-radius: 100%;
+}
+
+.text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  color: transparent;
+  z-index: 20;
+  transition: all .25s cubic-bezier(0.62, 0.05, 0.01, 0.99);
 }
 
 .small {
-  .smallBall {
-    width: $innerCursorSize;
-    height: $innerCursorSize;
-    transform: translate(-($innerCursorSize/2), -($innerCursorSize/2));
+  &.smallBall:after {
+    @include setSize($innerCursorSize);
   }
 
-  .bigBall {
-    width: $outerCursorSize;
-    height: $outerCursorSize;
-    transform: translate(-($outerCursorSize/2), -($outerCursorSize/2));
+  &.bigBall:after {
+    @include setSize($outerCursorSize);
   }
 }
 
 .big {
-  .smallBall {
-    width: $outerCursorSize;
-    height: $outerCursorSize;
-    transform: translate(-($outerCursorSize/2), -($outerCursorSize/2));
-    border-color: $text-color;
+  $outerCursorSizeBig: $outerCursorSize * 1.3;
+  $innerCursorSizeBig: $innerCursorSize * 3;
+
+  &.smallBall:after {
+    @include setSize($innerCursorSizeBig);
+    border-color: transparent;
     background-color: transparent;
   }
 
-  .bigBall {
-    $outerCursorSizeBig: $outerCursorSize * 1.2;
-    width: $outerCursorSizeBig;
-    height: $outerCursorSizeBig;
-    transform: translate(-($outerCursorSizeBig/2), -($outerCursorSizeBig/2));
+  &.bigBall:after {
+    @include setSize($outerCursorSizeBig);
+    background-color: $background-color;
   }
+}
+
+.withText {
+  $outerCursorSizeBig: $outerCursorSize * 2;
+  $innerCursorSizeBig: $innerCursorSize * 3;
+
+  &.fixed {
+    mix-blend-mode: normal;
+  }
+
+  &.smallBall:after {
+    @include setSize($innerCursorSizeBig);
+    border-color: transparent;
+    background-color: transparent;
+  }
+  
+  &.bigBall:after {
+    @include setSize($outerCursorSizeBig);
+    width: 0;
+    height: 0;
+    border: ($outerCursorSizeBig/2) solid $secondary-color;
+    opacity: 0.9;
+  }
+
+  .text {
+    @include setSize($outerCursorSizeBig);
+    color: $background-color;
+  }
+}
+
+.image {
+  $outerCursorSizeBig: $outerCursorSize * 3;
+  $innerCursorSizeBig: $innerCursorSize * 3;
+
+  &.smallBall:after {
+    border-color: transparent;
+    background-color: transparent;
+  }
+  
+  &.bigBall:after {
+    @include setSize($outerCursorSizeBig);
+  }
+
 }

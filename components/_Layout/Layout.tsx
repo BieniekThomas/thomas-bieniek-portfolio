@@ -2,23 +2,27 @@ import { motion } from "framer-motion";
 import { FC, ReactNode } from "react";
 import { framer_default_variants } from "../../lib/framer";
 import Navigation from "../Navigation/Navigation";
+import styles from "./Layout.module.scss";
 
 interface ILayout {
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
 }
 
 const Layout: FC<ILayout> = ({ children }) => {
   return (
-    <motion.main
-      initial="hidden"
-      animate="enter"
-      exit="exit"
-      variants={framer_default_variants}
-      transition={{ type: "linear" }}
-    >
+    <>
       <Navigation />
-      {children}
-    </motion.main>
+      <motion.main
+        initial="hidden"
+        animate="enter"
+        exit="exit"
+        variants={framer_default_variants}
+        transition={{ type: "linear" }}
+      >
+        <div className={styles.spacer}></div>
+        {children}
+      </motion.main>
+    </>
   );
 };
 

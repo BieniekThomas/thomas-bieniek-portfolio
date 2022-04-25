@@ -1,10 +1,10 @@
 import { useMotionValue, motion, useSpring } from "framer-motion";
 import { useEffect } from "react";
 import styles from "./Cursor.module.scss";
-import { useCursorContext, ICursorSizes } from "./CursorManager";
+import { useCursorContext } from "./CursorManager";
 
 const Cursor = () => {
-  const { size } = useCursorContext();
+  const { size, text } = useCursorContext();
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const springConfig = { damping: 25, stiffness: 300 };
@@ -30,29 +30,35 @@ const Cursor = () => {
         return styles.small;
       case "big":
         return styles.big;
+      case "image":
+        return styles.image;
+      case "withText":
+        return styles.withText;
     }
   };
 
   return (
     <>
       <motion.div
-        className={`${styles.fixed} ${getClassName()}`}
+        className={`${styles.fixed} ${styles.smallBall} ${getClassName()}`}
         style={{
           translateX: cursorX,
           translateY: cursorY,
         }}
       >
-        <div className={styles.smallBall} />
+        {/* <div className={styles.smallBall}></div> */}
       </motion.div>
 
       <motion.div
-        className={`${styles.fixed} ${getClassName()}`}
+        className={`${styles.fixed} ${styles.bigBall} ${getClassName()}`}
         style={{
           translateX: cursorXSpring,
           translateY: cursorYSpring,
         }}
       >
-        <div className={styles.bigBall} />
+        {size === "withText" && (
+          <span className={styles.text}>{text || "show me"}</span>
+        )}
       </motion.div>
     </>
   );

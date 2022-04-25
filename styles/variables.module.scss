@@ -12,6 +12,18 @@ $text: 'Rubik', sans-serif;
 $innerCursorSize: 16px;
 $outerCursorSize: $innerCursorSize*3;
 
+// viewports
+$screen_sm: 480px;
+$screen_md: 768px;
+$screen_xl: 1024px;
+$screen_xxl: 1400px;
+
+// font-sizes
+$fontSize_big: 200px;
+$fontSize_headline: 60px;
+$fontSize_subheadline: 40px;
+$fontSize_highlight: 20px;
+
 :export {
   primaryColor: $primary-color;
   backgroundColor: $background-color;

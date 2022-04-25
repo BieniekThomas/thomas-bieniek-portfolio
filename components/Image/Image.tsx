@@ -26,7 +26,7 @@ const ContentfulImage: FC<IImageComponent> = ({ data, windowWidth }) => {
   const title = data.fields.title;
 
   return (
-    <NoScrollLink url={`/photo/${id}`}>
+    <NoScrollLink url={`/photo/${id}`} cursor="image">
       <Image
         src={`https:${src}`}
         width={resultWidth}
