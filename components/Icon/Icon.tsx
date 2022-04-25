@@ -12,14 +12,22 @@ export function Icon({
   cursorText,
 }: IIconProps) {
   const { setSize, setText } = useCursorContext();
-  cursorText && setText(cursorText);
+
+  const onHover = () => {
+    setSize(cursorText ? "withText" : "big");
+    cursorText && setText(cursorText);
+  };
+
+  const onLeave = () => {
+    setSize("small");
+    setText("");
+  };
+
   return (
     <span
       className={`material-icons-sharp`}
-      onMouseEnter={() =>
-        hoverAnimation && setSize(cursorText ? "withText" : "big")
-      }
-      onMouseLeave={() => hoverAnimation && setSize("small")}
+      onMouseEnter={() => hoverAnimation && onHover()}
+      onMouseLeave={() => hoverAnimation && onLeave()}
     >
       {iconName}
     </span>

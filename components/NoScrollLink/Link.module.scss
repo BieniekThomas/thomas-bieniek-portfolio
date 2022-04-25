@@ -1,0 +1,17 @@
+@import '../../styles/variables.module.scss';
+
+.link {
+  border-bottom: 2px solid transparent;
+  padding-top: 2px;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    border-color: $text-color;
+  }
+
+  &.blendMode {
+    &:hover {
+      border-color: $background-color;
+    }
+  }
+}

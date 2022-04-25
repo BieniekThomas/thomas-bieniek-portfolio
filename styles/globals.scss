@@ -1,12 +1,19 @@
 @import './variables.module';
 
+:root {
+  --background-color: #e7e4df;
+  --secondary-color: rgb(36, 31, 31);
+  --action-color: rgb(70, 17, 167);
+  --text-color: rgb(36, 31, 31);
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: $text;
-  background-color: $background-color;
-  color: $text-color;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -19,7 +26,7 @@ a {
   text-transform: uppercase;
   font-style: italic;
   font-weight: bold;
-  color: $secondary-color;
+  color: var(--action-color);
 }
 
 * {

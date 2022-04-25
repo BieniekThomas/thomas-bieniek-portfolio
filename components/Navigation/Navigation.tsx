@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import PageData from "../../pageData";
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
 import styles from "./Navigation.module.scss";
@@ -24,12 +24,12 @@ const Links = () => {
       {PageData.navigation.map(
         (nav) =>
           nav.displayInNavigation && (
-            <>
-              <NoScrollLink key={nav.name} url={nav.url} cursor="big">
+            <React.Fragment key={nav.name}>
+              <NoScrollLink url={nav.url} cursor="big" blendMode>
                 {nav.navigationTitle}
               </NoScrollLink>
               <span className={styles.spacer}></span>
-            </>
+            </React.Fragment>
           )
       )}
     </div>
@@ -41,7 +41,7 @@ const Navigation: FunctionComponent = () => {
     <div className={styles.outerWrapper}>
       <div className={styles.innerWrapper}>
         <div className={styles.name}>
-          <NoScrollLink url="/" cursor="big">
+          <NoScrollLink url="/" cursor="big" blendMode>
             {PageData.name}
           </NoScrollLink>
         </div>

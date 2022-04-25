@@ -17,7 +17,8 @@ interface IHome {
 }
 
 const Home: FC<IHome> = ({ photoGallery }) => {
-  const images = photoGallery.fields.images;
+  // const images = photoGallery.fields.images;
+  const photos = photoGallery.fields.photos;
   return (
     <Layout>
       <PageHead site="home" />
@@ -37,7 +38,7 @@ const Home: FC<IHome> = ({ photoGallery }) => {
           voluptate nulla.
         </p>
         <Icon iconName="done" hoverAnimation cursorText="thats an icon" />
-        {images && <Gallery imageArray={images} />}
+        {photos && <Gallery imageArray={photos} />}
       </div>
     </Layout>
   );
@@ -48,6 +49,11 @@ export default Home;
 const PHOTO_GALLERY_ID = "photoGallery";
 export const getStaticProps: GetStaticProps = async () => {
   const photoGallery = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
+  console.log(
+    "🚀 ~ file: index.tsx ~ line 51 ~ constgetStaticProps:GetStaticProps= ~ photoGallery",
+    photoGallery
+  );
+
   if (!photoGallery) {
     console.error("photogallery not available");
     return {

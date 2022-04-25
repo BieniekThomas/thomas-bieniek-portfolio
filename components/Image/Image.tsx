@@ -2,15 +2,15 @@ import Image from "next/image";
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
 
 import { FC } from "react";
-import { IImage } from "../../@types/generated/contentful";
+import { Asset } from "contentful";
 
 interface IImageComponent {
-  data: IImage;
+  data: Asset;
   windowWidth: number;
 }
 
 const ContentfulImage: FC<IImageComponent> = ({ data, windowWidth }) => {
-  const photo = data?.fields?.photo?.fields?.file;
+  const photo = data?.fields?.file;
   const id = data.sys.id;
   if (!photo || !photo.details.image) {
     return null;
@@ -26,7 +26,7 @@ const ContentfulImage: FC<IImageComponent> = ({ data, windowWidth }) => {
   const title = data.fields.title;
 
   return (
-    <NoScrollLink url={`/photo/${id}`} cursor="image">
+    <NoScrollLink url={`/photo/${id}`} cursor="image" noStyling>
       <Image
         src={`https:${src}`}
         width={resultWidth}

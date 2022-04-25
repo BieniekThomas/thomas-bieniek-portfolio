@@ -84,6 +84,9 @@ export interface IPhotoGalleryFields {
   /** Description */
   description?: string | undefined;
 
+  /** photos */
+  photos?: Asset[] | undefined;
+
   /** Images */
   images?: IImage[] | undefined;
 
