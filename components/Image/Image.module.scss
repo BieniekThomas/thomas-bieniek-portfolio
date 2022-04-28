@@ -1,0 +1,37 @@
+
+
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > span {
+    max-height: 100%;
+  }
+}
+
+.blurWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+  // background: radial-gradient(var(--text-color), transparent);
+  
+  > span {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  &.unblur {
+    opacity: 0;
+  }
+}
+
+.blur {
+  filter: blur(6px);
+}

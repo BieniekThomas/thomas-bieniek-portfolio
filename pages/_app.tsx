@@ -13,11 +13,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <CursorManager>
         <Cursor />
-        <Component
-          {...pageProps}
-          // canonical={url}
-          // key={url}
-        />
+        <div id="main-container">
+          <Component
+            {...pageProps}
+            // canonical={url}
+            // key={url}
+          />
+        </div>
       </CursorManager>
     </AnimatePresence>
   );

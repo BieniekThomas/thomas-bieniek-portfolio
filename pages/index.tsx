@@ -8,37 +8,21 @@ import { FC } from "react";
 import { IPhotoGallery } from "../@types/generated/contentful";
 
 // styleImports
-import styles from "../styles/Home.module.css";
-import { Icon } from "../components/Icon/Icon";
+import styles from "../styles/Home.module.scss";
 import { PageHead } from "../components/PageHead/PageHead";
 
 interface IHome {
-  photoGallery: IPhotoGallery;
+  photoGallery: IPhotoGallery[];
 }
 
 const Home: FC<IHome> = ({ photoGallery }) => {
-  // const images = photoGallery.fields.images;
-  const photos = photoGallery.fields.photos;
   return (
     <Layout>
       <PageHead site="home" />
-      <div className={styles.container}>
-        <h1>Photography</h1>
-        <h3>by Thomas Bieniek</h3>
-        <p>
-          <a href="#">show me a link</a>
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas vel
-          tempore laborum mollitia quia quo qui doloremque pariatur? Voluptatem
-          at ullam maxime ex veritatis sint esse dolor ipsum itaque quis? Lorem
-          ipsum dolor sit amet consectetur adipisicing elit. Quam obcaecati quas
-          dolor? Eligendi perspiciatis eius obcaecati ipsum fugit, cupiditate
-          amet quos eum quam laborum illum dignissimos repudiandae, nostrum,
-          voluptate nulla.
-        </p>
-        <Icon iconName="done" hoverAnimation cursorText="thats an icon" />
-        {photos && <Gallery imageArray={photos} />}
+      <div className={styles.wrapper}>
+        {photoGallery.map((gallery) => {
+          return <Gallery key={gallery.fields.slug} data={gallery} />;
+        })}
       </div>
     </Layout>
   );
@@ -49,11 +33,6 @@ export default Home;
 const PHOTO_GALLERY_ID = "photoGallery";
 export const getStaticProps: GetStaticProps = async () => {
   const photoGallery = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
-  console.log(
-    "🚀 ~ file: index.tsx ~ line 51 ~ constgetStaticProps:GetStaticProps= ~ photoGallery",
-    photoGallery
-  );
-
   if (!photoGallery) {
     console.error("photogallery not available");
     return {
@@ -62,7 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
   return {
     props: {
-      photoGallery: photoGallery[0],
+      photoGallery: photoGallery,
     },
   };
 };

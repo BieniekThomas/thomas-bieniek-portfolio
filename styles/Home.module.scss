@@ -1,0 +1,5 @@
+@import './mixins';
+
+.wrapper {
+  @include inner-space;
+}

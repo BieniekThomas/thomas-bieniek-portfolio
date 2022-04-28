@@ -15,9 +15,6 @@ export interface IAuthorFields {
 
   /** Biography */
   biography?: string | undefined;
-
-  /** Created entries */
-  createdEntries?: IImage[] | undefined;
 }
 
 export interface IAuthor extends Entry<IAuthorFields> {
@@ -37,21 +34,18 @@ export interface IAuthor extends Entry<IAuthorFields> {
   };
 }
 
-export interface IImageFields {
-  /** Title */
-  title: string;
+export interface IHomeFields {
+  /** headline */
+  headline?: string | undefined;
 
-  /** Photo */
-  photo?: Asset | undefined;
+  /** description */
+  description?: Document | undefined;
 
-  /** Image caption */
-  imageCaption?: string | undefined;
-
-  /** Image credits */
-  imageCredits?: string | undefined;
+  /** galleries */
+  galleries?: Entry<{ [fieldId: string]: unknown }>[] | undefined;
 }
 
-export interface IImage extends Entry<IImageFields> {
+export interface IHome extends Entry<IHomeFields> {
   sys: {
     id: string;
     type: string;
@@ -60,7 +54,7 @@ export interface IImage extends Entry<IImageFields> {
     locale: string;
     contentType: {
       sys: {
-        id: "image";
+        id: "home";
         linkType: "ContentType";
         type: "Link";
       };
@@ -75,9 +69,6 @@ export interface IPhotoGalleryFields {
   /** Slug */
   slug?: string | undefined;
 
-  /** Author */
-  author: IAuthor;
-
   /** Cover Image */
   coverImage?: Asset | undefined;
 
@@ -87,17 +78,8 @@ export interface IPhotoGalleryFields {
   /** photos */
   photos?: Asset[] | undefined;
 
-  /** Images */
-  images?: IImage[] | undefined;
-
   /** Tags */
   tags?: string[] | undefined;
-
-  /** Date */
-  date?: string | undefined;
-
-  /** Location */
-  location?: { lat: number; lon: number } | undefined;
 }
 
 export interface IPhotoGallery extends Entry<IPhotoGalleryFields> {
@@ -117,7 +99,7 @@ export interface IPhotoGallery extends Entry<IPhotoGalleryFields> {
   };
 }
 
-export type CONTENT_TYPE = "author" | "image" | "photoGallery";
+export type CONTENT_TYPE = "author" | "home" | "photoGallery";
 
 export type LOCALE_CODE = "en-US";
 

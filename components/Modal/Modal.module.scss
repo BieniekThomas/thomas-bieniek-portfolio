@@ -1,0 +1,17 @@
+.modalWrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+}
+
+.overlayOne {
+  position: absolute;
+  inset: 0;
+  background-color: var(--action-color);
+}
+
+.overlayTwo {
+  position: absolute;
+  inset: 0;
+  background-color: #fff;
+}

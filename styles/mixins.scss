@@ -4,11 +4,12 @@
   padding: 20px 80px;
 }
 
-@mixin headline {
+@mixin headline($fontSize: $fontSize_highlight) {
   font-family: $displayPrimary;
-  font-size: $fontSize_highlight;
+  font-size: $fontSize;
   letter-spacing: 3px;
-  line-height: $fontSize_highlight;
+  line-height: $fontSize;
   font-weight: bold;
   text-transform: uppercase;
+  margin: 0;
 }
