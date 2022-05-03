@@ -1,6 +1,6 @@
 import { createContext, FC, ReactElement, useContext, useState } from "react";
 
-export type ICursorSizes = "small" | "big" | "image" | "withText";
+export type ICursorSizes = "small" | "big" | "image" | "withText" | "drag";
 
 interface ContextState {
   size: ICursorSizes;

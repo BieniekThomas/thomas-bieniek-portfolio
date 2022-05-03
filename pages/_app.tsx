@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <CursorManager>
         <Cursor />
-        <div id="main-container">
+        <div id="main-container" className="scroll">
           <Component
             {...pageProps}
             // canonical={url}

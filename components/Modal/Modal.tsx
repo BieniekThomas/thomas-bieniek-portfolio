@@ -7,9 +7,10 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 interface IModal {
   children: ReactElement | ReactElement[];
+  title?: string;
 }
 
-const Modal = ({ children }: IModal) => {
+const Modal = ({ children, title }: IModal) => {
   const [main, setMain] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const Modal = ({ children }: IModal) => {
             }}
             className={styles.overlayOne}
           >
+            <span className={styles.headline}>{title}</span>
             <motion.div
               initial="hidden"
               animate="enter"

@@ -1,6 +1,6 @@
-$background-color: #fcf1e1;
-$primary-color: rgb(36, 31, 31);
-$secondary-color: rgb(70, 17, 167);
+$background-color: var(--background-color);
+$primary-color: var(--text-color);
+$secondary-color: var(--action-color);
 $text-color: $primary-color;
 
 // fonts

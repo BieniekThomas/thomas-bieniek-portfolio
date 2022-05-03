@@ -34,6 +34,8 @@ const Cursor = () => {
         return styles.image;
       case "withText":
         return styles.withText;
+      case "drag":
+        return styles.drag;
     }
   };
 

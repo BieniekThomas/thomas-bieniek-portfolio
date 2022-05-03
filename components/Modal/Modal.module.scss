@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .modalWrapper {
   position: fixed;
   inset: 0;
@@ -8,6 +10,16 @@
   position: absolute;
   inset: 0;
   background-color: var(--action-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .headline {
+    @include headline(580px);
+    color: var(--background-color);
+    font-style: italic;
+    margin: 0;
+  }
 }
 
 .overlayTwo {

@@ -1,0 +1,16 @@
+@import '../../styles/mixins';
+
+.outerWrapper {
+  @include inner-space;
+}
+
+.innerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyright {
+  font-size: 10px;
+  opacity: 0.5;
+}

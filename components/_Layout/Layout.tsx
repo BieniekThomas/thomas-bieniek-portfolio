@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FC, ReactNode } from "react";
 import { framer_default_variants } from "../../lib/framer";
+import Footer from "../Footer/Footer";
 import Navigation from "../Navigation/Navigation";
 import styles from "./Layout.module.scss";
 
@@ -22,6 +23,7 @@ const Layout: FC<ILayout> = ({ children }) => {
         <div className={styles.spacer}></div>
         {children}
       </motion.main>
+      <Footer />
     </>
   );
 };

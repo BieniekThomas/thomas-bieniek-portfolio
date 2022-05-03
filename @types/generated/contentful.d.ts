@@ -73,7 +73,7 @@ export interface IPhotoGalleryFields {
   coverImage?: Asset | undefined;
 
   /** Description */
-  description?: string | undefined;
+  description?: Document | undefined;
 
   /** photos */
   photos?: Asset[] | undefined;

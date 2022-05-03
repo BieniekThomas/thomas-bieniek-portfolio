@@ -121,5 +121,16 @@
   &.bigBall:after {
     @include setSize($outerCursorSizeBig);
   }
+}
 
+.drag {
+  $outerCursorSizeBig: $outerCursorSize * 3;
+  &.smallBall:after {
+    border-color: transparent;
+    background-color: transparent;
+  }
+  
+  &.bigBall:after {
+    @include setSize($outerCursorSizeBig);
+  }
 }

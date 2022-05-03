@@ -10,6 +10,7 @@ import { IPhotoGallery } from "../@types/generated/contentful";
 // styleImports
 import styles from "../styles/Home.module.scss";
 import { PageHead } from "../components/PageHead/PageHead";
+import { Section } from "../components/Section/Section";
 
 interface IHome {
   photoGallery: IPhotoGallery[];
@@ -19,6 +20,7 @@ const Home: FC<IHome> = ({ photoGallery }) => {
   return (
     <Layout>
       <PageHead site="home" />
+      <Section number={1} headline="Photography" subHeadline="loving it" />
       <div className={styles.wrapper}>
         {photoGallery.map((gallery) => {
           return <Gallery key={gallery.fields.slug} data={gallery} />;
