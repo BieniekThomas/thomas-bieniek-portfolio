@@ -166,23 +166,19 @@ const GalleryModal = ({
           className={`${styles.image} ${
             image.ratio > 1 ? styles.portrait : ""
           } galleryImage`}
+          initial={{
+            opacity: 0,
+          }}
           style={{
             width: image.imageWidth,
             marginLeft: image.marginLeft,
             marginRight: image.marginRight,
           }}
           animate={{
-            visibility:
-              photoIndex - 2 > index || photoIndex + 2 < index
-                ? "hidden"
-                : "visible",
+            opacity: photoIndex - 2 > index || photoIndex + 2 < index ? 0 : 100,
           }}
         >
-          <ContentfulImage
-            data={image}
-            windowWidth={image.imageWidth}
-            layoutId={image.fields.file.fileName}
-          />
+          <ContentfulImage data={image} windowWidth={image.imageWidth} />
         </motion.div>
       );
     });
@@ -203,16 +199,20 @@ const GalleryModal = ({
             onDragEnd={onDragEnd}
             drag="x"
             dragConstraints={galleryRef}
+            initial={false}
             ref={photoWrapperRef}
             dragElastic={0.2}
             whileDrag={{
-              scale: 1.02,
+              scale: 1.01,
             }}
+            layout
           >
             {galleryImages && (
               <motion.div
+                layout
                 className={styles.photosWrapper}
                 transition={{ type: "linear", duration: 0.35 }}
+                initial={false}
                 animate={{
                   x: -galleryImages?.[photoIndex]?.leftCenter ?? 0,
                 }}
@@ -247,7 +247,7 @@ const Gallery: FC<IGallery> = ({ data }) => {
     <div className={styles.outerWrapper} id={slug}>
       <motion.div
         className={styles.innerWrapper}
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3, delay: 0.2 }}

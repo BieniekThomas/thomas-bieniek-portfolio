@@ -47,7 +47,6 @@ const Modal = ({ children, title }: IModal) => {
               transition={{
                 type: "spring",
                 bounce: 0.25,
-                staggerChildren: 0.5,
                 delay: 1,
               }}
               className={styles.overlayTwo}
