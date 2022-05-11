@@ -4,7 +4,9 @@ interface IPageData {
   name: string;
   profession: string[];
   navigation: INavigationEntry[];
-  [k: string]: IPageDataInner | string | string[] | INavigationEntry[];
+  home: IPageDataInner;
+  about: IPageDataInner;
+  privacy: IPageDataInner;
 }
 
 interface INavigationEntry {

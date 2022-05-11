@@ -1,5 +1,4 @@
 import Head from "next/head";
-import * as React from "react";
 import PageData, { pageNames } from "../../pageData";
 
 export interface IPageHeadProps {
@@ -8,6 +7,11 @@ export interface IPageHeadProps {
 
 export function PageHead({ site }: IPageHeadProps) {
   const headInfo = PageData[site];
+  console.log(
+    "🚀 ~ file: PageHead.tsx ~ line 10 ~ PageHead ~ headInfo",
+    headInfo
+  );
+
   return (
     <Head key={site}>
       <title>{headInfo?.pageTitle}</title>
