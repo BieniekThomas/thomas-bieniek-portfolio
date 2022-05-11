@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { FC, useState } from "react";
 import { Asset } from "contentful";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
 import styles from "./Image.module.scss";
 
@@ -10,14 +10,14 @@ interface IImageComponent {
   data: Asset;
   windowWidth: number;
   priority?: boolean;
-  layoutId?: string;
 }
+
+const PREVIEW_SIZE = 8;
 
 const ContentfulImage: FC<IImageComponent> = ({
   data,
   windowWidth,
-  priority,
-  layoutId,
+  priority = false,
 }) => {
   const photo = data.fields.file;
   const [loading, setLoading] = useState(true);
@@ -26,22 +26,26 @@ const ContentfulImage: FC<IImageComponent> = ({
     return null;
   }
 
+  if (!windowWidth) {
+    console.error("no windowwidth");
+  }
+
   // get them variables
   const src = photo.url;
   const width = photo.details.image.width;
   const height = photo.details.image.height;
   const ratio = width / height;
   const resultWidth = windowWidth || width;
-  const quality = 85;
+  const quality = 90;
   const title = data.fields.title;
 
   return (
-    <motion.div className={styles.imageWrapper} layoutId={layoutId}>
+    <div className={styles.imageWrapper}>
       <div className={`${styles.blurWrapper} ${!loading && styles.unblur}`}>
         <Image
           src={`https:${src}`}
-          width={30}
-          height={30 / ratio}
+          width={PREVIEW_SIZE}
+          height={PREVIEW_SIZE / ratio}
           quality={0}
           alt={title}
           priority={priority}
@@ -59,7 +63,7 @@ const ContentfulImage: FC<IImageComponent> = ({
         objectFit="contain"
         onLoadingComplete={() => setLoading(false)}
       />
-    </motion.div>
+    </div>
   );
 };
 

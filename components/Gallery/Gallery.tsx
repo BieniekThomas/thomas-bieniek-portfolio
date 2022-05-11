@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React, {
   FC,
   useCallback,
@@ -20,7 +20,6 @@ import { enableBodyScroll } from "body-scroll-lock";
 import { useCursorContext } from "../Cursor/CursorManager";
 import { zeroPad } from "../Section/Section";
 import Text from "../Text/Text";
-// import { gsap } from "../../lib/gsap";
 
 interface IGallery {
   data: IPhotoGallery;
@@ -32,6 +31,15 @@ interface IGalleryModal {
   windowHeight: number;
   onClose: () => void;
   title?: string;
+}
+
+interface ExtendedAsset extends Asset {
+  marginLeft: number;
+  marginRight: number;
+  spaceLeft: number;
+  imageWidth: number;
+  leftCenter: number;
+  ratio: number;
 }
 
 const GalleryModal = ({
@@ -46,8 +54,7 @@ const GalleryModal = ({
   const photoWrapperRef = useRef(null);
   const [photoIndex, setPhotoIndex] = useState(0);
   const galleryHeight = windowHeight - 160;
-  const controls = useAnimation();
-  const [galleryImages, setGalleryImages] = useState();
+  const [galleryImages, setGalleryImages] = useState<ExtendedAsset[]>();
 
   const addLeftCenter = useCallback(
     (photos: Asset[]) => {
@@ -61,15 +68,16 @@ const GalleryModal = ({
           ratio = height / width;
         }
         const ImageWidth = galleryHeight / ratio + 100;
+
         const currentSpaceLeft =
           index === 0 ? ImageWidth / 2 : spaceLeft + ImageWidth / 2;
+        spaceLeft = currentSpaceLeft + ImageWidth / 2;
+
         let marginLeft = 0;
         let marginRight = 0;
         if (index === 0) {
           marginLeft = windowWidth / 2;
         }
-        spaceLeft = currentSpaceLeft + ImageWidth / 2;
-        console.log(spaceLeft, index);
         if (index + 1 === photoAmount) {
           marginRight = windowWidth / 2 - ImageWidth / 2;
         }
@@ -89,11 +97,11 @@ const GalleryModal = ({
   );
 
   useLayoutEffect(() => {
-    console.log("useLayoutEffect triggered");
-    setGalleryImages(addLeftCenter(photos));
+    const newPhotos = addLeftCenter(photos);
+    setGalleryImages(newPhotos);
   }, [addLeftCenter, photos, windowHeight, windowWidth]);
 
-  const onDragEnd = (_event, info) => {
+  const onDragEnd = (_event: any, info: any) => {
     if (info.offset.x > 250) {
       onDecrement();
     } else if (info.offset.x < -250) {
@@ -158,21 +166,17 @@ const GalleryModal = ({
           className={`${styles.image} ${
             image.ratio > 1 ? styles.portrait : ""
           } galleryImage`}
-          initial={{
-            opacity: 1,
+          style={{
             width: image.imageWidth,
             marginLeft: image.marginLeft,
             marginRight: image.marginRight,
           }}
           animate={{
             visibility:
-              photoIndex - 3 > index || photoIndex + 3 < index
+              photoIndex - 2 > index || photoIndex + 2 < index
                 ? "hidden"
                 : "visible",
           }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.35, delay: 0.05 }}
-          // onTap={() => onTapListener()}
         >
           <ContentfulImage
             data={image}
@@ -191,11 +195,6 @@ const GalleryModal = ({
         animate="enter"
         exit="exit"
         variants={framer_default_variants}
-        transition={{
-          type: "linear",
-          staggerChildren: 0.2,
-          delayChildren: 0.5,
-        }}
       >
         <GalleryHeader />
         <div ref={galleryRef}>
@@ -205,23 +204,22 @@ const GalleryModal = ({
             drag="x"
             dragConstraints={galleryRef}
             ref={photoWrapperRef}
-            animate={controls}
-            dragElastic={0.25}
+            dragElastic={0.2}
             whileDrag={{
-              scale: 1.01,
+              scale: 1.02,
             }}
           >
-            <motion.div
-              className={styles.photosWrapper}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              style={{
-                transform: `translate(${
-                  galleryImages ? -galleryImages[photoIndex]?.leftCenter : "0"
-                }px, 0)`,
-              }}
-            >
-              {renderPhotos()}
-            </motion.div>
+            {galleryImages && (
+              <motion.div
+                className={styles.photosWrapper}
+                transition={{ type: "linear", duration: 0.35 }}
+                animate={{
+                  x: -galleryImages?.[photoIndex]?.leftCenter ?? 0,
+                }}
+              >
+                {renderPhotos()}
+              </motion.div>
+            )}
           </motion.div>
         </div>
       </motion.div>
@@ -231,7 +229,7 @@ const GalleryModal = ({
 
 const Gallery: FC<IGallery> = ({ data }) => {
   const [open, setOpen] = useState(false);
-  const { width, height } = useWindowSize(1920, 1080);
+  const { width, height } = useWindowSize();
   const { setSize } = useCursorContext();
   const { title, description, photos, coverImage, slug } = data.fields;
 
@@ -252,7 +250,7 @@ const Gallery: FC<IGallery> = ({ data }) => {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
       >
         <div className={styles.left}>
           <NoScrollLink
@@ -282,7 +280,7 @@ const Gallery: FC<IGallery> = ({ data }) => {
               cursor="withText"
               cursorText="open gallery"
             >
-              <ContentfulImage data={coverImage} windowWidth={width} priority />
+              <ContentfulImage data={coverImage} windowWidth={700} />
             </NoScrollLink>
           )}
         </div>
