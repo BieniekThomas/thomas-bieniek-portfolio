@@ -2,18 +2,22 @@ import Image from "next/image";
 
 import { FC, useState } from "react";
 import { Asset } from "contentful";
+import { motion } from "framer-motion";
+
 import styles from "./Image.module.scss";
 
 interface IImageComponent {
   data: Asset;
   windowWidth: number;
   priority?: boolean;
+  layoutId?: string;
 }
 
 const ContentfulImage: FC<IImageComponent> = ({
   data,
   windowWidth,
   priority,
+  layoutId,
 }) => {
   const photo = data.fields.file;
   const [loading, setLoading] = useState(true);
@@ -32,7 +36,7 @@ const ContentfulImage: FC<IImageComponent> = ({
   const title = data.fields.title;
 
   return (
-    <div className={styles.imageWrapper}>
+    <motion.div className={styles.imageWrapper} layoutId={layoutId}>
       <div className={`${styles.blurWrapper} ${!loading && styles.unblur}`}>
         <Image
           src={`https:${src}`}
@@ -55,7 +59,7 @@ const ContentfulImage: FC<IImageComponent> = ({
         objectFit="contain"
         onLoadingComplete={() => setLoading(false)}
       />
-    </div>
+    </motion.div>
   );
 };
 

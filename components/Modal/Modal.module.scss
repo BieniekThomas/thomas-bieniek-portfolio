@@ -15,9 +15,9 @@
   justify-content: center;
 
   .headline {
-    @include headline(580px);
+    @include headline(150px);
     color: var(--background-color);
-    font-style: italic;
+    // font-style: italic;
     margin: 0;
   }
 }

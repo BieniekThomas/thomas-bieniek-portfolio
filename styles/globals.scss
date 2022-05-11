@@ -1,10 +1,41 @@
 @import './variables.module.scss';
 
+@font-face {
+  font-family: "PPNeueMontreal";
+  src: url("/fonts/PPNeueMontreal-Medium.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PPNeueMontreal";
+  src: url("/fonts/PPNeueMontreal-Bold.ttf");
+  font-style: bold;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PPMonumentExtended";
+  src: url("/fonts/PPMonumentExtended-Black.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+
 :root {
   --background-color: #e7e4df;
   --secondary-color: rgb(36, 31, 31);
   --action-color: #4200ff;
   --text-color: rgb(36, 31, 31);
+  --body-font: "PPNeueMontreal", sans-serif;
+  --display-font: "PPMonumentExtended", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,

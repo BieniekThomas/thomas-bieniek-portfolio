@@ -1,5 +1,12 @@
-import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
-import React, { FC, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { useWindowSize } from "react-use";
 import { IPhotoGallery } from "../../@types/generated/contentful";
 import { framer_default_variants } from "../../lib/framer";
@@ -11,8 +18,9 @@ import Modal from "../Modal/Modal";
 import { Icon } from "../Icon/Icon";
 import { enableBodyScroll } from "body-scroll-lock";
 import { useCursorContext } from "../Cursor/CursorManager";
-import { Section, zeroPad } from "../Section/Section";
+import { zeroPad } from "../Section/Section";
 import Text from "../Text/Text";
+// import { gsap } from "../../lib/gsap";
 
 interface IGallery {
   data: IPhotoGallery;
@@ -20,7 +28,8 @@ interface IGallery {
 
 interface IGalleryModal {
   photos: Asset[];
-  windowWidth?: number;
+  windowWidth: number;
+  windowHeight: number;
   onClose: () => void;
   title?: string;
 }
@@ -28,53 +37,151 @@ interface IGalleryModal {
 const GalleryModal = ({
   photos,
   windowWidth,
+  windowHeight,
   onClose,
   title,
 }: IGalleryModal) => {
+  const photoAmount = photos.length;
   const galleryRef = useRef(null);
+  const photoWrapperRef = useRef(null);
   const [photoIndex, setPhotoIndex] = useState(0);
+  const galleryHeight = windowHeight - 160;
+  const controls = useAnimation();
+  const [galleryImages, setGalleryImages] = useState();
 
-  const renderPhotos = () => {
-    if (!photos) {
-      return null;
+  const addLeftCenter = useCallback(
+    (photos: Asset[]) => {
+      let spaceLeft = 0;
+      const newPhotos = photos.map((image, index) => {
+        const sizes = image.fields.file.details.image;
+        const width = sizes?.width;
+        const height = sizes?.height;
+        let ratio = 1;
+        if (width && height) {
+          ratio = height / width;
+        }
+        const ImageWidth = galleryHeight / ratio + 100;
+        const currentSpaceLeft =
+          index === 0 ? ImageWidth / 2 : spaceLeft + ImageWidth / 2;
+        let marginLeft = 0;
+        let marginRight = 0;
+        if (index === 0) {
+          marginLeft = windowWidth / 2;
+        }
+        spaceLeft = currentSpaceLeft + ImageWidth / 2;
+        console.log(spaceLeft, index);
+        if (index + 1 === photoAmount) {
+          marginRight = windowWidth / 2 - ImageWidth / 2;
+        }
+        return {
+          ...image,
+          marginLeft: marginLeft,
+          marginRight: marginRight,
+          spaceLeft: spaceLeft,
+          imageWidth: ImageWidth,
+          leftCenter: currentSpaceLeft,
+          ratio: ratio,
+        };
+      });
+      return newPhotos;
+    },
+    [galleryHeight, photoAmount, windowWidth]
+  );
+
+  useLayoutEffect(() => {
+    console.log("useLayoutEffect triggered");
+    setGalleryImages(addLeftCenter(photos));
+  }, [addLeftCenter, photos, windowHeight, windowWidth]);
+
+  const onDragEnd = (_event, info) => {
+    if (info.offset.x > 250) {
+      onDecrement();
+    } else if (info.offset.x < -250) {
+      onIncrement();
     }
-
-    return (
-      <AnimateSharedLayout type="crossfade">
-        {/* <motion.div layout> */}
-        {photos.map((image, index) => {
-          const imageName = image.fields.file.fileName;
-          return (
-            <motion.div
-              id={index.toString()}
-              key={imageName}
-              className={styles.image}
-              initial={{ opacity: 0, y: 30, filter: "grayscale(100%)" }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                filter:
-                  index === photoIndex ? "grayscale(0%)" : "grayscale(100%)",
-                scale: index === photoIndex ? 1 : 0.85,
-              }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: 0.05 }}
-            >
-              <ContentfulImage data={image} windowWidth={700} />
-            </motion.div>
-          );
-        })}
-        {/* </motion.div> */}
-      </AnimateSharedLayout>
-    );
   };
 
   const onIncrement = () => {
-    setPhotoIndex((index) => index + 1);
+    if (photoIndex + 1 < photoAmount) {
+      setPhotoIndex((index) => index + 1);
+    }
   };
 
   const onDecrement = () => {
-    setPhotoIndex((index) => index - 1);
+    if (photoIndex > 0) {
+      setPhotoIndex((index) => index - 1);
+    }
+  };
+
+  const GalleryHeader = () => {
+    return (
+      <>
+        <div className={styles.next} onClick={() => onIncrement()}>
+          <Icon iconName="arrow_forward" hoverAnimation />
+        </div>
+        <div className={styles.prev} onClick={() => onDecrement()}>
+          <Icon iconName="arrow_back" hoverAnimation />
+        </div>
+        <div className={styles.header}>
+          <div className={styles.galleryTitle}>{title}</div>
+          <div className={styles.count}>
+            <span className={styles.number}>{zeroPad(photoIndex + 1, 2)}</span>
+            <span className={styles.spacer}></span>
+            <span className={styles.number}>{zeroPad(photos.length, 2)}</span>
+          </div>
+          <div className={styles.closeWrapper}>
+            <div className={styles.close} onClick={onClose}>
+              <Icon
+                iconName="close"
+                cursorText="close gallery"
+                hoverAnimation
+                fallBackCursor="drag"
+              />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
+  const renderPhotos = () => {
+    if (!galleryImages) {
+      return null;
+    }
+
+    return galleryImages.map((image, index) => {
+      const imageName = image.fields.file.fileName;
+      return (
+        <motion.div
+          id={index.toString()}
+          key={imageName}
+          className={`${styles.image} ${
+            image.ratio > 1 ? styles.portrait : ""
+          } galleryImage`}
+          initial={{
+            opacity: 1,
+            width: image.imageWidth,
+            marginLeft: image.marginLeft,
+            marginRight: image.marginRight,
+          }}
+          animate={{
+            visibility:
+              photoIndex - 3 > index || photoIndex + 3 < index
+                ? "hidden"
+                : "visible",
+          }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.35, delay: 0.05 }}
+          // onTap={() => onTapListener()}
+        >
+          <ContentfulImage
+            data={image}
+            windowWidth={image.imageWidth}
+            layoutId={image.fields.file.fileName}
+          />
+        </motion.div>
+      );
+    });
   };
 
   return (
@@ -90,27 +197,31 @@ const GalleryModal = ({
           delayChildren: 0.5,
         }}
       >
-        <div className={styles.close} onClick={onClose}>
-          <Icon iconName="close" cursorText="close gallery" hoverAnimation />
-        </div>
-        <div className={styles.next} onClick={() => onIncrement()}>
-          <Icon iconName="arrow_forward" hoverAnimation />
-        </div>
-        <div className={styles.prev} onClick={() => onDecrement()}>
-          <Icon iconName="arrow_backward" hoverAnimation />
-        </div>
-        <Section
-          number={photoIndex + 1}
-          headline={`${zeroPad(photos.length, 2)} pictures`}
-          subHeadline={title}
-        />
+        <GalleryHeader />
         <div ref={galleryRef}>
           <motion.div
-            className={styles.photosWrapper}
+            className={styles.photosWrapperOuter}
+            onDragEnd={onDragEnd}
             drag="x"
             dragConstraints={galleryRef}
+            ref={photoWrapperRef}
+            animate={controls}
+            dragElastic={0.25}
+            whileDrag={{
+              scale: 1.01,
+            }}
           >
-            {renderPhotos()}
+            <motion.div
+              className={styles.photosWrapper}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              style={{
+                transform: `translate(${
+                  galleryImages ? -galleryImages[photoIndex]?.leftCenter : "0"
+                }px, 0)`,
+              }}
+            >
+              {renderPhotos()}
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>
@@ -120,14 +231,9 @@ const GalleryModal = ({
 
 const Gallery: FC<IGallery> = ({ data }) => {
   const [open, setOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(1920);
-  const width = useWindowSize().width;
+  const { width, height } = useWindowSize(1920, 1080);
   const { setSize } = useCursorContext();
   const { title, description, photos, coverImage, slug } = data.fields;
-
-  useEffect(() => {
-    setWindowWidth(width);
-  }, [width]);
 
   useEffect(() => {
     const body = document?.getElementById("main-container");
@@ -140,7 +246,7 @@ const Gallery: FC<IGallery> = ({ data }) => {
   }, [open, setSize]);
 
   return (
-    <div className={styles.outerWrapper} id={slug} data-scroll-section>
+    <div className={styles.outerWrapper} id={slug}>
       <motion.div
         className={styles.innerWrapper}
         initial={{ opacity: 0, y: 30 }}
@@ -176,11 +282,7 @@ const Gallery: FC<IGallery> = ({ data }) => {
               cursor="withText"
               cursorText="open gallery"
             >
-              <ContentfulImage
-                data={coverImage}
-                windowWidth={windowWidth}
-                priority
-              />
+              <ContentfulImage data={coverImage} windowWidth={width} priority />
             </NoScrollLink>
           )}
         </div>
@@ -189,7 +291,8 @@ const Gallery: FC<IGallery> = ({ data }) => {
             {open && (
               <GalleryModal
                 photos={photos}
-                windowWidth={windowWidth}
+                windowWidth={width}
+                windowHeight={height}
                 title={title}
                 onClose={() => setOpen(false)}
               />

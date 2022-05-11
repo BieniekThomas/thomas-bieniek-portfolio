@@ -21,7 +21,9 @@ const Layout: FC<ILayout> = ({ children }) => {
         transition={{ type: "linear" }}
       >
         <div className={styles.spacer}></div>
-        {children}
+        <div id="smooth-wrapper">
+          <div id="smooth-content">{children}</div>
+        </div>
       </motion.main>
       <Footer />
     </>

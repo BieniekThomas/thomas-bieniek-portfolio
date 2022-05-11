@@ -12,6 +12,8 @@ interface INoScrollLink {
   noStyling?: boolean;
   noLink?: boolean;
   onClick?: () => void;
+  fallBackCursor?: ICursorSizes;
+  fallBackCursorText?: string;
 }
 
 const NoScrollLink: FC<INoScrollLink> = ({
@@ -23,6 +25,8 @@ const NoScrollLink: FC<INoScrollLink> = ({
   noStyling = false,
   noLink = false,
   onClick,
+  fallBackCursor,
+  fallBackCursorText,
 }) => {
   const { setSize, setText } = useCursorContext();
 
@@ -32,8 +36,8 @@ const NoScrollLink: FC<INoScrollLink> = ({
   };
 
   const onLeave = () => {
-    setSize("small");
-    setText("");
+    setSize(fallBackCursor ?? "small");
+    setText(fallBackCursorText ?? "");
   };
 
   const Inner = () => (

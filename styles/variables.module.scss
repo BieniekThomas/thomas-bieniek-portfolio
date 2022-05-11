@@ -4,9 +4,8 @@ $secondary-color: var(--action-color);
 $text-color: $primary-color;
 
 // fonts
-$displayPrimary: 'Bebas Neue', cursive;
-$displaySecondary: 'Rubik Puddles', cursive;
-$text: 'Rubik', sans-serif;
+$displayPrimary: var(--display-font);
+$text: var(--body-font);
 
 // sizes
 $innerCursorSize: 16px;

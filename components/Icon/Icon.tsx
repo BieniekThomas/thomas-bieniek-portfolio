@@ -1,15 +1,19 @@
-import { useCursorContext } from "../Cursor/CursorManager";
+import { ICursorSizes, useCursorContext } from "../Cursor/CursorManager";
 
 export interface IIconProps {
   hoverAnimation?: boolean;
   iconName: string;
   cursorText?: string;
+  fallBackCursor?: ICursorSizes;
+  fallBackCursorText?: string;
 }
 
 export function Icon({
   hoverAnimation = false,
   iconName,
   cursorText,
+  fallBackCursor,
+  fallBackCursorText,
 }: IIconProps) {
   const { setSize, setText } = useCursorContext();
 
@@ -19,8 +23,8 @@ export function Icon({
   };
 
   const onLeave = () => {
-    setSize("small");
-    setText("");
+    setSize(fallBackCursor ?? "small");
+    setText(fallBackCursorText ?? "");
   };
 
   return (
