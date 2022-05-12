@@ -203,7 +203,7 @@ const GalleryModal = ({
             ref={photoWrapperRef}
             dragElastic={0.2}
             whileDrag={{
-              scale: 1.01,
+              scale: 0.98,
             }}
             layout
           >
