@@ -1,8 +1,8 @@
 @import '../../styles/mixins';
 .outerWrapper {
-  min-height: 30vh;
   @include inner-space;
   width: 100%;
+  margin-bottom: 80px;
 }
 
 .innerWrapper {

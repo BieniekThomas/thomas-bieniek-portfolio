@@ -14,6 +14,7 @@ interface INoScrollLink {
   onClick?: () => void;
   fallBackCursor?: ICursorSizes;
   fallBackCursorText?: string;
+  active?: boolean;
 }
 
 const NoScrollLink: FC<INoScrollLink> = ({
@@ -27,6 +28,7 @@ const NoScrollLink: FC<INoScrollLink> = ({
   onClick,
   fallBackCursor,
   fallBackCursorText,
+  active = false,
 }) => {
   const { setSize, setText } = useCursorContext();
 
@@ -43,8 +45,9 @@ const NoScrollLink: FC<INoScrollLink> = ({
   const Inner = () => (
     <div
       className={`
-          ${noStyling ?? styles.link} 
-          ${blendMode ?? styles.blendMode}
+          ${noStyling || styles.link} 
+          ${blendMode ? styles.blendMode : ""}
+          ${active ? styles.active : ""}
         `}
       onMouseEnter={() => onEnter()}
       onMouseLeave={() => onLeave()}

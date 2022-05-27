@@ -13,7 +13,7 @@ export function Section({ number, headline, subHeadline }: ISectionProps) {
   // Idee: query anhängen
 
   return (
-    <div className={styles.outerWrapper}>
+    <div className={styles.outerWrapper} id={headline}>
       <div className={styles.innerWrapper}>
         <div className={styles.number}>{number && zeroPad(number, 2)}</div>
         <div className={styles.headline}>{headline ?? headline}</div>

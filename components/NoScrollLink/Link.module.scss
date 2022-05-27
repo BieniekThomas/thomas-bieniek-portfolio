@@ -9,6 +9,10 @@
     border-color: $text-color;
   }
 
+  &.active {
+    border-color: $text-color;
+  }
+
   &.blendMode {
     &:hover {
       border-color: $background-color;

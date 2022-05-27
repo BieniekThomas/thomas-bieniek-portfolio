@@ -13,6 +13,7 @@
 }
 
 .outerWrapper {
+  @include inner-space;
   height: 100vh;
   padding-bottom: 50px;
   // border-bottom: 1px solid var(--text-color);

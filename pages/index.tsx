@@ -1,7 +1,9 @@
 import type { GetStaticProps } from "next";
 import { fetchEntries } from "../lib/api";
-import Gallery from "../components/Gallery/Gallery";
 import Layout from "../components/_Layout/Layout";
+import { PageHead } from "../components/PageHead/PageHead";
+import { Section } from "../components/Section/Section";
+import { GallerySection } from "../components/Gallery/GallerySection";
 
 // typeImports
 import { FC } from "react";
@@ -9,8 +11,6 @@ import { IPhotoGallery } from "../@types/generated/contentful";
 
 // styleImports
 import styles from "../styles/Home.module.scss";
-import { PageHead } from "../components/PageHead/PageHead";
-import { Section } from "../components/Section/Section";
 
 interface IHome {
   photoGallery: IPhotoGallery[];
@@ -21,11 +21,9 @@ const Home: FC<IHome> = ({ photoGallery }) => {
     <Layout>
       <PageHead site="home" />
       <Section number={1} headline="Photography" subHeadline="loving it" />
-      <div className={styles.wrapper}>
-        {photoGallery.map((gallery) => {
-          return <Gallery key={gallery.fields.slug} data={gallery} />;
-        })}
-      </div>
+      <GallerySection galleries={photoGallery} />
+      <Section number={2} headline="Music" subHeadline="feeling it" />
+      <Section number={3} headline="Developer" subHeadline="coding it" />
     </Layout>
   );
 };

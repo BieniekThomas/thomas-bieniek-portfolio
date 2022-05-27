@@ -6,11 +6,7 @@ import CursorManager from "../components/Cursor/CursorManager";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AnimatePresence
-      exitBeforeEnter
-      initial={false}
-      onExitComplete={() => window.scrollTo(0, 0)}
-    >
+    <AnimatePresence onExitComplete={() => window.scrollTo(0, 0)}>
       <CursorManager>
         <Cursor />
         <div id="main-container" className="scroll">

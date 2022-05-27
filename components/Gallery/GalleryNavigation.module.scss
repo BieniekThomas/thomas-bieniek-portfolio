@@ -1,0 +1,19 @@
+@import '../../styles/mixins';
+
+.outerWrapper {
+  @include inner-space;
+}
+
+.innerWrapper {
+  font-weight: bold;
+  font-size: 20px;
+  text-transform: capitalize;
+  > * {
+    padding: 8px;
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
