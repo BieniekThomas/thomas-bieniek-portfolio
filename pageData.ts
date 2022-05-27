@@ -13,7 +13,8 @@ interface INavigationEntry {
   name: pageNames;
   url: string;
   navigationTitle: string;
-  displayInNavigation: boolean,
+  displayInNavigation?: boolean,
+  displayInFooter?: boolean,
 }
 
 interface IPageDataInner {
@@ -43,7 +44,8 @@ const PageData: IPageData = {
       name: "privacy",
       url: "/privacy",
       navigationTitle: "Privacy",
-      displayInNavigation: true,
+      displayInNavigation: false,
+      displayInFooter: true,
     }
   ],
   home: {
