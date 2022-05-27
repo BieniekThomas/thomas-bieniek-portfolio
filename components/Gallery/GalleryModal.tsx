@@ -7,11 +7,10 @@ import { zeroPad } from "../Section/Section";
 import { motion } from "framer-motion";
 import { framer_default_variants } from "../../lib/framer";
 import ContentfulImage from "../Image/Image";
+import { useLayoutManagerContext } from "../_Layout/LayoutManager";
 
 interface IGalleryModal {
   photos: Asset[];
-  windowWidth: number;
-  windowHeight: number;
   onClose: () => void;
   title?: string;
 }
@@ -25,13 +24,11 @@ interface ExtendedAsset extends Asset {
   ratio: number;
 }
 
-export const GalleryModal = ({
-  photos,
-  windowWidth,
-  windowHeight,
-  onClose,
-  title,
-}: IGalleryModal) => {
+export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
+  const windowContext = useLayoutManagerContext();
+  const windowHeight = windowContext.height;
+  const windowWidth = windowContext.width;
+
   const photoAmount = photos.length;
   const galleryRef = useRef(null);
   const photoWrapperRef = useRef(null);
@@ -126,7 +123,6 @@ export const GalleryModal = ({
                 iconName="close"
                 cursorText="close gallery"
                 hoverAnimation
-                fallBackCursor="drag"
               />
             </div>
           </div>
