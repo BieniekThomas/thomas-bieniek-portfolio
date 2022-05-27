@@ -21,6 +21,7 @@ const ContentfulImage: FC<IImageComponent> = ({
 }) => {
   const photo = data.fields.file;
   const [loading, setLoading] = useState(true);
+  const [thumbnailLoading, setThumbnailLoading] = useState(true);
 
   if (!photo.details.image) {
     return null;
@@ -51,6 +52,7 @@ const ContentfulImage: FC<IImageComponent> = ({
           priority={priority}
           objectFit="contain"
           className={styles.blur}
+          onLoadingComplete={() => setThumbnailLoading(false)}
         />
       </div>
       <Image
@@ -63,6 +65,9 @@ const ContentfulImage: FC<IImageComponent> = ({
         objectFit="contain"
         onLoadingComplete={() => setLoading(false)}
       />
+      {thumbnailLoading && loading && (
+        <div className={styles.loading}>Image loading...</div>
+      )}
     </div>
   );
 };
