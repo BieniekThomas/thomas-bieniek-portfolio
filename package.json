@@ -18,8 +18,8 @@
     "framer-motion": "^6.2.10",
     "gsap": "^3.10.3",
     "next": "12.1.4",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-use": "^17.3.2"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "@types/react": "18.0.0",
     "@types/react-dom": "18.0.0",
     "contentful-cli": "^1.12.9",
-    "contentful-import": "^7.9.42",
+    "contentful-import": "^8.3.0",
     "contentful-typescript-codegen": "^3.2.3",
     "env-cmd": "^10.1.0",
     "eslint": "8.12.0",
