@@ -156,6 +156,7 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
           animate={{
             opacity: photoIndex - 2 > index || photoIndex + 2 < index ? 0 : 100,
           }}
+          layout="size"
         >
           <ContentfulImage data={image} windowWidth={image.imageWidth} />
         </motion.div>

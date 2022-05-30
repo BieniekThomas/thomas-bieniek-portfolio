@@ -15,6 +15,7 @@ export function GalleryNavigation({
 }: IGalleryNavigationProps) {
   return (
     <div className={styles.outerWrapper}>
+      <div className={styles.headline}>Galleries</div>
       <div className={styles.innerWrapper}>
         {galleries.map((gallery, i) => {
           return (
