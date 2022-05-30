@@ -19,7 +19,6 @@ export const useLayoutManagerContext = () => useContext(LayoutContext);
 
 const LayoutManager: FC<ICursorManager> = ({ children }) => {
   const { width, height } = useWindowSize(1920, 1080);
-  console.log("from manager", width, height);
   return (
     <LayoutContext.Provider value={{ width, height }}>
       {children}
