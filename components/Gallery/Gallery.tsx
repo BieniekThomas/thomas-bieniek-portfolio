@@ -76,8 +76,6 @@ export const Gallery: FC<IGallery> = ({ data }) => {
             {open && (
               <GalleryModal
                 photos={photos}
-                windowWidth={width}
-                windowHeight={height}
                 title={title}
                 onClose={() => setOpen(false)}
               />
