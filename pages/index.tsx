@@ -21,10 +21,22 @@ const Home: FC<IHome> = ({ photoGallery }) => {
     <Layout>
       <PageHead site="home" />
       <div className={styles.wrapper}>
-        <Section number={1} headline="Photography" subHeadline="loving it" />
+        <Section
+          number={1}
+          headline="Photography"
+          subHeadline="capturing emotions"
+        />
         <GallerySection galleries={photoGallery} />
-        <Section number={2} headline="Music" subHeadline="feeling it" />
-        <Section number={3} headline="Developer" subHeadline="coding it" />
+        <Section
+          number={2}
+          headline="Drummer/Producer/DJ"
+          subHeadline="feeling it"
+        />
+        <Section
+          number={3}
+          headline="Software-Developer"
+          subHeadline="coding it"
+        />
       </div>
     </Layout>
   );

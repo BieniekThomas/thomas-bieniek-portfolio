@@ -1,11 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { FC, useEffect, useState } from "react";
-import { useWindowSize } from "react-use";
 import { IPhotoGallery } from "../../@types/generated/contentful";
 import ContentfulImage from "../Image/Image";
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
 import styles from "./Gallery.module.scss";
-import { enableBodyScroll } from "body-scroll-lock";
+import { enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { useCursorContext } from "../Cursor/CursorManager";
 import Text from "../Text/Text";
 import { GalleryModal } from "./GalleryModal";
@@ -16,7 +15,6 @@ interface IGallery {
 
 export const Gallery: FC<IGallery> = ({ data }) => {
   const [open, setOpen] = useState(false);
-  const { width, height } = useWindowSize();
   const { setSize } = useCursorContext();
   const { title, description, photos, coverImage, slug } = data.fields;
 
@@ -28,6 +26,9 @@ export const Gallery: FC<IGallery> = ({ data }) => {
     if (open) {
       setSize("drag");
     }
+    return () => {
+      clearAllBodyScrollLocks();
+    };
   }, [open, setSize]);
 
   return (

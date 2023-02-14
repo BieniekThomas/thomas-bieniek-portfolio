@@ -14,3 +14,22 @@ export function PageHead({ site }: IPageHeadProps) {
     </Head>
   );
 }
+
+export interface IPageHeadPropsIndividual {
+  key: string;
+  pageTitle: string;
+  pageDescription: string;
+}
+
+export const PageHeadIndividual = ({
+  key,
+  pageTitle,
+  pageDescription,
+}: IPageHeadPropsIndividual) => {
+  return (
+    <Head key={key}>
+      <title>{pageTitle}</title>
+      <meta name="description" content={pageDescription} />
+    </Head>
+  );
+};

@@ -1,16 +1,16 @@
 @import './variables.module.scss';
 
 @font-face {
-  font-family: "PPNeueMontreal";
-  src: url("/fonts/PPNeueMontreal-Medium.ttf");
+  font-family: "PPRadioGrotesk";
+  src: url("/fonts/PPRadioGrotesk-Regular.ttf");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PPNeueMontreal";
-  src: url("/fonts/PPNeueMontreal-Bold.ttf");
+  font-family: "PPRadioGrotesk";
+  src: url("/fonts/PPRadioGrotesk-Bold.ttf");
   font-style: bold;
   font-weight: 800;
   font-display: swap;
@@ -30,12 +30,12 @@
   --secondary-color: rgb(36, 31, 31);
   --action-color: #4200ff;
   --text-color: rgb(36, 31, 31);
-  --body-font: "PPNeueMontreal", sans-serif;
+  --body-font: "PPRadioGrotesk", sans-serif;
   --display-font: "PPMonumentExtended", sans-serif;
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: initial;
 }
 
 html,
@@ -45,6 +45,9 @@ body {
   font-family: $text;
   background-color: var(--background-color);
   color: var(--text-color);
+  min-height: 100%;
+  width: 100%;
+  line-height: 1.7;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -58,9 +61,10 @@ a {
   font-style: italic;
   font-weight: bold;
   color: var(--action-color);
+  cursor: pointer;
 }
 
 * {
   box-sizing: border-box;
-  cursor: none;
+  // cursor: none;
 }

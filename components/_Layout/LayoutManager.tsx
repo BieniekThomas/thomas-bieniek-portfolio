@@ -1,5 +1,5 @@
 import { createContext, FC, ReactElement, useContext } from "react";
-import { useWindowSize } from "react-use";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 interface ContextState {
   width: number;
@@ -18,9 +18,11 @@ export const LayoutContext = createContext<ContextState>({
 export const useLayoutManagerContext = () => useContext(LayoutContext);
 
 const LayoutManager: FC<ICursorManager> = ({ children }) => {
-  const { width, height } = useWindowSize(1920, 1080);
+  const { width, height } = useWindowDimensions();
   return (
-    <LayoutContext.Provider value={{ width, height }}>
+    <LayoutContext.Provider
+      value={{ width: width ?? 1920, height: height ?? 1080 }}
+    >
       {children}
     </LayoutContext.Provider>
   );

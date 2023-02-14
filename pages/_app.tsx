@@ -4,8 +4,11 @@ import { AnimatePresence } from "framer-motion";
 import Cursor from "../components/Cursor/Cursor";
 import CursorManager from "../components/Cursor/CursorManager";
 import LayoutManager from "../components/_Layout/LayoutManager";
+import { useSmoothScroll } from "../hooks/useSmoothScroll";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useSmoothScroll();
+
   return (
     <AnimatePresence onExitComplete={() => window.scrollTo(0, 0)}>
       <CursorManager>

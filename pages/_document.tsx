@@ -1,6 +1,5 @@
 import Document, { Html, Main, NextScript, Head } from "next/document";
-import { GOOGLE_FONTS_ARRAY } from "../lib/constants";
-
+import { ICON_FONT } from "../lib/constants";
 export interface IDocumentProps {}
 
 export default class MyDocument extends Document {
@@ -8,10 +7,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp&display=swap"
-            rel="stylesheet"
-          />
+          <link href={ICON_FONT} rel="stylesheet" />
         </Head>
         <body>
           <Main />

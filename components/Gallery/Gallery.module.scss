@@ -15,7 +15,6 @@
 .outerWrapper {
   @include inner-space;
   padding-bottom: 50px;
-  margin: 50px 0 50px;
 }
 
 .innerWrapper {
@@ -41,7 +40,7 @@
 }
 
 .headline {
-  @include headline(80px);
+  @include headline(3.2vw);
   margin: 0 0 40px 0;
   position: relative;
   background-color: var(--background-color);
@@ -71,8 +70,10 @@
 }
 
 .description {
-  font-size: 24px;
-  line-height: 37px;
+  @media (max-width: 760px) {
+    font-size: 18px;
+  }
+  font-size: 1.35vw;
 }
 
 .photosWrapperOuter {
@@ -80,28 +81,28 @@
   inset: 0;
 }
 
-.photosWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  align-items: center;
-  height: 100vh;
-  padding: 120px 0px 40px;
-  overflow: visible;
-  overflow-x: hidden;
-  white-space: nowrap;
-}
+// .photosWrapper {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   display: block;
+//   align-items: center;
+//   height: 100vh;
+//   padding: 120px 0px 40px;
+//   overflow: visible;
+//   overflow-x: hidden;
+//   white-space: nowrap;
+// }
 
-.image {
-  height: 99.5%;
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-  padding: 0 50px;
-  pointer-events: none;
-}
+// .image {
+//   height: 99.5%;
+//   display: inline-block;
+//   align-items: center;
+//   justify-content: center;
+//   line-height: 0;
+//   padding: 0 50px;
+//   pointer-events: none;
+// }
 
 .next, .prev {
   width: 50px;
@@ -173,13 +174,10 @@
 .count {
   justify-content: center;
   position: absolute;
-  left: calc(50% - 80px);
+  left: 50%;
+  transform: translateX(-50%);
   top: 0;
   height: 80px;
-
-  .number {
-    width: 50px;
-  }
 
   .spacer {
     height: 3px;

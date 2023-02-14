@@ -8,38 +8,61 @@ import { motion } from "framer-motion";
 import { framer_default_variants } from "../../lib/framer";
 import ContentfulImage from "../Image/Image";
 import { useLayoutManagerContext } from "../_Layout/LayoutManager";
+import { useSmoothScroll } from "../../hooks/useSmoothScroll";
 
+interface GalleryHeaderProps {
+  photoAmount: number;
+  onClose: () => void;
+  title: string | undefined;
+}
+
+const GalleryHeader: React.FC<GalleryHeaderProps> = ({
+  photoAmount,
+  onClose,
+  title,
+}) => {
+  return (
+    <>
+      <div className={styles.header}>
+        <div className={styles.galleryTitle}>{title}</div>
+        <div className={styles.count}>
+          <span className={styles.number}>
+            {zeroPad(photoAmount, 2)} pictures
+          </span>
+        </div>
+        <div className={styles.closeWrapper}>
+          <div className={styles.close} onClick={onClose}>
+            <Icon iconName="close" cursorText="close gallery" hoverAnimation />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+interface ExtendedAsset extends Asset {
+  imageWidth: number;
+  ratio: number;
+}
 interface IGalleryModal {
   photos: Asset[];
   onClose: () => void;
   title?: string;
 }
 
-interface ExtendedAsset extends Asset {
-  marginLeft: number;
-  marginRight: number;
-  spaceLeft: number;
-  imageWidth: number;
-  leftCenter: number;
-  ratio: number;
-}
-
 export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
+  useSmoothScroll();
+  const photoAmount = photos.length;
   const windowContext = useLayoutManagerContext();
   const windowHeight = windowContext.height;
   const windowWidth = windowContext.width;
-
-  const photoAmount = photos.length;
-  const galleryRef = useRef(null);
-  const photoWrapperRef = useRef(null);
-  const [photoIndex, setPhotoIndex] = useState(0);
   const galleryHeight = windowHeight - 160;
+
   const [galleryImages, setGalleryImages] = useState<ExtendedAsset[]>();
 
-  const addLeftCenter = useCallback(
+  const extendPhotos = useCallback(
     (photos: Asset[]) => {
-      let spaceLeft = 0;
-      const newPhotos = photos.map((image, index) => {
+      const newPhotos = photos.map((image, _) => {
         const sizes = image.fields.file.details.image;
         const width = sizes?.width;
         const height = sizes?.height;
@@ -47,28 +70,13 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
         if (width && height) {
           ratio = height / width;
         }
-        const ImageWidth = galleryHeight / ratio + 100;
 
-        const currentSpaceLeft =
-          index === 0 ? ImageWidth / 2 : spaceLeft + ImageWidth / 2;
-        spaceLeft = currentSpaceLeft + ImageWidth / 2;
+        const imageWidth = galleryHeight / ratio + 100;
 
-        let marginLeft = 0;
-        let marginRight = 0;
-        if (index === 0) {
-          marginLeft = windowWidth / 2;
-        }
-        if (index + 1 === photoAmount) {
-          marginRight = windowWidth / 2 - ImageWidth / 2;
-        }
         return {
           ...image,
-          marginLeft: marginLeft,
-          marginRight: marginRight,
-          spaceLeft: spaceLeft,
-          imageWidth: ImageWidth,
-          leftCenter: currentSpaceLeft,
-          ratio: ratio,
+          ratio,
+          imageWidth,
         };
       });
       return newPhotos;
@@ -77,59 +85,9 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
   );
 
   useLayoutEffect(() => {
-    const newPhotos = addLeftCenter(photos);
+    const newPhotos = extendPhotos(photos);
     setGalleryImages(newPhotos);
-  }, [addLeftCenter, photos, windowHeight, windowWidth]);
-
-  const onDragEnd = (_event: any, info: any) => {
-    if (info.offset.x > 250) {
-      onDecrement();
-    } else if (info.offset.x < -250) {
-      onIncrement();
-    }
-  };
-
-  const onIncrement = () => {
-    if (photoIndex + 1 < photoAmount) {
-      setPhotoIndex((index) => index + 1);
-    }
-  };
-
-  const onDecrement = () => {
-    if (photoIndex > 0) {
-      setPhotoIndex((index) => index - 1);
-    }
-  };
-
-  const GalleryHeader = () => {
-    return (
-      <>
-        <div className={styles.next} onClick={() => onIncrement()}>
-          <Icon iconName="arrow_forward" hoverAnimation />
-        </div>
-        <div className={styles.prev} onClick={() => onDecrement()}>
-          <Icon iconName="arrow_back" hoverAnimation />
-        </div>
-        <div className={styles.header}>
-          <div className={styles.galleryTitle}>{title}</div>
-          <div className={styles.count}>
-            <span className={styles.number}>{zeroPad(photoIndex + 1, 2)}</span>
-            <span className={styles.spacer}></span>
-            <span className={styles.number}>{zeroPad(photos.length, 2)}</span>
-          </div>
-          <div className={styles.closeWrapper}>
-            <div className={styles.close} onClick={onClose}>
-              <Icon
-                iconName="close"
-                cursorText="close gallery"
-                hoverAnimation
-              />
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  };
+  }, [extendPhotos, photos, windowHeight, windowWidth]);
 
   const renderPhotos = () => {
     if (!galleryImages) {
@@ -139,27 +97,16 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
     return galleryImages.map((image, index) => {
       const imageName = image.fields.file.fileName;
       return (
-        <motion.div
+        <div
           id={index.toString()}
           key={imageName}
-          className={`${styles.image} ${
-            image.ratio > 1 ? styles.portrait : ""
-          } galleryImage`}
-          initial={{
-            opacity: 0,
-          }}
+          className={`${styles.image}`}
           style={{
             width: image.imageWidth,
-            marginLeft: image.marginLeft,
-            marginRight: image.marginRight,
           }}
-          animate={{
-            opacity: photoIndex - 2 > index || photoIndex + 2 < index ? 0 : 100,
-          }}
-          layout="size"
         >
           <ContentfulImage data={image} windowWidth={image.imageWidth} />
-        </motion.div>
+        </div>
       );
     });
   };
@@ -172,37 +119,173 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
         exit="exit"
         variants={framer_default_variants}
       >
-        <GalleryHeader />
-        <div ref={galleryRef}>
-          <motion.div
-            className={styles.photosWrapperOuter}
-            onDragEnd={onDragEnd}
-            drag="x"
-            dragConstraints={galleryRef}
-            initial={false}
-            ref={photoWrapperRef}
-            dragElastic={0.2}
-            whileDrag={{
-              scale: 0.98,
-            }}
-            layout
-          >
-            {galleryImages && (
-              <motion.div
-                layout
-                className={styles.photosWrapper}
-                transition={{ type: "linear", duration: 0.35 }}
-                initial={false}
-                animate={{
-                  x: -galleryImages?.[photoIndex]?.leftCenter ?? 0,
-                }}
-              >
-                {renderPhotos()}
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
+        <GalleryHeader
+          photoAmount={photoAmount}
+          onClose={onClose}
+          title={title}
+        />
+        {renderPhotos()}
       </motion.div>
     </Modal>
   );
 };
+
+// export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
+//   const windowContext = useLayoutManagerContext();
+//   const windowHeight = windowContext.height;
+//   const windowWidth = windowContext.width;
+
+//   const photoAmount = photos.length;
+//   const galleryRef = useRef(null);
+//   const photoWrapperRef = useRef(null);
+//   const [photoIndex, setPhotoIndex] = useState(0);
+//   const galleryHeight = windowHeight - 160;
+//   const [galleryImages, setGalleryImages] = useState<ExtendedAsset[]>();
+
+//   const onIncrement = () => {
+//     if (photoIndex + 1 < photoAmount) {
+//       setPhotoIndex((index) => index + 1);
+//     }
+//   };
+
+//   const onDecrement = () => {
+//     if (photoIndex > 0) {
+//       setPhotoIndex((index) => index - 1);
+//     }
+//   };
+
+//   const addLeftCenter = useCallback(
+//     (photos: Asset[]) => {
+//       let spaceLeft = 0;
+//       const newPhotos = photos.map((image, index) => {
+//         const sizes = image.fields.file.details.image;
+//         const width = sizes?.width;
+//         const height = sizes?.height;
+//         let ratio = 1;
+//         if (width && height) {
+//           ratio = height / width;
+//         }
+//         const ImageWidth = galleryHeight / ratio + 100;
+
+//         const currentSpaceLeft =
+//           index === 0 ? ImageWidth / 2 : spaceLeft + ImageWidth / 2;
+//         spaceLeft = currentSpaceLeft + ImageWidth / 2;
+
+//         let marginLeft = 0;
+//         let marginRight = 0;
+//         if (index === 0) {
+//           marginLeft = windowWidth / 2;
+//         }
+//         if (index + 1 === photoAmount) {
+//           marginRight = windowWidth / 2 - ImageWidth / 2;
+//         }
+//         return {
+//           ...image,
+//           marginLeft: marginLeft,
+//           marginRight: marginRight,
+//           spaceLeft: spaceLeft,
+//           imageWidth: ImageWidth,
+//           leftCenter: currentSpaceLeft,
+//           ratio: ratio,
+//         };
+//       });
+//       return newPhotos;
+//     },
+//     [galleryHeight, photoAmount, windowWidth]
+//   );
+
+//   useLayoutEffect(() => {
+//     const newPhotos = addLeftCenter(photos);
+//     setGalleryImages(newPhotos);
+//   }, [addLeftCenter, photos, windowHeight, windowWidth]);
+
+//   const onDragEnd = (_event: any, info: any) => {
+//     if (info.offset.x > 250) {
+//       onDecrement();
+//     } else if (info.offset.x < -250) {
+//       onIncrement();
+//     }
+//   };
+
+//   const renderPhotos = () => {
+//     if (!galleryImages) {
+//       return null;
+//     }
+
+//     return galleryImages.map((image, index) => {
+//       const imageName = image.fields.file.fileName;
+//       return (
+//         <motion.div
+//           id={index.toString()}
+//           key={imageName}
+//           className={`${styles.image} ${
+//             image.ratio > 1 ? styles.portrait : ""
+//           } galleryImage`}
+//           initial={{
+//             opacity: 0,
+//           }}
+//           style={{
+//             width: image.imageWidth,
+//             marginLeft: image.marginLeft,
+//             marginRight: image.marginRight,
+//           }}
+//           animate={{
+//             opacity: photoIndex - 2 > index || photoIndex + 2 < index ? 0 : 100,
+//           }}
+//           layout="size"
+//         >
+//           <ContentfulImage data={image} windowWidth={image.imageWidth} />
+//         </motion.div>
+//       );
+//     });
+//   };
+
+//   return (
+//     <Modal title={title}>
+//       <motion.div
+//         initial="hidden"
+//         animate="enter"
+//         exit="exit"
+//         variants={framer_default_variants}
+//       >
+//         <GalleryHeader
+//           photoIndex={photoIndex}
+//           photoAmount={photoAmount}
+//           onIncrement={onIncrement}
+//           onDecrement={onDecrement}
+//           onClose={onClose}
+//           title={title}
+//         />
+//         <div ref={galleryRef}>
+//           <motion.div
+//             className={styles.photosWrapperOuter}
+//             onDragEnd={onDragEnd}
+//             drag="x"
+//             dragConstraints={galleryRef}
+//             initial={false}
+//             ref={photoWrapperRef}
+//             dragElastic={0.2}
+//             whileDrag={{
+//               scale: 0.98,
+//             }}
+//             layout
+//           >
+//             {galleryImages && (
+//               <motion.div
+//                 layout
+//                 className={styles.photosWrapper}
+//                 transition={{ type: "linear", duration: 0.35 }}
+//                 initial={false}
+//                 animate={{
+//                   x: -galleryImages?.[photoIndex]?.leftCenter ?? 0,
+//                 }}
+//               >
+//                 {renderPhotos()}
+//               </motion.div>
+//             )}
+//           </motion.div>
+//         </div>
+//       </motion.div>
+//     </Modal>
+//   );
+// };
