@@ -29,7 +29,7 @@ export const LenisManager = ({ children }: IChildren) => {
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-    window.lenis = lenis.current;
+    // window.lenis = lenis.current;
   }, []);
 
   return (

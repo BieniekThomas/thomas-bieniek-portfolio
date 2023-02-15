@@ -37,20 +37,20 @@ const Gallery = ({ gallery }: IGallery) => {
     restDelta: 0.001,
   });
   const scrollPercent = useTransform(scrollSpring, [0, 1], ["0%", "100%"]);
-  // const lenisContext = useLenisManagerContext();
+  const lenisContext = useLenisManagerContext();
 
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   if (!lenisContext.lenis) console.error("lenis not useable");
-  //   console.log("lenis found");
-  // });
+  useEffect(() => {
+    if (!lenisContext.lenis) console.error("lenis not useable");
+    console.log("lenis found", lenisContext.lenis);
+  });
 
   function onAnchorClick(anchor: string) {
     console.log(anchor);
-    // lenisContext.lenis?.scrollTo(anchor);
+    lenisContext.lenis?.scrollTo(anchor);
     // dirty hack
-    window?.lenis.scrollTo(anchor);
+    // window?.lenis.scrollTo(anchor);
   }
 
   function onClose() {
