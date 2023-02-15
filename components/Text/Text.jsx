@@ -3,14 +3,14 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
 const options = {
   renderMark: {
-    [MARKS.BOLD]: (text: string) => <b>{text}</b>,
+    [MARKS.BOLD]: (text) => <b>{text}</b>,
   },
   renderNode: {
-    [BLOCKS.PARAGRAPH]: (_: any, children: string) => <p>{children}</p>,
+    [BLOCKS.PARAGRAPH]: (_, children) => <p>{children}</p>,
   },
 };
 
-const Text = ({ text }: any) => {
+const Text = ({ text }) => {
   return documentToReactComponents(text, options);
 };
 
