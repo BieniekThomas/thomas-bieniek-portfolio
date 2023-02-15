@@ -68,7 +68,7 @@ export const Gallery: FC<IGallery> = ({ data }) => {
               cursor="withText"
               cursorText="open gallery"
             >
-              <ContentfulImage data={coverImage} windowWidth={700} />
+              <ContentfulImage data={coverImage} />
             </NoScrollLink>
           )}
         </div>
