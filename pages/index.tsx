@@ -26,17 +26,21 @@ const Home: FC<IHome> = ({ photoGallery }) => {
           headline="Photography"
           subHeadline="capturing emotions"
         />
-        <GallerySection galleries={photoGallery} />
+        <div className={styles.minHeight}>
+          <GallerySection galleries={photoGallery} />
+        </div>
         <Section
           number={2}
           headline="Drummer/Producer/DJ"
           subHeadline="feeling it"
         />
+        <div className={styles.minHeight}></div>
         <Section
           number={3}
           headline="Software-Developer"
           subHeadline="coding it"
         />
+        <div className={styles.minHeight}></div>
       </div>
     </Layout>
   );

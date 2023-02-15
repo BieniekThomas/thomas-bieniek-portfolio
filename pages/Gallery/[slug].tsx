@@ -5,6 +5,18 @@ import ContentfulImage from "../../components/Image/Image";
 import { PageHeadIndividual } from "../../components/PageHead/PageHead";
 import { fetchEntries } from "../../lib/api";
 import styles from "../../styles/Gallery.module.scss";
+import {
+  useViewportScroll,
+  motion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { GalleryHeader } from "../../components/Gallery/GalleryModal";
+import Text from "../../components/Text/Text";
+import {
+  AnimatedText,
+  AnimatedTextBlock,
+} from "../../components/AnimatedText/AnimatedText";
 
 interface IGallery {
   gallery: IPhotoGallery;
@@ -12,27 +24,57 @@ interface IGallery {
 
 const Gallery = ({ gallery }: IGallery) => {
   const router = useRouter();
-  const slug = router.query;
-  const photos = gallery.fields.photos;
+  const { title, description, photos } = gallery.fields;
   const photoAmount = photos?.length;
+  const { scrollYProgress } = useViewportScroll();
+  const scrollSpring = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  const scrollPercent = useTransform(scrollSpring, [0, 1], ["0%", "100%"]);
+
+  function onClose() {
+    router.push("/");
+  }
 
   return (
     <>
       <PageHeadIndividual
-        pageTitle={`Gallery — ${gallery.fields.title}`}
-        key={gallery.fields.slug ?? "gallery"}
-        pageDescription={`Gallery with ${photoAmount} pictures on the theme ${gallery.fields.title}`}
+        pageTitle={`Gallery — ${title}`}
+        keyName={gallery.fields.slug ?? "gallery"}
+        pageDescription={`Gallery with ${photoAmount} pictures on the theme ${title}`}
       />
-      <p>
-        Gallery: {slug.slug} with {photoAmount} photos
-      </p>
-      {photos?.map((photo) => {
-        return (
-          <div key={photo.fields.title} className={styles.photoWrapper}>
-            <ContentfulImage data={photo} />
-          </div>
-        );
-      })}
+      <GalleryHeader onClose={onClose} title={title} />
+      <div>
+        {photos?.map((photo) => {
+          return (
+            <div key={photo.fields.title} className={styles.photoWrapper}>
+              <ContentfulImage data={photo} />
+            </div>
+          );
+        })}
+      </div>
+      <div className={styles.progressWrapper}>
+        <motion.div
+          className={styles.progress}
+          style={{ height: scrollPercent }}
+        />
+      </div>
+      <div className={styles.galleryFooter}>
+        <div className={styles.galleryFooterWrapper}>
+          <h1>
+            <AnimatedText text={title} />
+          </h1>
+          {description && (
+            <div className={styles.description}>
+              <AnimatedTextBlock>
+                {Text({ text: description })}
+              </AnimatedTextBlock>
+            </div>
+          )}
+        </div>
+      </div>
     </>
   );
 };

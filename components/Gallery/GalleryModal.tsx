@@ -1,42 +1,35 @@
 import { Asset } from "contentful";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { Icon } from "../Icon/Icon";
 import styles from "./Gallery.module.scss";
 import Modal from "../Modal/Modal";
-import { zeroPad } from "../Section/Section";
 import { motion } from "framer-motion";
 import { framer_default_variants } from "../../lib/framer";
 import ContentfulImage from "../Image/Image";
 import { useLayoutManagerContext } from "../_Layout/LayoutManager";
 import { useSmoothScroll } from "../../hooks/useSmoothScroll";
+import { AnimatedText } from "../AnimatedText/AnimatedText";
 
 interface GalleryHeaderProps {
-  photoAmount: number;
   onClose: () => void;
   title: string | undefined;
 }
 
-const GalleryHeader: React.FC<GalleryHeaderProps> = ({
-  photoAmount,
+export const GalleryHeader: React.FC<GalleryHeaderProps> = ({
   onClose,
   title,
 }) => {
   return (
-    <>
-      <div className={styles.header}>
-        <div className={styles.galleryTitle}>{title}</div>
-        <div className={styles.count}>
-          <span className={styles.number}>
-            {zeroPad(photoAmount, 2)} pictures
-          </span>
-        </div>
-        <div className={styles.closeWrapper}>
-          <div className={styles.close} onClick={onClose}>
-            <Icon iconName="close" cursorText="close gallery" hoverAnimation />
-          </div>
+    <div className={styles.header}>
+      <div className={styles.galleryTitle}>
+        {title && <AnimatedText text={title} />}
+      </div>
+      <div className={styles.closeWrapper}>
+        <div className={styles.close} onClick={onClose}>
+          <Icon iconName="close" cursorText="close gallery" hoverAnimation />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -52,7 +45,6 @@ interface IGalleryModal {
 
 export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
   useSmoothScroll();
-  const photoAmount = photos.length;
   const windowContext = useLayoutManagerContext();
   const windowHeight = windowContext.height;
   const windowWidth = windowContext.width;
@@ -71,7 +63,7 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
           ratio = height / width;
         }
 
-        const imageWidth = galleryHeight / ratio + 100;
+        const imageWidth = galleryHeight / ratio;
 
         return {
           ...image,
@@ -81,7 +73,7 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
       });
       return newPhotos;
     },
-    [galleryHeight, photoAmount, windowWidth]
+    [galleryHeight]
   );
 
   useLayoutEffect(() => {
@@ -105,7 +97,7 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
             width: image.imageWidth,
           }}
         >
-          <ContentfulImage data={image} windowWidth={image.imageWidth} />
+          <ContentfulImage data={image} />
         </div>
       );
     });
@@ -119,11 +111,7 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
         exit="exit"
         variants={framer_default_variants}
       >
-        <GalleryHeader
-          photoAmount={photoAmount}
-          onClose={onClose}
-          title={title}
-        />
+        <GalleryHeader onClose={onClose} title={title} />
         {renderPhotos()}
       </motion.div>
     </Modal>

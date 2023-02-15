@@ -16,18 +16,18 @@ export function PageHead({ site }: IPageHeadProps) {
 }
 
 export interface IPageHeadPropsIndividual {
-  key: string;
+  keyName: string;
   pageTitle: string;
   pageDescription: string;
 }
 
 export const PageHeadIndividual = ({
-  key,
+  keyName,
   pageTitle,
   pageDescription,
 }: IPageHeadPropsIndividual) => {
   return (
-    <Head key={key}>
+    <Head key={keyName}>
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription} />
     </Head>

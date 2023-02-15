@@ -1,3 +1,5 @@
+@import './styles/mixins.scss';
+
 .photoWrapper{
   height: 100vh;
   width: 100%;
@@ -10,4 +12,31 @@
     max-height: 100%;
     transform: scale(0.8);
   }
+}
+
+.progressWrapper {
+  position: fixed;
+  left: 0px;
+  top: 0;
+  height: 100vh;
+  width: 5px;
+}
+.progress {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  background-color: var(--action-color);
+}
+
+.galleryFooter {
+  min-height: 50vh;
+  background-color: var(--action-color);
+  color: var(--background-color);
+}
+
+.galleryFooterWrapper{
+  @include inner-space;
+  padding-bottom: 50px;
+  padding-top: 50px;
 }

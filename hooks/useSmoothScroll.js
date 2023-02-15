@@ -8,6 +8,7 @@ export const useSmoothScroll = () => {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: "vertical",
       smooth: true,
+      mouseMultiplier: 0.6
     });
 
     function raf(time) {
