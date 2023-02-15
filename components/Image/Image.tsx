@@ -9,9 +9,14 @@ import { useLayoutManagerContext } from "../_Layout/LayoutManager";
 interface IImageComponent {
   data: Asset;
   priority?: boolean;
+  maxDimensionInPx?: number;
 }
 
-const ContentfulImage: FC<IImageComponent> = ({ data, priority = false }) => {
+const ContentfulImage: FC<IImageComponent> = ({
+  data,
+  priority = false,
+  maxDimensionInPx,
+}) => {
   const photo = data.fields.file;
   const size = useLayoutManagerContext();
 
@@ -24,8 +29,8 @@ const ContentfulImage: FC<IImageComponent> = ({ data, priority = false }) => {
 
   const ratio = width / height;
 
-  let resultWidth = size.width;
-  let resultHeight = size.height;
+  let resultWidth = maxDimensionInPx ?? size.width;
+  let resultHeight = maxDimensionInPx ?? size.height;
 
   if (ratio >= 1) {
     // landscape

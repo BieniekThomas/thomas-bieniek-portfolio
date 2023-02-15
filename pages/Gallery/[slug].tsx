@@ -10,6 +10,7 @@ import {
   motion,
   useSpring,
   useTransform,
+  MotionValue,
 } from "framer-motion";
 import { GalleryHeader } from "../../components/Gallery/GalleryModal";
 import Text from "../../components/Text/Text";
@@ -17,6 +18,8 @@ import {
   AnimatedText,
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
+import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
+import { useEffect, useRef, useState } from "react";
 
 interface IGallery {
   gallery: IPhotoGallery;
@@ -24,36 +27,96 @@ interface IGallery {
 
 const Gallery = ({ gallery }: IGallery) => {
   const router = useRouter();
-  const { title, description, photos } = gallery.fields;
+  const { title, description, photos, slug } = gallery.fields;
   const photoAmount = photos?.length;
   const { scrollYProgress } = useViewportScroll();
+  const [previewDivHeight, setPreviewDivHeight] = useState(0);
   const scrollSpring = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
   const scrollPercent = useTransform(scrollSpring, [0, 1], ["0%", "100%"]);
+  // const lenisContext = useLenisManagerContext();
+
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   if (!lenisContext.lenis) console.error("lenis not useable");
+  //   console.log("lenis found");
+  // });
+
+  function onAnchorClick(anchor: string) {
+    console.log(anchor);
+    // lenisContext.lenis?.scrollTo(anchor);
+    // dirty hack
+    window?.lenis.scrollTo(anchor);
+  }
 
   function onClose() {
     router.push("/");
   }
 
+  useEffect(() => {
+    if (!previewRef.current) return;
+    setPreviewDivHeight(previewRef?.current?.offsetHeight);
+  }, []);
+
+  const offsetPreviewHeight = useTransform(
+    scrollSpring,
+    [0, 1],
+    ["0px", `-${previewDivHeight / 2}px`]
+  );
+
+  const LinksAndPreviews = () => {
+    return (
+      <motion.div ref={previewRef} style={{ translateY: offsetPreviewHeight }}>
+        {photos?.map((photo, index) => {
+          return (
+            <div key={`preview-${photo.fields.title}`}>
+              <a
+                className={styles.photoPreviewWrapper}
+                href={`#photo-${index}`}
+                onClick={() => onAnchorClick(`#photo-${index}`)}
+              >
+                <ContentfulImage data={photo} maxDimensionInPx={80} />
+              </a>
+            </div>
+          );
+        })}
+      </motion.div>
+    );
+  };
+
   return (
     <>
       <PageHeadIndividual
         pageTitle={`Gallery — ${title}`}
-        keyName={gallery.fields.slug ?? "gallery"}
+        keyName={slug ?? "gallery"}
         pageDescription={`Gallery with ${photoAmount} pictures on the theme ${title}`}
       />
-      <GalleryHeader onClose={onClose} title={title} />
-      <div>
-        {photos?.map((photo) => {
-          return (
-            <div key={photo.fields.title} className={styles.photoWrapper}>
-              <ContentfulImage data={photo} />
-            </div>
-          );
-        })}
+      <GalleryHeader
+        onClose={onClose}
+        title={title}
+        photoAmount={photos?.length}
+      />
+      <div className={styles.photoContainer}>
+        <div className={styles.leftContainer}>
+          <LinksAndPreviews />
+        </div>
+        <div className={styles.rightContainer}>
+          {photos?.map((photo, index) => {
+            return (
+              <div
+                key={photo.fields.title}
+                id={`photo-${index}`}
+                className={styles.photoWrapper}
+              >
+                <ContentfulImage data={photo} />
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div className={styles.progressWrapper}>
         <motion.div

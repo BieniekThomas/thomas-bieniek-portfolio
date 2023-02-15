@@ -9,20 +9,28 @@ import ContentfulImage from "../Image/Image";
 import { useLayoutManagerContext } from "../_Layout/LayoutManager";
 import { useSmoothScroll } from "../../hooks/useSmoothScroll";
 import { AnimatedText } from "../AnimatedText/AnimatedText";
+import { zeroPad } from "../Section/Section";
 
 interface GalleryHeaderProps {
   onClose: () => void;
   title: string | undefined;
+  photoAmount?: number;
 }
 
 export const GalleryHeader: React.FC<GalleryHeaderProps> = ({
   onClose,
+  photoAmount,
   title,
 }) => {
   return (
     <div className={styles.header}>
       <div className={styles.galleryTitle}>
-        {title && <AnimatedText text={title} />}
+        <div>{title && <AnimatedText text={title} />}</div>
+        <div className={styles.photoCount}>
+          {photoAmount && (
+            <AnimatedText text={`${zeroPad(photoAmount, 2)} Fotos`} />
+          )}
+        </div>
       </div>
       <div className={styles.closeWrapper}>
         <div className={styles.close} onClick={onClose}>
