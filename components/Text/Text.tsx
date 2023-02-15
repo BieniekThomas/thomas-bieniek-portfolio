@@ -6,11 +6,11 @@ const options = {
     [MARKS.BOLD]: (text: string) => <b>{text}</b>,
   },
   renderNode: {
-    [BLOCKS.PARAGRAPH]: (_, children: string) => <p>{children}</p>,
+    [BLOCKS.PARAGRAPH]: (_: any, children: string) => <p>{children}</p>,
   },
 };
 
-const Text = ({ text }) => {
+const Text = ({ text }: any) => {
   return documentToReactComponents(text, options);
 };
 
