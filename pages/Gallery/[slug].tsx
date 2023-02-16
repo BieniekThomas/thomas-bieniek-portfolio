@@ -20,6 +20,7 @@ import {
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
 import { useEffect, useRef, useState } from "react";
+import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 
 interface IGallery {
   gallery: IPhotoGallery;
@@ -38,6 +39,7 @@ const Gallery = ({ gallery }: IGallery) => {
   });
   const scrollPercent = useTransform(scrollSpring, [0, 1], ["0%", "100%"]);
   const lenisContext = useLenisManagerContext();
+  const layoutContext = useLayoutManagerContext();
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -47,10 +49,7 @@ const Gallery = ({ gallery }: IGallery) => {
   });
 
   function onAnchorClick(anchor: string) {
-    console.log(anchor);
     lenisContext.lenis?.scrollTo(anchor);
-    // dirty hack
-    // window?.lenis.scrollTo(anchor);
   }
 
   function onClose() {
@@ -60,12 +59,13 @@ const Gallery = ({ gallery }: IGallery) => {
   useEffect(() => {
     if (!previewRef.current) return;
     setPreviewDivHeight(previewRef?.current?.offsetHeight);
+    console.log("previewDivHeight", previewDivHeight);
   }, []);
 
   const offsetPreviewHeight = useTransform(
     scrollSpring,
     [0, 1],
-    ["0px", `-${previewDivHeight / 2}px`]
+    ["0px", `-${previewDivHeight - layoutContext.height / 2}px`]
   );
 
   const LinksAndPreviews = () => {
