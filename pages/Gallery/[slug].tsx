@@ -44,7 +44,8 @@ const Gallery = ({ gallery }: IGallery) => {
   const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!lenisContext.lenis) console.error("lenis not useable");
+    if (!lenisContext.lenis)
+      console.error("lenis not useable. LenisContext:", lenisContext);
     console.log("lenis found", lenisContext.lenis);
   });
 
@@ -60,7 +61,7 @@ const Gallery = ({ gallery }: IGallery) => {
     if (!previewRef.current) return;
     setPreviewDivHeight(previewRef?.current?.offsetHeight);
     console.log("previewDivHeight", previewDivHeight);
-  }, []);
+  }, [previewDivHeight]);
 
   const offsetPreviewHeight = useTransform(
     scrollSpring,
