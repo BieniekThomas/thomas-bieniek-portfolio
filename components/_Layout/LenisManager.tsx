@@ -1,7 +1,6 @@
 import Lenis from "@studio-freight/lenis";
 import {
   createContext,
-  MutableRefObject,
   ReactNode,
   useContext,
   useLayoutEffect,
@@ -44,3 +43,5 @@ export const LenisManager = ({ children }: IChildren) => {
     </LenisContext.Provider>
   );
 };
+
+export default LenisManager;

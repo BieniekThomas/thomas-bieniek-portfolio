@@ -10,7 +10,6 @@ import {
   motion,
   useSpring,
   useTransform,
-  MotionValue,
 } from "framer-motion";
 import { GalleryHeader } from "../../components/Gallery/GalleryModal";
 import Text from "../../components/Text/Text";
@@ -47,7 +46,7 @@ const Gallery = ({ gallery }: IGallery) => {
     if (!lenisContext.lenis)
       console.error("lenis not useable. LenisContext:", lenisContext);
     console.log("lenis found", lenisContext.lenis);
-  });
+  }, [lenisContext]);
 
   function onAnchorClick(anchor: string) {
     lenisContext.lenis?.scrollTo(anchor);

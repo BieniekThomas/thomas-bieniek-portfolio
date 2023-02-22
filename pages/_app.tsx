@@ -4,24 +4,14 @@ import { AnimatePresence } from "framer-motion";
 import Cursor from "../components/Cursor/Cursor";
 import CursorManager from "../components/Cursor/CursorManager";
 import LayoutManager from "../components/_Layout/LayoutManager";
-import dynamic from "next/dynamic";
-
-const DynamicLenis = dynamic(
-  () =>
-    import("../components/_Layout/LenisManager").then(
-      (mod) => mod.LenisManager
-    ),
-  {
-    ssr: false,
-  }
-);
+import LenisManager from "../components/_Layout/LenisManager";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AnimatePresence onExitComplete={() => window.scrollTo(0, 0)}>
       <CursorManager>
         <LayoutManager>
-          <DynamicLenis>
+          <LenisManager>
             <Cursor />
             <div id="main-container" className="scroll">
               <Component
@@ -30,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 // key={url}
               />
             </div>
-          </DynamicLenis>
+          </LenisManager>
         </LayoutManager>
       </CursorManager>
     </AnimatePresence>
