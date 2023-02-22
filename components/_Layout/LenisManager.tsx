@@ -35,12 +35,14 @@ export function initLenis(lenis: MutableRefObject<Lenis | undefined>) {
     requestAnimationFrame(raf);
   }
   requestAnimationFrame(raf);
+
+  return lenis.current;
 }
 
 export const LenisManager = ({ children }: IChildren) => {
   const lenis = useRef<Lenis>();
   useEffect(() => {
-    initLenis(lenis);
+    lenis.current = initLenis(lenis);
   }, []);
 
   return (
