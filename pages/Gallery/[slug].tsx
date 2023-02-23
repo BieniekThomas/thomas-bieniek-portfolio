@@ -18,8 +18,9 @@ import {
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
+import { useIsomorphicLayoutEffect } from "react-use";
 
 interface IGallery {
   gallery: IPhotoGallery;
@@ -42,24 +43,18 @@ const Gallery = ({ gallery }: IGallery) => {
 
   const previewRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!lenisContext.lenis)
-      console.error("lenis not useable. LenisContext:", lenisContext);
-    console.log("lenis found", lenisContext.lenis);
-  }, [lenisContext]);
-
   function onAnchorClick(anchor: string) {
-    lenisContext.lenis?.scrollTo(anchor);
+    if (!lenisContext.lenis) return;
+    lenisContext.lenis.scrollTo(anchor);
   }
 
   function onClose() {
     router.push("/");
   }
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!previewRef.current) return;
     setPreviewDivHeight(previewRef?.current?.offsetHeight);
-    console.log("previewDivHeight", previewDivHeight);
   }, [previewDivHeight]);
 
   const offsetPreviewHeight = useTransform(
@@ -79,7 +74,7 @@ const Gallery = ({ gallery }: IGallery) => {
                 href={`#photo-${index}`}
                 onClick={() => onAnchorClick(`#photo-${index}`)}
               >
-                <ContentfulImage data={photo} maxDimensionInPx={80} />
+                <ContentfulImage data={photo} maxDimensionInPx={150} />
               </a>
             </div>
           );
@@ -150,7 +145,7 @@ export async function getStaticPaths() {
   const photoGalleries = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
 
   const paths = photoGalleries?.map((gallery) => {
-    return `/Gallery/${gallery.fields.slug}`;
+    return `/gallery/${gallery.fields.slug}`;
   });
 
   return { paths, fallback: false };

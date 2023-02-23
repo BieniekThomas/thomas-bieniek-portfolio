@@ -1,11 +1,7 @@
 import Lenis from "@studio-freight/lenis";
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import { createContext, ReactNode, useContext, useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "react-use";
+useIsomorphicLayoutEffect;
 
 interface ILenis {
   lenis: Lenis | undefined;
@@ -20,8 +16,11 @@ export interface IChildren {
 }
 
 export const LenisManager = ({ children }: IChildren) => {
+  const [ready, setReady] = useState(false);
   const lenis = useRef<Lenis>();
-  useLayoutEffect(() => {
+
+  useIsomorphicLayoutEffect(() => {
+    if (ready && lenis.current) return;
     lenis.current = new Lenis({
       duration: 1.3,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -35,6 +34,14 @@ export const LenisManager = ({ children }: IChildren) => {
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+
+    // for re-rendering?
+    setReady(true);
+
+    return () => {
+      lenis.current?.destroy();
+      setReady(false);
+    };
   }, []);
 
   return (

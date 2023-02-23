@@ -27,7 +27,7 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
         <AnimatePresence>
           {
             galleries[galleryIndex] && (
-              <Link href={`/Gallery/${galleries[galleryIndex].fields.slug}`}>
+              <Link href={`/gallery/${galleries[galleryIndex].fields.slug}`}>
                 {galleries[galleryIndex].fields.slug}
               </Link>
             )
