@@ -10,6 +10,7 @@ import {
   motion,
   useSpring,
   useTransform,
+  useDragControls,
 } from "framer-motion";
 import { GalleryHeader } from "../../components/Gallery/GalleryModal";
 import Text from "../../components/Text/Text";
@@ -21,10 +22,35 @@ import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
 import { useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import { useIsomorphicLayoutEffect } from "react-use";
+import useMousePosition from "../../hooks/useMousePosition";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 interface IGallery {
   gallery: IPhotoGallery;
 }
+
+const previewVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const previewChildVariants = {
+  hidden: {
+    opacity: 0,
+    y: "100%",
+  },
+  visible: {
+    opacity: 1,
+    y: "0%",
+  },
+};
 
 const Gallery = ({ gallery }: IGallery) => {
   const router = useRouter();
@@ -40,6 +66,14 @@ const Gallery = ({ gallery }: IGallery) => {
   const scrollPercent = useTransform(scrollSpring, [0, 1], ["0%", "100%"]);
   const lenisContext = useLenisManagerContext();
   const layoutContext = useLayoutManagerContext();
+
+  const { width = 0, height = 0 } = useWindowDimensions();
+  const { cursorX, cursorY } = useMousePosition();
+  const springConfig = { damping: 25, stiffness: 300 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+  const transformX = useTransform(cursorXSpring, [0, width], [-15, 15]);
+  const transformY = useTransform(cursorYSpring, [0, height], [-15, 15]);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -65,10 +99,19 @@ const Gallery = ({ gallery }: IGallery) => {
 
   const LinksAndPreviews = () => {
     return (
-      <motion.div ref={previewRef} style={{ translateY: offsetPreviewHeight }}>
+      <motion.div
+        variants={previewVariants}
+        initial="hidden"
+        whileInView={"visible"}
+        ref={previewRef}
+        style={{ translateY: offsetPreviewHeight }}
+      >
         {photos?.map((photo, index) => {
           return (
-            <div key={`preview-${photo.fields.title}`}>
+            <motion.div
+              variants={previewChildVariants}
+              key={`preview-${photo.fields.title}`}
+            >
               <a
                 className={styles.photoPreviewWrapper}
                 href={`#photo-${index}`}
@@ -76,7 +119,7 @@ const Gallery = ({ gallery }: IGallery) => {
               >
                 <ContentfulImage data={photo} maxDimensionInPx={150} />
               </a>
-            </div>
+            </motion.div>
           );
         })}
       </motion.div>
@@ -102,13 +145,19 @@ const Gallery = ({ gallery }: IGallery) => {
         <div className={styles.rightContainer}>
           {photos?.map((photo, index) => {
             return (
-              <div
+              <motion.div
                 key={photo.fields.title}
                 id={`photo-${index}`}
                 className={styles.photoWrapper}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                style={{
+                  translateX: transformX,
+                  translateY: transformY,
+                }}
               >
                 <ContentfulImage data={photo} />
-              </div>
+              </motion.div>
             );
           })}
         </div>

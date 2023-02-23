@@ -1,12 +1,12 @@
-import { useMotionValue, motion, useSpring } from "framer-motion";
+import { motion, useSpring } from "framer-motion";
 import { useEffect } from "react";
+import useMousePosition from "../../hooks/useMousePosition";
 import styles from "./Cursor.module.scss";
 import { useCursorContext } from "./CursorManager";
 
 const Cursor = () => {
   const { size, text } = useCursorContext();
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
+  const { cursorX, cursorY } = useMousePosition();
   const springConfig = { damping: 25, stiffness: 300 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);

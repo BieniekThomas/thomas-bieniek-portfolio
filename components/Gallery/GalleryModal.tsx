@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { framer_default_variants } from "../../lib/framer";
 import ContentfulImage from "../Image/Image";
 import { useLayoutManagerContext } from "../_Layout/LayoutManager";
-import { useSmoothScroll } from "../../hooks/useSmoothScroll";
 import { AnimatedText } from "../AnimatedText/AnimatedText";
 import { zeroPad } from "../Section/Section";
 
@@ -52,7 +51,6 @@ interface IGalleryModal {
 }
 
 export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
-  useSmoothScroll();
   const windowContext = useLayoutManagerContext();
   const windowHeight = windowContext.height;
   const windowWidth = windowContext.width;
