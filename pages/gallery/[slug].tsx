@@ -10,7 +10,6 @@ import {
   motion,
   useSpring,
   useTransform,
-  useDragControls,
 } from "framer-motion";
 import { GalleryHeader } from "../../components/Gallery/GalleryModal";
 import Text from "../../components/Text/Text";
@@ -22,9 +21,10 @@ import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
 import { useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import { useIsomorphicLayoutEffect } from "react-use";
-import useMousePosition from "../../hooks/useMousePosition";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { framer_default_variants } from "../../lib/framer";
+// import useMousePosition from "../../hooks/useMousePosition";
+// import useWindowDimensions from "../../hooks/useWindowDimensions";
+// import { framer_default_variants } from "../../lib/framer";
+import Layout from "../../components/_Layout/Layout";
 
 interface IGallery {
   gallery: IPhotoGallery;
@@ -128,70 +128,62 @@ const Gallery = ({ gallery }: IGallery) => {
   };
 
   return (
-    <>
+    <Layout>
       <PageHeadIndividual
         pageTitle={`Gallery — ${title}`}
         keyName={slug ?? "gallery"}
         pageDescription={`Gallery with ${photoAmount} pictures on the theme ${title}`}
       />
-      <motion.main
-        initial="hidden"
-        animate="enter"
-        exit="exit"
-        variants={framer_default_variants}
-        transition={{ type: "linear" }}
-      >
-        <GalleryHeader
-          onClose={onClose}
-          title={title}
-          photoAmount={photos?.length}
-        />
-        <div className={styles.photoContainer}>
-          <div className={styles.leftContainer}>
-            <LinksAndPreviews />
-          </div>
-          <div className={styles.rightContainer}>
-            {photos?.map((photo, index) => {
-              return (
-                <motion.div key={photo.fields.title} id={`photo-${index}`}>
-                  <motion.div
-                    className={styles.photoWrapper}
-                    initial={{ opacity: 0, y: 80 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    // style={{
-                    //   translateX: transformX,
-                    //   translateY: transformY,
-                    // }}
-                  >
-                    <ContentfulImage data={photo} />
-                  </motion.div>
+      <GalleryHeader
+        onClose={onClose}
+        title={title}
+        photoAmount={photos?.length}
+      />
+      <div className={styles.photoContainer}>
+        <div className={styles.leftContainer}>
+          <LinksAndPreviews />
+        </div>
+        <div className={styles.rightContainer}>
+          {photos?.map((photo, index) => {
+            return (
+              <motion.div key={photo.fields.title} id={`photo-${index}`}>
+                <motion.div
+                  className={styles.photoWrapper}
+                  initial={{ opacity: 0, y: 80 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  // style={{
+                  //   translateX: transformX,
+                  //   translateY: transformY,
+                  // }}
+                >
+                  <ContentfulImage data={photo} />
                 </motion.div>
-              );
-            })}
-          </div>
+              </motion.div>
+            );
+          })}
         </div>
-        <div className={styles.progressWrapper}>
-          <motion.div
-            className={styles.progress}
-            style={{ height: scrollPercent }}
-          />
+      </div>
+      <div className={styles.progressWrapper}>
+        <motion.div
+          className={styles.progress}
+          style={{ height: scrollPercent }}
+        />
+      </div>
+      <div className={styles.galleryFooter}>
+        <div className={styles.galleryFooterWrapper}>
+          <h1>
+            <AnimatedText text={title} />
+          </h1>
+          {description && (
+            <div className={styles.description}>
+              <AnimatedTextBlock>
+                {Text({ text: description })}
+              </AnimatedTextBlock>
+            </div>
+          )}
         </div>
-        <div className={styles.galleryFooter}>
-          <div className={styles.galleryFooterWrapper}>
-            <h1>
-              <AnimatedText text={title} />
-            </h1>
-            {description && (
-              <div className={styles.description}>
-                <AnimatedTextBlock>
-                  {Text({ text: description })}
-                </AnimatedTextBlock>
-              </div>
-            )}
-          </div>
-        </div>
-      </motion.main>
-    </>
+      </div>
+    </Layout>
   );
 };
 
