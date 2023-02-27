@@ -19,6 +19,7 @@ const Layout: FC<ILayout> = ({ children }) => {
         exit="exit"
         variants={framer_default_variants}
         transition={{ type: "linear" }}
+        className={styles.outer}
       >
         <div className={styles.spacer}></div>
         <div>{children}</div>
