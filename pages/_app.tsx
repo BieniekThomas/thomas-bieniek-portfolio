@@ -5,25 +5,31 @@ import Cursor from "../components/Cursor/Cursor";
 import CursorManager from "../components/Cursor/CursorManager";
 import LayoutManager from "../components/_Layout/LayoutManager";
 import LenisManager from "../components/_Layout/LenisManager";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
-    <AnimatePresence onExitComplete={() => window.scrollTo(0, 0)}>
-      <CursorManager>
-        <LayoutManager>
-          <LenisManager>
-            <Cursor />
-            <div id="main-container" className="scroll">
+    <CursorManager>
+      <LayoutManager>
+        <LenisManager>
+          <Cursor />
+          <div id="main-container" className="scroll">
+            <AnimatePresence
+              exitBeforeEnter
+              onExitComplete={() => window.scrollTo(0, 0)}
+            >
               <Component
                 {...pageProps}
                 // canonical={url}
                 // key={url}
+                key={router.asPath}
               />
-            </div>
-          </LenisManager>
-        </LayoutManager>
-      </CursorManager>
-    </AnimatePresence>
+            </AnimatePresence>
+          </div>
+        </LenisManager>
+      </LayoutManager>
+    </CursorManager>
   );
 }
 

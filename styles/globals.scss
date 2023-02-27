@@ -52,7 +52,7 @@ body {
 
 p {
   line-height: 1.7;
-  font-size: 1.8vw;
+  font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
 }
 
 h1 {
