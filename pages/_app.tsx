@@ -6,9 +6,11 @@ import CursorManager from "../components/Cursor/CursorManager";
 import LayoutManager from "../components/_Layout/LayoutManager";
 import LenisManager from "../components/_Layout/LenisManager";
 import { useRouter } from "next/router";
+import { useNextCssRemovalPrevention } from "../hooks/useNextjsCssRemovalPrevention";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  useNextCssRemovalPrevention();
   return (
     <CursorManager>
       <LayoutManager>
