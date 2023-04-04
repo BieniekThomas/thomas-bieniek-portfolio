@@ -18,7 +18,7 @@ import {
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
-import { useCallback, useRef, useState } from "react";
+import { Ref, useCallback, useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import { useIsomorphicLayoutEffect } from "react-use";
 // import useMousePosition from "../../hooks/useMousePosition";
@@ -76,7 +76,7 @@ const Gallery = ({ gallery }: IGallery) => {
   // const transformX = useTransform(cursorXSpring, [0, width], [-15, 15]);
   // const transformY = useTransform(cursorYSpring, [0, height], [-15, 15]);
 
-  const previewRef = useCallback((node: HTMLElement) => {
+  const previewRef = useCallback((node: HTMLElement | null) => {
     if (node === null) return;
     setPreviewDivHeight(node.offsetHeight);
   }, []);
