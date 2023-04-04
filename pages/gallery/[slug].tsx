@@ -90,7 +90,7 @@ const Gallery = ({ gallery }: IGallery) => {
   useIsomorphicLayoutEffect(() => {
     if (!previewRef.current) return;
     setPreviewDivHeight(previewRef?.current?.offsetHeight);
-  }, [previewDivHeight]);
+  }, [previewDivHeight, previewRef.current]);
 
   const offsetPreviewHeight = useTransform(
     scrollSpring,
