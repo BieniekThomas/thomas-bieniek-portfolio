@@ -18,7 +18,7 @@ import {
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import { useIsomorphicLayoutEffect } from "react-use";
 // import useMousePosition from "../../hooks/useMousePosition";
@@ -76,7 +76,10 @@ const Gallery = ({ gallery }: IGallery) => {
   // const transformX = useTransform(cursorXSpring, [0, width], [-15, 15]);
   // const transformY = useTransform(cursorYSpring, [0, height], [-15, 15]);
 
-  const previewRef = useRef<HTMLDivElement>(null);
+  const previewRef = useCallback((node: HTMLElement) => {
+    if (node === null) return;
+    setPreviewDivHeight(node.offsetHeight);
+  }, []);
 
   function onAnchorClick(anchor: string) {
     if (!lenisContext.lenis) return;
@@ -86,11 +89,6 @@ const Gallery = ({ gallery }: IGallery) => {
   function onClose() {
     router.push("/");
   }
-
-  useIsomorphicLayoutEffect(() => {
-    if (!previewRef.current) return;
-    setPreviewDivHeight(previewRef?.current?.offsetHeight);
-  }, [previewDivHeight, previewRef.current]);
 
   const offsetPreviewHeight = useTransform(
     scrollSpring,
