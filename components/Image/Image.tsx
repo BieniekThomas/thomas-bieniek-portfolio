@@ -42,7 +42,7 @@ const ContentfulImage: FC<IImageComponent> = ({
 
   return (
     <div className={styles.imageWrapper}>
-      <div style={{ aspectRatio: ratio }}>
+      <div className={styles.aspectWrapper} style={{ aspectRatio: ratio }}>
         <Image
           src={`https:${src}?w=${resultWidth}&h=${resultHeight}`}
           width={resultWidth}
