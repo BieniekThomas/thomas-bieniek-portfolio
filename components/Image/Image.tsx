@@ -42,17 +42,19 @@ const ContentfulImage: FC<IImageComponent> = ({
 
   return (
     <div className={styles.imageWrapper}>
-      <Image
-        src={`https:${src}?w=${resultWidth}&h=${resultHeight}`}
-        width={resultWidth}
-        height={resultHeight}
-        quality={quality}
-        alt={title}
-        priority={priority}
-        objectFit="contain"
-        placeholder="blur"
-        blurDataURL={`https:${src}?fm=jpg&q=0&w=8&h=8`}
-      />
+      <div style={{ aspectRatio: ratio }}>
+        <Image
+          src={`https:${src}?w=${resultWidth}&h=${resultHeight}`}
+          width={resultWidth}
+          height={resultHeight}
+          quality={quality}
+          alt={title}
+          priority={priority}
+          objectFit="contain"
+          placeholder="blur"
+          blurDataURL={`https:${src}?fm=jpg&q=0&w=8&h=8`}
+        />
+      </div>
     </div>
   );
 };

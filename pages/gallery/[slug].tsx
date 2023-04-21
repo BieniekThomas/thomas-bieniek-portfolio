@@ -5,12 +5,7 @@ import ContentfulImage from "../../components/Image/Image";
 import { PageHeadIndividual } from "../../components/PageHead/PageHead";
 import { fetchEntries } from "../../lib/api";
 import styles from "../../styles/Gallery.module.scss";
-import {
-  useViewportScroll,
-  motion,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, useSpring, useTransform, useScroll } from "framer-motion";
 import { GalleryHeader } from "../../components/Gallery/GalleryModal";
 import Text from "../../components/Text/Text";
 import {
@@ -18,12 +13,8 @@ import {
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
-import { Ref, useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
-import { useIsomorphicLayoutEffect } from "react-use";
-// import useMousePosition from "../../hooks/useMousePosition";
-// import useWindowDimensions from "../../hooks/useWindowDimensions";
-// import { framer_default_variants } from "../../lib/framer";
 import Layout from "../../components/_Layout/Layout";
 
 interface IGallery {
@@ -57,7 +48,7 @@ const Gallery = ({ gallery }: IGallery) => {
   const router = useRouter();
   const { title, description, photos, slug } = gallery.fields;
   const photoAmount = photos?.length;
-  const { scrollYProgress } = useViewportScroll();
+  const { scrollYProgress } = useScroll();
   const [previewDivHeight, setPreviewDivHeight] = useState(0);
   const scrollSpring = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -78,6 +69,7 @@ const Gallery = ({ gallery }: IGallery) => {
 
   const previewRef = useCallback((node: HTMLElement | null) => {
     if (node === null) return;
+    console.log(node.offsetHeight, node);
     setPreviewDivHeight(node.offsetHeight);
   }, []);
 
@@ -96,35 +88,6 @@ const Gallery = ({ gallery }: IGallery) => {
     ["0px", `-${previewDivHeight - layoutContext.height / 2}px`]
   );
 
-  const LinksAndPreviews = () => {
-    return (
-      <motion.div
-        variants={previewVariants}
-        initial="hidden"
-        whileInView={"visible"}
-        ref={previewRef}
-        style={{ translateY: offsetPreviewHeight }}
-      >
-        {photos?.map((photo, index) => {
-          return (
-            <motion.div
-              variants={previewChildVariants}
-              key={`preview-${photo.fields.title}`}
-            >
-              <a
-                className={styles.photoPreviewWrapper}
-                href={`#photo-${index}`}
-                onClick={() => onAnchorClick(`#photo-${index}`)}
-              >
-                <ContentfulImage data={photo} maxDimensionInPx={150} />
-              </a>
-            </motion.div>
-          );
-        })}
-      </motion.div>
-    );
-  };
-
   return (
     <Layout>
       <PageHeadIndividual
@@ -139,7 +102,30 @@ const Gallery = ({ gallery }: IGallery) => {
       />
       <div className={styles.photoContainer}>
         <div className={styles.leftContainer}>
-          <LinksAndPreviews />
+          <motion.div
+            variants={previewVariants}
+            initial="hidden"
+            animate="visible"
+            ref={previewRef}
+            style={{ translateY: offsetPreviewHeight }}
+          >
+            {photos?.map((photo, index) => {
+              return (
+                <motion.div
+                  variants={previewChildVariants}
+                  key={`preview-${photo.fields.title}`}
+                >
+                  <a
+                    className={styles.photoPreviewWrapper}
+                    href={`#photo-${index}`}
+                    onClick={() => onAnchorClick(`#photo-${index}`)}
+                  >
+                    <ContentfulImage data={photo} maxDimensionInPx={150} />
+                  </a>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
         <div className={styles.rightContainer}>
           {photos?.map((photo, index) => {
