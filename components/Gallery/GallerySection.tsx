@@ -5,13 +5,14 @@ import { GalleryNavigation } from "./GalleryNavigation";
 import Gallery from "./Gallery";
 import { motion } from "framer-motion";
 import styles from "./GallerySection.module.scss";
-import Link from "next/link";
 
-import { IPhotoGallery } from "../../@types/generated/contentful";
+import { IPhotoGalleryFields } from "../../@types/generated/contentful";
 // import { framer_default_variants } from "../../lib/framer";
 
 export interface IGallerySectionProps {
-  galleries: IPhotoGallery[];
+  galleries: {
+    fields: IPhotoGalleryFields
+  }[];
 }
 
 export function GallerySection({ galleries }: IGallerySectionProps) {

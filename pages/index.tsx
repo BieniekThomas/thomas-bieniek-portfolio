@@ -7,13 +7,15 @@ import { GallerySection } from "../components/Gallery/GallerySection";
 
 // typeImports
 import { FC } from "react";
-import { IPhotoGallery } from "../@types/generated/contentful";
+import { IPhotoGalleryFields } from "../@types/generated/contentful";
 
 // styleImports
 import styles from "../styles/Home.module.scss";
 
 interface IHome {
-  photoGallery: IPhotoGallery[];
+  photoGallery: {
+    fields: IPhotoGalleryFields
+  }[];
 }
 
 const Home: FC<IHome> = ({ photoGallery }) => {

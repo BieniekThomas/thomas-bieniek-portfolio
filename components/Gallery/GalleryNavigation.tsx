@@ -1,9 +1,9 @@
-import { IPhotoGallery } from "../../@types/generated/contentful";
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
 import styles from "./GalleryNavigation.module.scss";
+import { IGallerySectionProps } from "./GallerySection";
 
 export interface IGalleryNavigationProps {
-  galleries: IPhotoGallery[];
+  galleries: IGallerySectionProps["galleries"];
   index: number;
   setIndex: (i: number) => void;
 }
