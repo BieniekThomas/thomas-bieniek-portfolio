@@ -1,4 +1,4 @@
-@import '../../styles/variables.module.scss';
+@use '../../styles/variables.module.scss';
 
 .link {
   border-bottom: 2px solid transparent;
@@ -6,16 +6,16 @@
   transition: all .2s ease-in-out;
 
   &:hover {
-    border-color: $text-color;
+    border-color: variables.$text-color;
   }
 
   &.active {
-    border-color: $text-color;
+    border-color: variables.$text-color;
   }
 
   &.blendMode {
     &:hover {
-      border-color: $background-color;
+      border-color: variables.$background-color;
     }
   }
 }

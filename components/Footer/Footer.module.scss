@@ -1,7 +1,7 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 .outerWrapper {
-  @include inner-space;
+  @include mixins.inner-space;
 }
 
 .innerWrapper {

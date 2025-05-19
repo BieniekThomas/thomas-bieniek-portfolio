@@ -1,4 +1,4 @@
-@import './styles/mixins.scss';
+@use './styles/mixins.scss';
 
 .photoWrapper{
   height: 100vh;
@@ -38,7 +38,7 @@
 }
 
 .galleryFooterWrapper{
-  @include inner-space;
+  @include mixins.inner-space;
   padding-bottom: 50px;
   padding-top: 50px;
 }

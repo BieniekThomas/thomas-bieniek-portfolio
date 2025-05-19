@@ -1,7 +1,7 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 .outerWrapper {
-  @include inner-space;
+  @include mixins.inner-space;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 6fr;
@@ -17,6 +17,11 @@
 
 .innerWrapper {
   text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
   > * {
     padding: 8px 0;
     margin: 8px 24px 8px;
@@ -24,9 +29,4 @@
       margin-left: 0;
     }
   }
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
 }

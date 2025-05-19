@@ -1,9 +1,9 @@
-@import '../../styles/variables.module.scss';
+@use '../../styles/variables.module.scss';
 
 @mixin setSize($size) {
   width: $size;
   height: $size;
-  transform: translate(-($size/2), -($size/2));
+  transform: translate(-1*calc($size / 2), -1*calc($size / 2));
 }
 
 .fixed {
@@ -18,7 +18,7 @@
   content: '';
   inset: 0;
   position: absolute;
-  @include setSize($innerCursorSize);
+  @include setSize(variables.$innerCursorSize);
   transition: all .25s cubic-bezier(0.62, 0.05, 0.01, 0.99);
   background-color: transparent;
   border: 1px solid transparent;
@@ -29,9 +29,9 @@
   content: '';
   inset: 0;
   position: absolute;
-  @include setSize($outerCursorSize);
+  @include setSize(variables.$outerCursorSize);
   transition: all .25s cubic-bezier(0.62, 0.05, 0.01, 0.99);
-  border: 1px solid $text-color;
+  border: 1px solid variables.$text-color;
   border-radius: 100%;
 }
 
@@ -52,17 +52,17 @@
 
 .small {
   &.smallBall:after {
-    @include setSize($innerCursorSize);
+    @include setSize(variables.$innerCursorSize);
   }
 
   &.bigBall:after {
-    @include setSize($outerCursorSize);
+    @include setSize(variables.$outerCursorSize);
   }
 }
 
 .big {
-  $outerCursorSizeBig: $outerCursorSize * 1.3;
-  $innerCursorSizeBig: $innerCursorSize * 3;
+  $outerCursorSizeBig: variables.$outerCursorSize * 1.3;
+  $innerCursorSizeBig: variables.$innerCursorSize * 3;
 
   &.fixed {
     mix-blend-mode: difference;
@@ -76,14 +76,14 @@
 
   &.bigBall:after {
     @include setSize($outerCursorSizeBig);
-    border-color: $background-color;
+    border-color: variables.$background-color;
     // background-color: $background-color;
   }
 }
 
 .withText {
-  $outerCursorSizeBig: $outerCursorSize * 2;
-  $innerCursorSizeBig: $innerCursorSize * 3;
+  $outerCursorSizeBig: variables.$outerCursorSize * 2;
+  $innerCursorSizeBig: variables.$innerCursorSize * 3;
 
   &.fixed {
     mix-blend-mode: normal;
@@ -99,19 +99,19 @@
     @include setSize($outerCursorSizeBig);
     width: 0;
     height: 0;
-    border: ($outerCursorSizeBig/2) solid $secondary-color;
+    border: calc($outerCursorSizeBig/2) solid variables.$secondary-color;
     opacity: 0.9;
   }
 
   .text {
     @include setSize($outerCursorSizeBig);
-    color: $background-color;
+    color: variables.$background-color;
   }
 }
 
 .image {
-  $outerCursorSizeBig: $outerCursorSize * 3;
-  $innerCursorSizeBig: $innerCursorSize * 3;
+  $outerCursorSizeBig: variables.$outerCursorSize * 3;
+  $innerCursorSizeBig: variables.$innerCursorSize * 3;
 
   &.smallBall:after {
     border-color: transparent;
@@ -124,7 +124,7 @@
 }
 
 .drag {
-  $outerCursorSizeBig: $outerCursorSize * 1.5;
+  $outerCursorSizeBig: variables.$outerCursorSize * 1.5;
   &.smallBall:after {
     border-color: transparent;
     background-color: transparent;

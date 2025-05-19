@@ -51,6 +51,7 @@ interface IGalleryModal {
 }
 
 export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
+  console.log("🚀 ~ GalleryModal ~ photos:", photos)
   const windowContext = useLayoutManagerContext();
   const windowHeight = windowContext.height;
   const windowWidth = windowContext.width;
@@ -61,7 +62,7 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
   const extendPhotos = useCallback(
     (photos: Asset[]) => {
       const newPhotos = photos.map((image, _) => {
-        const sizes = image.fields.file.details.image;
+        const sizes = image.fields.file?.details?.image;
         const width = sizes?.width;
         const height = sizes?.height;
         let ratio = 1;
@@ -93,11 +94,12 @@ export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
     }
 
     return galleryImages.map((image, index) => {
-      const imageName = image.fields.file.fileName;
+      const imageName = image.fields.file?.fileName;
+      if (!imageName) return;
       return (
         <div
           id={index.toString()}
-          key={imageName}
+          key={imageName as string}
           className={`${styles.image}`}
           style={{
             width: image.imageWidth,

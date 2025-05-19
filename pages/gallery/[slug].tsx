@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { IPhotoGallery } from "../../@types/generated/contentful";
+import { IPhotoGallery, IPhotoGalleryFields } from "../../@types/generated/contentful";
 import ContentfulImage from "../../components/Image/Image";
 import { PageHeadIndividual } from "../../components/PageHead/PageHead";
 import { fetchEntries } from "../../lib/api";
@@ -18,7 +18,9 @@ import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager"
 import Layout from "../../components/_Layout/Layout";
 
 interface IGallery {
-  gallery: IPhotoGallery;
+  gallery: {
+    fields: IPhotoGalleryFields
+  };
 }
 
 const previewVariants = {
@@ -130,7 +132,7 @@ const Gallery = ({ gallery }: IGallery) => {
         <div className={styles.rightContainer}>
           {photos?.map((photo, index) => {
             return (
-              <motion.div key={photo.fields.title} id={`photo-${index}`}>
+              <motion.div key={photo.fields.title as string} id={`photo-${index}`}>
                 <motion.div
                   className={styles.photoWrapper}
                   initial={{ opacity: 0, y: 80 }}

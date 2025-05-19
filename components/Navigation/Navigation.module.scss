@@ -1,5 +1,5 @@
-@import '../../styles/variables.module.scss';
-@import '../../styles/mixins';
+@use '../../styles/variables.module.scss';
+@use '../../styles/mixins';
 
 .outerWrapper {
   top: 0;
@@ -8,11 +8,11 @@
   width: 100%;
   z-index: 50;
   mix-blend-mode: difference;
-  color: $background-color;
+  color: variables.$background-color;
 }
 
 .innerWrapper {
-  @include inner-space;
+  @include mixins.inner-space;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,7 +35,7 @@
     display: none;
   }
 
-  border-left: 1px solid $background-color;
+  border-left: 1px solid variables.$background-color;
   height: 30px;
   margin: 0 16px 0 16px;
 }

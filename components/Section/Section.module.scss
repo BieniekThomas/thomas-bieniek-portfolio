@@ -1,6 +1,6 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 .outerWrapper {
-  @include inner-space;
+  @include mixins.inner-space;
   width: 100%;
   margin-bottom: 80px;
 }

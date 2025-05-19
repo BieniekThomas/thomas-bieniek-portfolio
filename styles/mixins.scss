@@ -1,11 +1,11 @@
-@import './variables.module.scss';
+@use './variables.module.scss';
 
 @mixin inner-space {
   padding: 20px 80px;
 }
 
 @mixin headline($fontSize: $fontSize_highlight) {
-  font-family: $displayPrimary;
+  font-family: variables.$displayPrimary;
   font-size: $fontSize;
   letter-spacing: 3px;
   line-height: $fontSize;

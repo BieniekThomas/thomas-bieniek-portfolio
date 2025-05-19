@@ -12,30 +12,30 @@
     "contentful-export": "contentful space export --config contentful-config.json"
   },
   "dependencies": {
-    "@contentful/rich-text-react-renderer": "^15.12.0",
-    "@studio-freight/lenis": "^0.2.28",
+    "@contentful/rich-text-react-renderer": "^16.0.1",
+    "@studio-freight/lenis": "^1.0.42",
     "body-scroll-lock": "^4.0.0-beta.0",
     "contentful": "^11.5.22",
     "framer-motion": "^12.12.1",
-    "next": "^12.1.4",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-use": "^17.3.2"
+    "next": "^15.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-use": "^17.6.0"
   },
   "devDependencies": {
     "@types/body-scroll-lock": "^3.1.0",
-    "@types/node": "17.0.23",
-    "@types/react": "18.0.0",
-    "@types/react-dom": "18.0.0",
-    "contentful-cli": "^1.12.9",
-    "contentful-import": "^8.3.0",
-    "contentful-typescript-codegen": "^3.2.3",
+    "@types/node": "^22.15.19",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "contentful-cli": "^3.8.8",
+    "contentful-import": "^9.4.101",
+    "contentful-typescript-codegen": "^3.4.0",
     "env-cmd": "^10.1.0",
-    "eslint": "8.12.0",
-    "eslint-config-next": "^12.1.4",
-    "prettier": "2.6.2",
-    "sass": "^1.50.1",
-    "typescript": "^4.6.3"
+    "eslint": "^9.27.0",
+    "eslint-config-next": "^15.3.2",
+    "prettier": "3.5.3",
+    "sass": "^1.89.0",
+    "typescript": "^5.8.3"
   },
   "browserslist": [
     ">0.2%",

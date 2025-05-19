@@ -1,4 +1,4 @@
-@import '../../styles/mixins.scss';
+@use '../../styles/mixins.scss';
 
 .modalWrapper {
   position: fixed;
@@ -15,7 +15,7 @@
   justify-content: center;
 
   .headline {
-    @include headline(150px);
+    @include mixins.headline(150px);
     color: var(--background-color);
     // font-style: italic;
     margin: 0;

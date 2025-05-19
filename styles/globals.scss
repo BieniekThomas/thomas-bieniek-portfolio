@@ -1,4 +1,4 @@
-@import './variables.module.scss';
+@use './variables.module.scss';
 
 @font-face {
   font-family: "PPRadioGrotesk";
@@ -42,7 +42,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: $text;
+  font-family: variables.$text;
   background-color: var(--background-color);
   color: var(--text-color);
   min-height: 100%;
@@ -60,7 +60,7 @@ h1 {
 }
 
 h1,h2,h3,h4,h5,h6 {
-  font-family: $displayPrimary;
+  font-family: variables.$displayPrimary;
 }
 
 a {

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import { FC } from "react";
 import { Asset } from "contentful";
@@ -21,7 +21,11 @@ const ContentfulImage: FC<IImageComponent> = ({
   const size = useLayoutManagerContext();
 
   // get them variables
-  const src = photo.url;
+  const src = photo?.url;
+  if (!src) {
+    console.error('photo not found')
+    return
+  }
   const width = photo?.details?.image?.width ?? size.width;
   const height = photo?.details?.image?.height ?? size.height;
   const quality = 80;
@@ -48,7 +52,7 @@ const ContentfulImage: FC<IImageComponent> = ({
           width={resultWidth}
           height={resultHeight}
           quality={quality}
-          alt={title}
+          alt={title as string}
           priority={priority}
           objectFit="contain"
           placeholder="blur"
