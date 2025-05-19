@@ -101,6 +101,8 @@ export interface IPhotoGallery extends Entry<IPhotoGalleryFields> {
 
 export type CONTENT_TYPE = "author" | "home" | "photoGallery";
 
+export type IEntry = IAuthor | IHome | IPhotoGallery;
+
 export type LOCALE_CODE = "en-US";
 
 export type CONTENTFUL_DEFAULT_LOCALE_CODE = "en-US";

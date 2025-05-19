@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { FC, useState } from "react";
-import { IPhotoGallery } from "../../@types/generated/contentful";
+import { IPhotoGalleryFields } from "../../@types/generated/contentful";
 import ContentfulImage from "../Image/Image";
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
 import styles from "./Gallery.module.scss";
@@ -10,7 +10,9 @@ import Text from "../Text/Text";
 import { GalleryModal } from "./GalleryModal";
 
 interface IGallery {
-  data: IPhotoGallery;
+  data: {
+    fields: IPhotoGalleryFields
+  };
 }
 
 export const Gallery: FC<IGallery> = ({ data }) => {
@@ -28,10 +30,10 @@ export const Gallery: FC<IGallery> = ({ data }) => {
       >
         <div className={styles.left}>
           <NoScrollLink
-            onClick={() => setOpen((open) => !open)}
             noStyling
             cursor="withText"
             cursorText="open gallery"
+            url={`/gallery/${slug}`}
           >
             <h3 className={styles.headline}>{title}</h3>
           </NoScrollLink>
@@ -49,17 +51,17 @@ export const Gallery: FC<IGallery> = ({ data }) => {
         <div className={styles.right}>
           {coverImage && (
             <NoScrollLink
-              onClick={() => setOpen((open) => !open)}
               noStyling
               cursor="withText"
               cursorText="open gallery"
+              url={`/gallery/${slug}`}
             >
               <ContentfulImage data={coverImage} />
             </NoScrollLink>
           )}
         </div>
         {photos && (
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence>
             {open && (
               <GalleryModal
                 photos={photos}

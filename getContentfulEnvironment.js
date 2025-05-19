@@ -6,6 +6,6 @@ module.exports = function () {
   })
 
   return contentfulClient
-    .getSpace(process.env.CONTENTFUL_SPACE_ID)
+    .getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID)
     .then(space => space.getEnvironment(process.env.CONTENTFUL_ENVIRONMENT_ID))
 }

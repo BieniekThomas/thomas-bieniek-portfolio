@@ -17,6 +17,7 @@ interface IHome {
 }
 
 const Home: FC<IHome> = ({ photoGallery }) => {
+  console.log("🚀 ~ photoGallery:", photoGallery)
   return (
     <Layout>
       <PageHead site="home" />
