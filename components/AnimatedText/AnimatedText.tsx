@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
-import { ReactNode, useEffect, useRef, useState } from "react";
-import { useIntersection } from "react-use";
+import { motion, useInView } from "motion/react"
+import { ReactNode, useRef, useState } from "react";
 import styles from "./AnimatedText.module.scss";
 
 const variant = {
@@ -39,12 +38,10 @@ interface IAnimatedText {
 }
 export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
   const words = getSplitWordsArray(text.toString());
-  const inViewRef = useRef(null);
-  const [animationShown, setAnimationShown] = useState(false);
-  const isInView = useIntersection(inViewRef, {
-    root: null,
-    rootMargin: "0px",
-    threshold: 1,
+  const inViewRef = useRef<HTMLElement>(null);
+  const isInView = useInView(inViewRef, {
+    margin: "0px",
+    once: true
   });
 
   const containerVariant = {
@@ -56,11 +53,6 @@ export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
     },
   };
 
-  useEffect(() => {
-    if (isInView?.intersectionRatio === 1 && !animationShown)
-      setAnimationShown(true);
-  }, [isInView, animationShown]);
-
   return (
     <span ref={inViewRef}>
       {words.map((word, index) => {
@@ -70,7 +62,7 @@ export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
             <motion.span
               variants={noStagger ? {} : containerVariant}
               initial="hidden"
-              animate={animationShown ? "visible" : "hidden"}
+              animate={isInView ? "visible" : "hidden"}
             >
               {word.map((letter, letterIndex) => {
                 return (
@@ -122,24 +114,16 @@ interface IAnimatedTextBlock {
 }
 export const AnimatedTextBlock = ({ children }: IAnimatedTextBlock) => {
   const inViewRef = useRef(null);
-  const [animationShown, setAnimationShown] = useState(false);
-  const isInView = useIntersection(inViewRef, {
-    root: null,
-    rootMargin: "0px",
-    threshold: 1,
+  const isInView = useInView(inViewRef, {
+    margin: "0px",
   });
-
-  useEffect(() => {
-    if (isInView?.intersectionRatio === 1 && !animationShown)
-      setAnimationShown(true);
-  }, [isInView, animationShown]);
 
   return (
     <div ref={inViewRef}>
       <motion.div
         variants={TextBlockVariant}
         initial="hidden"
-        animate={animationShown ? "visible" : "hidden"}
+        animate={isInView ? "visible" : "hidden"}
       >
         {children}
       </motion.div>
