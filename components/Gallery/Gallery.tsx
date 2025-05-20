@@ -1,13 +1,10 @@
-import { AnimatePresence, motion } from "framer-motion";
-import React, { FC, useState } from "react";
+import { motion } from "framer-motion";
+import React, { FC } from "react";
 import { IPhotoGalleryFields } from "../../@types/generated/contentful";
 import ContentfulImage from "../Image/Image";
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
 import styles from "./Gallery.module.scss";
-// import { enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
-// import { useCursorContext } from "../Cursor/CursorManager";
 import Text from "../Text/Text";
-import { GalleryModal } from "./GalleryModal";
 
 interface IGallery {
   data: {
@@ -16,8 +13,7 @@ interface IGallery {
 }
 
 export const Gallery: FC<IGallery> = ({ data }) => {
-  const [open, setOpen] = useState(false);
-  const { title, description, photos, coverImage, slug } = data.fields;
+  const { title, description, coverImage, slug } = data.fields;
 
   return (
     <div className={styles.outerWrapper} id={slug}>
@@ -60,17 +56,6 @@ export const Gallery: FC<IGallery> = ({ data }) => {
             </NoScrollLink>
           )}
         </div>
-        {photos && (
-          <AnimatePresence>
-            {open && (
-              <GalleryModal
-                photos={photos}
-                title={title}
-                onClose={() => setOpen(false)}
-              />
-            )}
-          </AnimatePresence>
-        )}
       </motion.div>
     </div>
   );

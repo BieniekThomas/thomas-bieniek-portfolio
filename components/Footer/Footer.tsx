@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div className={styles.outerWrapper}>
       <div className={styles.innerWrapper}>
-        <div className={styles.copyright}>©2022, Thomas Bieniek</div>
+        <div className={styles.copyright}>©2025, Thomas Bieniek</div>
         <div className={styles.links}>
           {PageData.navigation.map(
             (nav) =>

@@ -17,16 +17,16 @@ export interface IChildren {
 
 export const LenisManager = ({ children }: IChildren) => {
   const [ready, setReady] = useState(false);
-  const lenis = useRef<Lenis>();
+  const lenis = useRef<Lenis>(null);
 
   useIsomorphicLayoutEffect(() => {
     if (ready && lenis.current) return;
     lenis.current = new Lenis({
       duration: 1.3,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: "vertical",
-      smooth: true,
-      mouseMultiplier: 0.6,
+      orientation: "vertical",
+      smoothWheel: true,
+      touchMultiplier: 0.6,
     });
 
     function raf(time: any) {
@@ -43,6 +43,10 @@ export const LenisManager = ({ children }: IChildren) => {
       setReady(false);
     };
   }, []);
+
+  if (!lenis.current) {
+    return <>{children}</>
+  }
 
   return (
     <LenisContext.Provider value={{ lenis: lenis.current }}>

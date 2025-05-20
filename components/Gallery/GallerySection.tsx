@@ -5,10 +5,8 @@ import { GalleryNavigation } from "./GalleryNavigation";
 import Gallery from "./Gallery";
 import { motion } from "framer-motion";
 import styles from "./GallerySection.module.scss";
-import Link from "next/link";
 
-import { IPhotoGallery, IPhotoGalleryFields } from "../../@types/generated/contentful";
-// import { framer_default_variants } from "../../lib/framer";
+import { IPhotoGalleryFields } from "../../@types/generated/contentful";
 
 export interface IGallerySectionProps {
   galleries: {
@@ -17,7 +15,6 @@ export interface IGallerySectionProps {
 }
 
 export function GallerySection({ galleries }: IGallerySectionProps) {
-  console.log("🚀 ~ GallerySection ~ galleries:", galleries)
   const [galleryIndex, setGalleryIndex] = useState(0);
   return (
     <>
@@ -29,11 +26,6 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
       <div className={styles.outerWrapper}>
         <AnimatePresence>
           {
-            // galleries[galleryIndex] && (
-            //   <Link href={`/gallery/${galleries[galleryIndex].fields.slug}`}>
-            //     {galleries[galleryIndex].fields.slug}
-            //   </Link>
-            // )
             <motion.div
               key={galleries[galleryIndex].fields.slug}
               initial={{ x: 300, opacity: 0, position: "absolute" }}

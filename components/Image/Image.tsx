@@ -1,13 +1,13 @@
 import Image from "next/legacy/image";
 
 import { FC } from "react";
-import { Asset } from "contentful";
+import * as contentful from 'contentful'
 
 import styles from "./Image.module.scss";
 import { useLayoutManagerContext } from "../_Layout/LayoutManager";
 
 interface IImageComponent {
-  data: Asset;
+  data: contentful.Asset
   priority?: boolean;
   maxDimensionInPx?: number;
 }
@@ -17,7 +17,8 @@ const ContentfulImage: FC<IImageComponent> = ({
   priority = false,
   maxDimensionInPx,
 }) => {
-  const photo = data.fields.file;
+  const photo = data.fields.file as contentful.AssetFile;
+  console.log("🚀 ~ photo:", photo)
   const size = useLayoutManagerContext();
 
   // get them variables
