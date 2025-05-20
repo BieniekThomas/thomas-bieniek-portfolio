@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import React, { FC } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React, { FC, useRef } from "react";
 import { IPhotoGalleryFields } from "../../@types/generated/contentful";
 import ContentfulImage from "../Image/Image";
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
@@ -14,6 +14,42 @@ interface IGallery {
 
 export const Gallery: FC<IGallery> = ({ data }) => {
   const { title, description, coverImage, slug } = data.fields;
+  const imageRef = useRef<HTMLElement>(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  const mouseYSpring = useSpring(y, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["-13.5deg", "13.5deg"])
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-13.5deg", "13.5deg"])
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!imageRef.current) return;
+    const { width, height, left, top } = imageRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - left;
+    const mouseY = e.clientY - top;
+
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+
+    x.set(xPct);
+    y.set(yPct);
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0)
+  }
 
   return (
     <div className={styles.outerWrapper} id={slug}>
@@ -44,7 +80,13 @@ export const Gallery: FC<IGallery> = ({ data }) => {
             </>
           </div>
         </div>
-        <div className={styles.right}>
+        <motion.div className={styles.right}
+          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          //@ts-ignore
+          ref={imageRef}
+          onMouseMove={e => handleMouseMove(e)}
+          onMouseLeave={handleMouseLeave}
+        >
           {coverImage && (
             <NoScrollLink
               noStyling
@@ -55,7 +97,7 @@ export const Gallery: FC<IGallery> = ({ data }) => {
               <ContentfulImage data={coverImage} />
             </NoScrollLink>
           )}
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
