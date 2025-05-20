@@ -23,7 +23,6 @@ const ParallaxGallery: FC<IParaGallery> = ({ data }) => {
     const containerRef = useRef(null)
 
     // const { width } = useWindowDimensions()
-    if (!images) return;
 
     const {height} = useWindowDimensions()
     const h = height ?? 0
@@ -39,7 +38,7 @@ const ParallaxGallery: FC<IParaGallery> = ({ data }) => {
         useTransform(scrollYProgress, [0,1], [-500, -h])
     ]
     
-
+    if (!images) return;
     return (
         <div className={styles.outerWrapper} ref={containerRef}>
             <div className={styles.innerWrapper}>
