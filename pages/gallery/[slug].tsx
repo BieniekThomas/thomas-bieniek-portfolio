@@ -47,7 +47,7 @@ const previewChildVariants = {
 };
 
 const Gallery = ({ gallery }: IGallery) => {
-  const rightContainerRef = useRef(null)
+  const rightContainerRef = useRef<HTMLInputElement>(null)
   const router = useRouter();
   const { title, description, photos, slug } = gallery.fields;
   const photoAmount = photos?.length;
@@ -67,9 +67,9 @@ const Gallery = ({ gallery }: IGallery) => {
     return node
   }, [rightContainerRef.current]);
 
-  useEffect(() => {
-    if (!rightContainerRef.current) return;
-    const {height} = (rightContainerRef.current.getBoundingClientRect());
+  useLayoutEffect(() => {
+    if (null == rightContainerRef.current) return;
+    const {height} = rightContainerRef.current.getBoundingClientRect();
     setPreviewDivHeight(height);
   }, [arrayRef])
 
@@ -120,6 +120,7 @@ const Gallery = ({ gallery }: IGallery) => {
                     className={styles.photoPreviewWrapper}
                     href={`#photo-${index}`}
                     onClick={() => onAnchorClick(`#photo-${index}`)}
+                    //@ts-ignore
                     ref={arrayRef}
                   >
                     <ContentfulImage data={photo} maxDimensionInPx={150} />
