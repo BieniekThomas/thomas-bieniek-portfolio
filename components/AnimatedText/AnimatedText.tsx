@@ -1,5 +1,5 @@
 import { motion, useInView } from "motion/react"
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useRef } from "react";
 import styles from "./AnimatedText.module.scss";
 
 const variant = {

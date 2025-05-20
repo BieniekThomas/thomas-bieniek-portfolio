@@ -1,12 +1,12 @@
-import { Asset } from "contentful";
-import { useCallback, useLayoutEffect, useState } from "react";
+// import { Asset } from "contentful";
+// import { useCallback, useLayoutEffect, useState } from "react";
 import { Icon } from "../Icon/Icon";
 import styles from "./Gallery.module.scss";
-import Modal from "../Modal/Modal";
-import { motion } from "framer-motion";
-import { framer_default_variants } from "../../lib/framer";
-import ContentfulImage from "../Image/Image";
-import { useLayoutManagerContext } from "../_Layout/LayoutManager";
+// import Modal from "../Modal/Modal";
+// import { motion } from "framer-motion";
+// import { framer_default_variants } from "../../lib/framer";
+// import ContentfulImage from "../Image/Image";
+// import { useLayoutManagerContext } from "../_Layout/LayoutManager";
 import { AnimatedText } from "../AnimatedText/AnimatedText";
 import { zeroPad } from "../Section/Section";
 
@@ -40,91 +40,91 @@ export const GalleryHeader: React.FC<GalleryHeaderProps> = ({
   );
 };
 
-interface ExtendedAsset extends Asset {
-  imageWidth: number;
-  ratio: number;
-}
-interface IGalleryModal {
-  photos: Asset[];
-  onClose: () => void;
-  title?: string;
-}
+// interface ExtendedAsset extends Asset {
+//   imageWidth: number;
+//   ratio: number;
+// }
+// interface IGalleryModal {
+//   photos: Asset[];
+//   onClose: () => void;
+//   title?: string;
+// }
 
-export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
-  console.log("🚀 ~ GalleryModal ~ photos:", photos)
-  const windowContext = useLayoutManagerContext();
-  const windowHeight = windowContext.height;
-  const windowWidth = windowContext.width;
-  const galleryHeight = windowHeight - 160;
+// export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
+//   console.log("🚀 ~ GalleryModal ~ photos:", photos)
+//   const windowContext = useLayoutManagerContext();
+//   const windowHeight = windowContext.height;
+//   const windowWidth = windowContext.width;
+//   const galleryHeight = windowHeight - 160;
 
-  const [galleryImages, setGalleryImages] = useState<ExtendedAsset[]>();
+//   const [galleryImages, setGalleryImages] = useState<ExtendedAsset[]>();
 
-  const extendPhotos = useCallback(
-    (photos: Asset[]) => {
-      const newPhotos = photos.map((image, _) => {
-        const sizes = image.fields.file?.details?.image;
-        const width = sizes?.width;
-        const height = sizes?.height;
-        let ratio = 1;
-        if (width && height) {
-          ratio = height / width;
-        }
+//   const extendPhotos = useCallback(
+//     (photos: Asset[]) => {
+//       const newPhotos = photos.map((image, _) => {
+//         const sizes = image.fields.file?.details?.image;
+//         const width = sizes?.width;
+//         const height = sizes?.height;
+//         let ratio = 1;
+//         if (width && height) {
+//           ratio = height / width;
+//         }
 
-        const imageWidth = galleryHeight / ratio;
+//         const imageWidth = galleryHeight / ratio;
 
-        return {
-          ...image,
-          ratio,
-          imageWidth,
-        };
-      });
-      return newPhotos;
-    },
-    [galleryHeight]
-  );
+//         return {
+//           ...image,
+//           ratio,
+//           imageWidth,
+//         };
+//       });
+//       return newPhotos;
+//     },
+//     [galleryHeight]
+//   );
 
-  useLayoutEffect(() => {
-    const newPhotos = extendPhotos(photos);
-    setGalleryImages(newPhotos);
-  }, [extendPhotos, photos, windowHeight, windowWidth]);
+//   useLayoutEffect(() => {
+//     const newPhotos = extendPhotos(photos);
+//     setGalleryImages(newPhotos);
+//   }, [extendPhotos, photos, windowHeight, windowWidth]);
 
-  const renderPhotos = () => {
-    if (!galleryImages) {
-      return null;
-    }
+//   const renderPhotos = () => {
+//     if (!galleryImages) {
+//       return null;
+//     }
 
-    return galleryImages.map((image, index) => {
-      const imageName = image.fields.file?.fileName;
-      if (!imageName) return;
-      return (
-        <div
-          id={index.toString()}
-          key={imageName as string}
-          className={`${styles.image}`}
-          style={{
-            width: image.imageWidth,
-          }}
-        >
-          <ContentfulImage data={image} />
-        </div>
-      );
-    });
-  };
+//     return galleryImages.map((image, index) => {
+//       const imageName = image.fields.file?.fileName;
+//       if (!imageName) return;
+//       return (
+//         <div
+//           id={index.toString()}
+//           key={imageName as string}
+//           className={`${styles.image}`}
+//           style={{
+//             width: image.imageWidth,
+//           }}
+//         >
+//           <ContentfulImage data={image} />
+//         </div>
+//       );
+//     });
+//   };
 
-  return (
-    <Modal title={title}>
-      <motion.div
-        initial="hidden"
-        animate="enter"
-        exit="exit"
-        variants={framer_default_variants}
-      >
-        <GalleryHeader onClose={onClose} title={title} />
-        {renderPhotos()}
-      </motion.div>
-    </Modal>
-  );
-};
+//   return (
+//     <Modal title={title}>
+//       <motion.div
+//         initial="hidden"
+//         animate="enter"
+//         exit="exit"
+//         variants={framer_default_variants}
+//       >
+//         <GalleryHeader onClose={onClose} title={title} />
+//         {renderPhotos()}
+//       </motion.div>
+//     </Modal>
+//   );
+// };
 
 // export const GalleryModal = ({ photos, onClose, title }: IGalleryModal) => {
 //   const windowContext = useLayoutManagerContext();

@@ -16,6 +16,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  a {
+    color: variables.$background-color
+  }
 }
 
 .name {
@@ -31,11 +34,11 @@
 }
 
 .spacer {
-  &:last-child {
-    display: none;
-  }
-
   border-left: 1px solid variables.$background-color;
   height: 30px;
   margin: 0 16px 0 16px;
+
+  &:last-child {
+    display: none;
+  }
 }
