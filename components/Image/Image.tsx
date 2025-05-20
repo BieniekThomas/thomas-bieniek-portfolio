@@ -18,7 +18,6 @@ const ContentfulImage: FC<IImageComponent> = ({
   maxDimensionInPx,
 }) => {
   const photo = data.fields.file as contentful.AssetFile;
-  console.log("🚀 ~ photo:", photo)
   const size = useLayoutManagerContext();
 
   // get them variables

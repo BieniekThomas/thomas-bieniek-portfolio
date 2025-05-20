@@ -7,7 +7,7 @@ export interface IAuthorFields {
   /** Name */
   name?: string | undefined;
 
-  /** Twitter handle */
+  /** InstagramHandle */
   twitterHandle?: string | undefined;
 
   /** Profile photo */
@@ -43,6 +43,9 @@ export interface IHomeFields {
 
   /** galleries */
   galleries?: Entry<{ [fieldId: string]: unknown }>[] | undefined;
+
+  /** author */
+  author?: Entry<{ [fieldId: string]: unknown }> | undefined;
 }
 
 export interface IHome extends Entry<IHomeFields> {

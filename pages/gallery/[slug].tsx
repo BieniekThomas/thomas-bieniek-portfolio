@@ -1,11 +1,11 @@
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { IPhotoGallery, IPhotoGalleryFields } from "../../@types/generated/contentful";
+import { IPhotoGalleryFields } from "../../@types/generated/contentful";
 import ContentfulImage from "../../components/Image/Image";
 import { PageHeadIndividual } from "../../components/PageHead/PageHead";
 import { fetchEntries } from "../../lib/api";
 import styles from "../../styles/Gallery.module.scss";
-import { motion, useSpring, useTransform, useScroll } from "framer-motion";
+import { motion, useSpring, useTransform, useScroll } from "motion/react";
 import { GalleryHeader } from "../../components/Gallery/GalleryModal";
 import Text from "../../components/Text/Text";
 import {
@@ -13,7 +13,7 @@ import {
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import Layout from "../../components/_Layout/Layout";
 
@@ -47,6 +47,7 @@ const previewChildVariants = {
 };
 
 const Gallery = ({ gallery }: IGallery) => {
+  const rightContainerRef = useRef(null)
   const router = useRouter();
   const { title, description, photos, slug } = gallery.fields;
   const photoAmount = photos?.length;
@@ -61,19 +62,16 @@ const Gallery = ({ gallery }: IGallery) => {
   const lenisContext = useLenisManagerContext();
   const layoutContext = useLayoutManagerContext();
 
-  // const { width = 0, height = 0 } = useWindowDimensions();
-  // const { cursorX, cursorY } = useMousePosition();
-  // const springConfig = { damping: 25, stiffness: 300 };
-  // const cursorXSpring = useSpring(cursorX, springConfig);
-  // const cursorYSpring = useSpring(cursorY, springConfig);
-  // const transformX = useTransform(cursorXSpring, [0, width], [-15, 15]);
-  // const transformY = useTransform(cursorYSpring, [0, height], [-15, 15]);
+  const arrayRef = useCallback((node: HTMLElement | null) => {
+    if (rightContainerRef.current === null) return;
+    return node
+  }, [rightContainerRef.current]);
 
-  const previewRef = useCallback((node: HTMLElement | null) => {
-    if (node === null) return;
-    console.log(node.offsetHeight, node);
-    setPreviewDivHeight(node.offsetHeight);
-  }, []);
+  useEffect(() => {
+    if (rightContainerRef.current === null) return;
+    const {height} = (rightContainerRef.current.getBoundingClientRect());
+    setPreviewDivHeight(height);
+  }, [arrayRef])
 
   function onAnchorClick(anchor: string) {
     if (!lenisContext.lenis) return;
@@ -108,19 +106,21 @@ const Gallery = ({ gallery }: IGallery) => {
             variants={previewVariants}
             initial="hidden"
             animate="visible"
-            ref={previewRef}
             style={{ translateY: offsetPreviewHeight }}
+            ref={rightContainerRef}
           >
             {photos?.map((photo, index) => {
+              if (!photo.fields.file?.url) return;
               return (
                 <motion.div
                   variants={previewChildVariants}
-                  key={`preview-${photo.fields.title}`}
+                  key={`preview-${photo.fields.file?.url}`}
                 >
                   <a
                     className={styles.photoPreviewWrapper}
                     href={`#photo-${index}`}
                     onClick={() => onAnchorClick(`#photo-${index}`)}
+                    ref={arrayRef}
                   >
                     <ContentfulImage data={photo} maxDimensionInPx={150} />
                   </a>
@@ -131,16 +131,13 @@ const Gallery = ({ gallery }: IGallery) => {
         </div>
         <div className={styles.rightContainer}>
           {photos?.map((photo, index) => {
+            if (!photo.fields.file?.url) return;
             return (
-              <motion.div key={photo.fields.title as string} id={`photo-${index}`}>
+              <motion.div key={`${photo.fields.file.url}`} id={`photo-${index}`}>
                 <motion.div
                   className={styles.photoWrapper}
                   initial={{ opacity: 0, y: 80 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  // style={{
-                  //   translateX: transformX,
-                  //   translateY: transformY,
-                  // }}
                 >
                   <ContentfulImage data={photo} />
                 </motion.div>

@@ -6,6 +6,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  scroll-snap-align: center;
+  scroll-snap-type: mandatory;
 
   > div {
     max-width: 100%;
