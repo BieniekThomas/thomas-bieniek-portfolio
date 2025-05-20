@@ -63,12 +63,12 @@ const Gallery = ({ gallery }: IGallery) => {
   const layoutContext = useLayoutManagerContext();
 
   const arrayRef = useCallback((node: HTMLElement | null) => {
-    if (rightContainerRef.current === null) return;
+    if (!rightContainerRef.current) return;
     return node
   }, [rightContainerRef.current]);
 
   useEffect(() => {
-    if (rightContainerRef.current === null) return;
+    if (!rightContainerRef.current) return;
     const {height} = (rightContainerRef.current.getBoundingClientRect());
     setPreviewDivHeight(height);
   }, [arrayRef])

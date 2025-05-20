@@ -7,26 +7,37 @@ import { GallerySection } from "../components/Gallery/GallerySection";
 
 // typeImports
 import { FC } from "react";
-import { IPhotoGalleryFields } from "../@types/generated/contentful";
+import { IAuthorFields, IPhotoGalleryFields } from "../@types/generated/contentful";
 
 // styleImports
 import styles from "../styles/Home.module.scss";
+import { Introduction } from "../components/Introduction/Introduction";
 
 interface IHome {
   photoGallery: {
     fields: IPhotoGalleryFields
   }[];
+  author: {
+    fields: IAuthorFields
+  }
 }
 
-const Home: FC<IHome> = ({ photoGallery }) => {
-  console.log("🚀 ~ photoGallery:", photoGallery)
+const Home: FC<IHome> = ({ photoGallery, author }) => {
   return (
     <Layout>
       <PageHead site="home" />
       <div className={styles.wrapper}>
         <Section
+          number={0}
+          headline="Hi"
+          subHeadline=""
+        />
+        <div className={styles.smallHeight}>
+          <Introduction data={author} />
+        </div>
+        <Section
           number={1}
-          headline="Photography"
+          headline="Multi-Media"
           subHeadline="capturing emotions"
         />
         <div className={styles.minHeight}>
@@ -52,17 +63,20 @@ const Home: FC<IHome> = ({ photoGallery }) => {
 export default Home;
 
 const PHOTO_GALLERY_ID = "photoGallery";
+const AUTHOR_ID = "author"
 export const getStaticProps: GetStaticProps = async () => {
   const photoGallery = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
+  const author = await fetchEntries({ content_type: AUTHOR_ID });
   if (!photoGallery) {
     console.error("photogallery not available");
-    return {
-      props: {},
-    };
+  }
+  if (!author) {
+    console.error("No Author found");
   }
   return {
     props: {
       photoGallery: photoGallery,
+      author: author?.[0]
     },
   };
 };
