@@ -24,13 +24,13 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
         setIndex={(index: number) => setGalleryIndex(index)}
       />
       <div className={styles.outerWrapper}>
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {
             <motion.div
               key={galleries[galleryIndex].fields.slug}
-              initial={{ x: 300, opacity: 0, position: "absolute" }}
-              animate={{ x: 0, opacity: 1, position: "relative" }}
-              exit={{ x: -300, opacity: 0, position: "absolute" }}
+              initial={{ y: 0, opacity: 0, }}
+              animate={{ y: 0, opacity: 1, }}
+              exit={{ y: 0, opacity: 0, }}
             >
               <Gallery
                 key={galleries[galleryIndex].fields.slug}

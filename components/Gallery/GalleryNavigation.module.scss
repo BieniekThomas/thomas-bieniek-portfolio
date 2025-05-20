@@ -30,3 +30,12 @@
     }
   }
 }
+
+.underline {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 8px;
+    height: 2px;
+    background: var(--text-color);
+}

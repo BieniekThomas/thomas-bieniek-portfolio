@@ -1,6 +1,7 @@
 import NoScrollLink from "../NoScrollLink/NoScrollLink";
 import styles from "./GalleryNavigation.module.scss";
 import { IGallerySectionProps } from "./GallerySection";
+import {AnimatePresence, motion} from 'framer-motion'
 
 export interface IGalleryNavigationProps {
   galleries: IGallerySectionProps["galleries"];
@@ -17,18 +18,21 @@ export function GalleryNavigation({
     <div className={styles.outerWrapper}>
       <div className={styles.headline}>Galleries</div>
       <div className={styles.innerWrapper}>
+        <AnimatePresence mode="wait">
         {galleries.map((gallery, i) => {
-          return (
+          return (<div style={{position: 'relative'}}>
             <NoScrollLink
               noLink
               key={gallery.fields.title}
               onClick={() => setIndex(i)}
-              active={i === index}
             >
               {gallery.fields.title}
             </NoScrollLink>
+            {i === index && <motion.div className={styles.underline} layoutId="underline" id="underline"/>}
+            </div>
           );
         })}
+        </AnimatePresence>
       </div>
     </div>
   );
