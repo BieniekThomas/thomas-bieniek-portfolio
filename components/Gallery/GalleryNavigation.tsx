@@ -20,7 +20,8 @@ export function GalleryNavigation({
       <div className={styles.innerWrapper}>
         <AnimatePresence mode="wait">
         {galleries.map((gallery, i) => {
-          return (<div style={{position: 'relative'}}>
+          return (
+          <div style={{position: 'relative'}} key={gallery.fields.title}>
             <NoScrollLink
               noLink
               key={gallery.fields.title}
