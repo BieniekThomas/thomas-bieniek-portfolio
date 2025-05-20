@@ -33,7 +33,7 @@ const ParallaxGallery: FC<IParaGallery> = ({ data }) => {
 
     const y = [
         useTransform(scrollYProgress, [0,1], [0, -h/4]),
-        useTransform(scrollYProgress, [0,1], [-300, -h/2]),
+        useTransform(scrollYProgress, [0,1], [-100, -h/1.5]),
         useTransform(scrollYProgress, [0,1], [-h/2, h/3]),
         useTransform(scrollYProgress, [0,1], [-500, -h])
     ]

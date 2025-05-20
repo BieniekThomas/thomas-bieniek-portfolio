@@ -32,9 +32,7 @@ export const Introduction: FC<IIntroduction> = ({ data }) => {
         </div>
         {profilePhoto && <div className={styles.backgroundImage}><motion.div style={{y}}><BackgroundImage data={profilePhoto} /></motion.div></div>}
         <h1>{biography && <AnimatedText text={biography} />}</h1>
-        <h3>Take a look below!</h3>
     </div>
-
     </>
     )
 }

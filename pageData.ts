@@ -38,7 +38,7 @@ const PageData: IPageData = {
       name: "about",
       url: "/about",
       navigationTitle: "About",
-      displayInNavigation: true,
+      displayInNavigation: false,
     },
     {
       name: "privacy",
