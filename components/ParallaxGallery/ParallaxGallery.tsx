@@ -25,9 +25,6 @@ const ParallaxGallery: FC<IParaGallery> = ({ data }) => {
     // const { width } = useWindowDimensions()
     if (!images) return;
 
-    const arrayChunk = chunk(images, 4);
-    console.log("🚀 ~ arrayChunk:", arrayChunk)
-
     const {height} = useWindowDimensions()
     const h = height ?? 0
     const {scrollYProgress} = useScroll({

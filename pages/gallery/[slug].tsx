@@ -65,7 +65,7 @@ const Gallery = ({ gallery }: IGallery) => {
   const arrayRef = useCallback((node: HTMLElement | null) => {
     if (!rightContainerRef.current) return;
     return node
-  }, [rightContainerRef.current]);
+  }, []);
 
   useLayoutEffect(() => {
     if (null == rightContainerRef.current) return;
