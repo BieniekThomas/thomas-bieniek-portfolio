@@ -13,6 +13,7 @@ import { IAuthorFields, IParallaxGalleryFields, IPhotoGalleryFields } from "../@
 // styleImports
 import styles from "../styles/Home.module.scss";
 import ParallaxGallery from "../components/ParallaxGallery/ParallaxGallery";
+import { TextSlider } from "../components/TextSlider/TextSlider";
 
 interface IHome {
   photoGallery: {
@@ -39,7 +40,9 @@ const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
         <div className={styles.smallHeight}>
           <Introduction data={author} />
         </div>
+        <div className={styles.smallestHeight}></div>
         <ParallaxGallery data={parallaxGallery} />
+        <div className={styles.smallestHeight}></div>
         <Section
           number={1}
           headline="Multi-Media"
@@ -48,12 +51,24 @@ const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
         <div className={styles.minHeight}>
           <GallerySection galleries={photoGallery} />
         </div>
-        <Section
+        <div className={styles.smallestHeight}></div>
+        {/* <Section
           number={2}
           headline="Drummer/Producer/DJ"
           subHeadline="feeling it"
-        />
-        <div className={styles.minHeight}></div>
+        /> */}
+        <div>
+          <TextSlider startOffset={'-50%'} direction={'left'} velocity={1.5}>
+            <span className={styles.bigFont}>FRONTEND DEVELOPER</span>
+          </TextSlider>
+          <TextSlider startOffset={'-20%'} direction={'right'} velocity={2}>
+            <span className={styles.bigFont}>REACT / TYPESCRIPT / NEXTJS</span>
+          </TextSlider>
+          <TextSlider startOffset={'-10%'} direction={'left'} velocity={1.2}>
+            <span className={styles.bigFont}>FRONTEND DEVELOPER</span>
+          </TextSlider>
+        </div>
+        <div className={styles.smallestHeight}></div>
         <Section
           number={3}
           headline="Software-Developer"

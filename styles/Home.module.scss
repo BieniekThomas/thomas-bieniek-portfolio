@@ -13,3 +13,12 @@
   width: 100%;
   min-height: 50vh;
 }
+
+.smallestHeight {
+  width: 100%;
+  min-height: 25vh;
+}
+
+.bigFont {
+  @include mixins.headline(7rem);
+}

@@ -1,0 +1,13 @@
+@use '../../styles/mixins.scss';
+
+.sliderWrapper {
+    display: flex;
+    white-space: nowrap;
+    gap: 200px;
+    position: relative;
+}
+
+.childrenWrapper {
+    display: flex;
+    gap: 20px;
+}

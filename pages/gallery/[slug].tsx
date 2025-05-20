@@ -13,7 +13,7 @@ import {
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import Layout from "../../components/_Layout/Layout";
 

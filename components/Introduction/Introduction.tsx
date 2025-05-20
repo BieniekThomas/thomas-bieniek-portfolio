@@ -24,13 +24,14 @@ export const Introduction: FC<IIntroduction> = ({ data }) => {
     })
 
     const y = useTransform(scrollYProgress, [0,1], [-h/2, h/4])
+    const opacity = useTransform(scrollYProgress, [0,1], [-2,3])
 
     return (<>
     <div className={styles.outerWrapper} ref={container}>
         <div>
             <h1>{name && <AnimatedText text={name} />}</h1>
         </div>
-        {profilePhoto && <div className={styles.backgroundImage}><motion.div style={{y}}><BackgroundImage data={profilePhoto} /></motion.div></div>}
+        {profilePhoto && <div className={styles.backgroundImage}><motion.div style={{y, opacity: opacity}}><BackgroundImage data={profilePhoto} /></motion.div></div>}
         <h1>{biography && <AnimatedText text={biography} />}</h1>
     </div>
     </>
