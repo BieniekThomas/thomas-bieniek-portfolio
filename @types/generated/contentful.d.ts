@@ -46,6 +46,9 @@ export interface IHomeFields {
 
   /** author */
   author?: Entry<{ [fieldId: string]: unknown }> | undefined;
+
+  /** parallaxGallery */
+  parallaxGallery?: Entry<{ [fieldId: string]: unknown }> | undefined;
 }
 
 export interface IHome extends Entry<IHomeFields> {
@@ -58,6 +61,28 @@ export interface IHome extends Entry<IHomeFields> {
     contentType: {
       sys: {
         id: "home";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
+export interface IParallaxGalleryFields {
+  /** images */
+  images?: Asset[] | undefined;
+}
+
+export interface IParallaxGallery extends Entry<IParallaxGalleryFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "parallaxGallery";
         linkType: "ContentType";
         type: "Link";
       };
@@ -102,9 +127,13 @@ export interface IPhotoGallery extends Entry<IPhotoGalleryFields> {
   };
 }
 
-export type CONTENT_TYPE = "author" | "home" | "photoGallery";
+export type CONTENT_TYPE =
+  | "author"
+  | "home"
+  | "parallaxGallery"
+  | "photoGallery";
 
-export type IEntry = IAuthor | IHome | IPhotoGallery;
+export type IEntry = IAuthor | IHome | IParallaxGallery | IPhotoGallery;
 
 export type LOCALE_CODE = "en-US";
 

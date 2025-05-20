@@ -1,0 +1,53 @@
+@use '../../styles/mixins.scss';
+@use '../../styles/variables.module.scss';
+
+.outerWrapper {
+  overflow: hidden;
+  position: relative;
+  background-color: variables.$text-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.innerWrapper {
+    max-width: 80%;
+    padding: 0 20px;
+    overflow: hidden;
+    display: flex;
+    gap: 20px;
+    height: 70vh;
+    overflow: hidden;
+    border-radius: 20px;
+    > * {
+        width: 25%;
+        overflow: hidden;
+    }
+}
+
+.columnWrapper {
+    height: 200vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    > * {
+        display: flex;
+        flex-direction: column;
+        height: 25%;
+        object-fit: cover;
+        overflow: hidden;
+        border-radius: 20px;
+        > * {
+            max-height: unset;
+            object-fit: cover;
+        }
+        * {
+            height: 110% !important;
+            max-height: none !important;
+            object-fit: cover;
+        }
+        img {
+            object-fit: cover;
+        }
+    }
+}

@@ -4,14 +4,15 @@ import Layout from "../components/_Layout/Layout";
 import { PageHead } from "../components/PageHead/PageHead";
 import { Section } from "../components/Section/Section";
 import { GallerySection } from "../components/Gallery/GallerySection";
+import { Introduction } from "../components/Introduction/Introduction";
 
 // typeImports
 import { FC } from "react";
-import { IAuthorFields, IPhotoGalleryFields } from "../@types/generated/contentful";
+import { IAuthorFields, IParallaxGalleryFields, IPhotoGalleryFields } from "../@types/generated/contentful";
 
 // styleImports
 import styles from "../styles/Home.module.scss";
-import { Introduction } from "../components/Introduction/Introduction";
+import ParallaxGallery from "../components/ParallaxGallery/ParallaxGallery";
 
 interface IHome {
   photoGallery: {
@@ -20,9 +21,12 @@ interface IHome {
   author: {
     fields: IAuthorFields
   }
+  parallaxGallery: {
+    fields: IParallaxGalleryFields
+  }
 }
 
-const Home: FC<IHome> = ({ photoGallery, author }) => {
+const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
   return (
     <Layout>
       <PageHead site="home" />
@@ -35,6 +39,7 @@ const Home: FC<IHome> = ({ photoGallery, author }) => {
         <div className={styles.smallHeight}>
           <Introduction data={author} />
         </div>
+        <ParallaxGallery data={parallaxGallery} />
         <Section
           number={1}
           headline="Multi-Media"
@@ -64,19 +69,25 @@ export default Home;
 
 const PHOTO_GALLERY_ID = "photoGallery";
 const AUTHOR_ID = "author"
+const PARALLAX_ID = "parallaxGallery"
 export const getStaticProps: GetStaticProps = async () => {
   const photoGallery = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
   const author = await fetchEntries({ content_type: AUTHOR_ID });
+  const parallaxGallery = await fetchEntries({ content_type: PARALLAX_ID });
   if (!photoGallery) {
     console.error("photogallery not available");
   }
   if (!author) {
     console.error("No Author found");
   }
+  if (!parallaxGallery) {
+    console.error('No parallax Gallery Found')
+  }
   return {
     props: {
       photoGallery: photoGallery,
-      author: author?.[0]
+      author: author?.[0],
+      parallaxGallery: parallaxGallery?.[0]
     },
   };
 };

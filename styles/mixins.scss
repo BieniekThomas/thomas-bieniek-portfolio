@@ -4,6 +4,11 @@
   padding: 20px 80px;
 }
 
+@mixin inner-space-small {
+  padding: 20px 80px;
+  max-width: 80%;
+}
+
 @mixin headline($fontSize: $fontSize_highlight) {
   font-family: variables.$displayPrimary;
   font-size: $fontSize;

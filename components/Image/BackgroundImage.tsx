@@ -38,7 +38,7 @@ export const BackgroundImage: FC<IImage> = ({
             quality={QUALITY}
             alt={title as string}
             priority={false}
-            objectFit="contain"
+            objectFit="cover"
             placeholder="blur"
             blurDataURL={`https:${src}?fm=jpg&q=0&w=8&h=8`}
             style={{ objectFit: 'cover' }}
