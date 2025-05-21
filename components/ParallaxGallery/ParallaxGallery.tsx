@@ -2,7 +2,6 @@ import { FC, useRef } from "react";
 import { IParallaxGalleryFields } from "../../@types/generated/contentful";
 import { motion, useScroll, useTransform } from 'framer-motion'
 import styles from './ParallaxGallery.module.scss'
-import ContentfulImage from "../Image/Image";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Asset, ChainModifiers } from "contentful";
 import { BackgroundImage } from "../Image/BackgroundImage";
@@ -14,7 +13,7 @@ interface IParaGallery {
 }
 
 const chunk = (arr: Asset<ChainModifiers, string>[], size: number) => {
-    //@ts-ignore
+    //@ts-expect-error have to take a look into generics
     return arr.reduce((carry, _, index, orig) => !(index % size) ? carry.concat([orig.slice(index, index+size)]) : carry, [])
 };
 
@@ -42,10 +41,10 @@ const ParallaxGallery: FC<IParaGallery> = ({ data }) => {
     return (
         <div className={styles.outerWrapper} ref={containerRef}>
             <div className={styles.innerWrapper}>
-            {chunk(images, 4).map((item: any[], index) => (
+            {chunk(images, 4).map((item: Asset<ChainModifiers, string>[], index) => (
                 <motion.div style={{y: y[index]}} className={styles.columnWrapper} key={`column-${index}`}>
                     {item.map((image , index) => (
-                    <motion.div key={`${image.fields.file.url}`} id={`column-photo-${index}`}>
+                    <motion.div key={`${image.fields.file?.url}`} id={`column-photo-${index}`}>
                         <motion.div
                             className={styles.photoWrapper}
                         >

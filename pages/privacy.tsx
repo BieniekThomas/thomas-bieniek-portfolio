@@ -1,8 +1,6 @@
 import Layout from "../components/_Layout/Layout";
 
-export interface IPrivacyProps {}
-
-function Privacy(props: IPrivacyProps) {
+function Privacy() {
   return (
     <Layout>
       <div>Privacy</div>

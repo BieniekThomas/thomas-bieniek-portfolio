@@ -1,7 +1,6 @@
 import Lenis from "@studio-freight/lenis";
 import { createContext, ReactNode, useContext, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
-useIsomorphicLayoutEffect;
 
 interface ILenis {
   lenis: Lenis | undefined;
@@ -29,7 +28,7 @@ export const LenisManager = ({ children }: IChildren) => {
       touchMultiplier: 0.6,
     });
 
-    function raf(time: any) {
+    function raf(time: number) {
       lenis?.current?.raf(time);
       requestAnimationFrame(raf);
     }

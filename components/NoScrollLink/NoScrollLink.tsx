@@ -30,7 +30,7 @@ const NoScrollLink: FC<INoScrollLink> = ({
 
   const onEnter = () => {
     setSize(cursor);
-    cursorText && setText(cursorText);
+    if(cursorText) setText(cursorText);
   };
 
   const onLeave = () => {

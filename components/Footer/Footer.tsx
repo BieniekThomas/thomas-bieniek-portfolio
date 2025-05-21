@@ -8,6 +8,34 @@ const Footer = () => {
     <div className={styles.outerWrapper}>
       <div className={styles.innerWrapper}>
         <div className={styles.copyright}>©2025, Thomas Bieniek</div>
+        <div>
+          <NoScrollLink
+              url={"https://github.com/BieniekThomas"}
+              cursor="big"
+              blendMode
+            >
+              GitHub
+            </NoScrollLink>
+        </div>
+        <div>
+          <NoScrollLink
+              url={"https://www.instagram.com/thomas_bieniek_digital"}
+              cursor="big"
+              blendMode
+            >
+              Instagram
+            </NoScrollLink>
+        </div>
+        <div>
+          <NoScrollLink
+              url={"https://soundcloud.com/thomasbieniek"}
+              cursor="big"
+              blendMode
+            >
+              SoundCloud
+            </NoScrollLink>
+        </div>
+        
         <div className={styles.links}>
           {PageData.navigation.map(
             (nav) =>

@@ -21,7 +21,7 @@ const variant = {
 
 function getSplitWordsArray(text: string) {
   const splitWords = text.split(" "); // [Hallo, Welt]
-  let letters: string[][] = [];
+  const letters: string[][] = [];
 
   splitWords.forEach((word) => {
     letters.push(word.split(""));

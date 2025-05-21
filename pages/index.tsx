@@ -45,7 +45,7 @@ const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
         <div className={styles.smallestHeight}></div>
         <Section
           number={1}
-          headline="Multi-Media"
+          headline="Photography"
           subHeadline="capturing emotions"
         />
         <div className={styles.minHeight}>

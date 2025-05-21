@@ -1,4 +1,4 @@
-import { ICursorSizes, useCursorContext } from "../Cursor/CursorManager";
+import { useCursorContext } from "../Cursor/CursorManager";
 
 export interface IIconProps {
   hoverAnimation?: boolean;
@@ -15,7 +15,7 @@ export function Icon({
 
   const onHover = () => {
     setSize(cursorText ? "withText" : "big");
-    cursorText && setText(cursorText);
+    if(cursorText) setText(cursorText);
   };
 
   const onLeave = () => {

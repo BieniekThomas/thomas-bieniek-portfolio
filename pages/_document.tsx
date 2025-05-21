@@ -1,6 +1,5 @@
 import Document, { Html, Main, NextScript, Head } from "next/document";
 import { ICON_FONT } from "../lib/constants";
-export interface IDocumentProps {}
 
 export default class MyDocument extends Document {
   render() {

@@ -82,7 +82,7 @@ export const Gallery: FC<IGallery> = ({ data }) => {
         </div>
         <motion.div className={styles.right}
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-          //@ts-ignore
+          //@ts-expect-error refs are dumb in typescript
           ref={imageRef}
           onMouseMove={e => handleMouseMove(e)}
           onMouseLeave={handleMouseLeave}

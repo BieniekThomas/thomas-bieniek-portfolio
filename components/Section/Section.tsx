@@ -1,5 +1,4 @@
 import styles from "./Section.module.scss";
-import { motion } from "framer-motion";
 import { AnimatedText } from "../AnimatedText/AnimatedText";
 
 export interface ISectionProps {
@@ -8,8 +7,9 @@ export interface ISectionProps {
   subHeadline?: string;
 }
 
-export const zeroPad = (num: number, places: number) =>
-  String(num).padStart(places, "0");
+export const zeroPad = (num: number, places: number) =>{
+  return String(num).padStart(places, "0");
+}
 
 export function Section({ number, headline, subHeadline }: ISectionProps) {
   // Idee: query anhängen
@@ -18,7 +18,7 @@ export function Section({ number, headline, subHeadline }: ISectionProps) {
     <div className={styles.outerWrapper} id={headline}>
       <div className={styles.innerWrapper}>
         <div className={styles.number}>
-          {number && <AnimatedText text={zeroPad(number, 2)} />}
+          {(number || number === 0) && <AnimatedText text={zeroPad(number, 2)} />}
         </div>
         <div className={styles.headline}>
           {headline && <AnimatedText text={headline} />}
