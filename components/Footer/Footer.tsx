@@ -13,6 +13,7 @@ const Footer = () => {
               url={"https://github.com/BieniekThomas"}
               cursor="big"
               blendMode
+              targetBlank
             >
               GitHub
             </NoScrollLink>
@@ -22,6 +23,7 @@ const Footer = () => {
               url={"https://www.instagram.com/thomas_bieniek_digital"}
               cursor="big"
               blendMode
+              targetBlank
             >
               Instagram
             </NoScrollLink>
@@ -31,6 +33,7 @@ const Footer = () => {
               url={"https://soundcloud.com/thomasbieniek"}
               cursor="big"
               blendMode
+              targetBlank
             >
               SoundCloud
             </NoScrollLink>

@@ -57,6 +57,11 @@ const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
           headline="Drummer/Producer/DJ"
           subHeadline="feeling it"
         /> */}
+        <Section
+          number={3}
+          headline="Software-Developer"
+          subHeadline="coding it"
+        />
         <div>
           <TextSlider startOffset={'-50%'} direction={'left'} velocity={1.5}>
             <span className={styles.bigFont}>FRONTEND DEVELOPER</span>
@@ -69,12 +74,6 @@ const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
           </TextSlider>
         </div>
         <div className={styles.smallestHeight}></div>
-        <Section
-          number={3}
-          headline="Software-Developer"
-          subHeadline="coding it"
-        />
-        <div className={styles.minHeight}></div>
       </div>
     </Layout>
   );

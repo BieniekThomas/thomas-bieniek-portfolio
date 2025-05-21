@@ -120,7 +120,7 @@ const Gallery = ({ gallery }: IGallery) => {
                     className={styles.photoPreviewWrapper}
                     href={`#photo-${index}`}
                     onClick={() => onAnchorClick(`#photo-${index}`)}
-                    //@ts-expect-error refs are dumb in typescript
+                    //@ts-expect-error refs are sometimes hard in typescript
                     ref={arrayRef}
                   >
                     <ContentfulImage data={photo} maxDimensionInPx={150} />

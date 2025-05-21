@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useCursorContext } from "../Cursor/CursorManager";
+import { useRouter } from "next/router";
 
 export interface IIconProps {
   hoverAnimation?: boolean;
@@ -12,16 +14,23 @@ export function Icon({
   cursorText,
 }: IIconProps) {
   const { setSize, setText } = useCursorContext();
+  const router = useRouter();
+
+  const onLeave = () => {
+    setSize("small");
+    setText("");
+  };
+
+  useEffect(() => {
+    onLeave()
+  }, [router.asPath])
 
   const onHover = () => {
     setSize(cursorText ? "withText" : "big");
     if(cursorText) setText(cursorText);
   };
 
-  const onLeave = () => {
-    setSize("small");
-    setText("");
-  };
+  
 
   return (
     <span

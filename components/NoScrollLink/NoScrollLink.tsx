@@ -13,6 +13,7 @@ interface INoScrollLink {
   noLink?: boolean;
   onClick?: () => void;
   active?: boolean;
+  targetBlank?: boolean
 }
 
 const NoScrollLink: FC<INoScrollLink> = ({
@@ -25,6 +26,7 @@ const NoScrollLink: FC<INoScrollLink> = ({
   noLink = false,
   onClick,
   active = false,
+  targetBlank = false
 }) => {
   const { setSize, setText } = useCursorContext();
 
@@ -54,7 +56,7 @@ const NoScrollLink: FC<INoScrollLink> = ({
   );
 
   return !noLink ? (
-    <Link scroll={false} href={url} passHref>
+    <Link scroll={false} href={url} passHref target={targetBlank ? '_blank' : '_self'}>
       {Inner()}
     </Link>
   ) : (
