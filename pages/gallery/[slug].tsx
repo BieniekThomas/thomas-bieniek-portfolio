@@ -13,9 +13,10 @@ import {
   AnimatedTextBlock,
 } from "../../components/AnimatedText/AnimatedText";
 import { useLenisManagerContext } from "../../components/_Layout/LenisManager";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import Layout from "../../components/_Layout/Layout";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 interface IGallery {
   gallery: {
@@ -55,6 +56,8 @@ const Gallery = ({ gallery }: IGallery) => {
   const { title, description, photos, slug } = gallery.fields;
   const photoAmount = photos?.length;
   const { scrollYProgress } = useScroll();
+  const { height: windowHeight } = useWindowDimensions();
+  console.log("🚀 ~ Gallery ~ windowHeight:", windowHeight);
   const [previewDivHeight, setPreviewDivHeight] = useState(0);
   const scrollSpring = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -65,16 +68,16 @@ const Gallery = ({ gallery }: IGallery) => {
   const lenisContext = useLenisManagerContext();
   const layoutContext = useLayoutManagerContext();
 
-  const arrayRef = useCallback((node: HTMLElement | null) => {
-    if (!rightContainerRef.current) return;
-    return node;
-  }, []);
-
   useLayoutEffect(() => {
+    setPreviewContainerHeight();
+  }, [windowHeight]);
+
+  const setPreviewContainerHeight = () => {
     if (null == rightContainerRef.current) return;
     const { height } = rightContainerRef.current.getBoundingClientRect();
+    console.log("🚀 ~ useLayoutEffect ~ height:", height);
     setPreviewDivHeight(height);
-  }, [arrayRef]);
+  };
 
   function onAnchorClick(anchor: string) {
     if (!lenisContext.lenis) return;
@@ -112,6 +115,7 @@ const Gallery = ({ gallery }: IGallery) => {
             exit="exit"
             style={{ translateY: offsetPreviewHeight }}
             ref={rightContainerRef}
+            onAnimationComplete={() => setPreviewContainerHeight()}
           >
             {photos?.map((photo, index) => {
               if (!photo.fields.file?.url) return;
@@ -124,8 +128,6 @@ const Gallery = ({ gallery }: IGallery) => {
                     className={styles.photoPreviewWrapper}
                     href={`#photo-${index}`}
                     onClick={() => onAnchorClick(`#photo-${index}`)}
-                    //@ts-expect-error refs are sometimes hard in typescript
-                    ref={arrayRef}
                   >
                     <ContentfulImage data={photo} maxDimensionInPx={150} />
                   </a>
