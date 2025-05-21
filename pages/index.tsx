@@ -58,7 +58,7 @@ const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
           subHeadline="feeling it"
         /> */}
         <Section
-          number={3}
+          number={2}
           headline="Software-Developer"
           subHeadline="coding it"
         />
