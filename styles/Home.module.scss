@@ -22,3 +22,7 @@
 .bigFont {
   @include mixins.headline(7rem);
 }
+
+.bigFontSmall {
+  @include mixins.headline(5rem);
+}

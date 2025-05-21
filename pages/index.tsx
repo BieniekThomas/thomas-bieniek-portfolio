@@ -70,7 +70,7 @@ const Home: FC<IHome> = ({ photoGallery, author, parallaxGallery }) => {
             <span className={styles.bigFont}>REACT / TYPESCRIPT / NEXTJS</span>
           </TextSlider>
           <TextSlider startOffset={'-10%'} direction={'left'} velocity={1.2}>
-            <span className={styles.bigFont}>FRONTEND DEVELOPER</span>
+            <span className={styles.bigFontSmall}>But also VUE / NODE / HEADLESS CMS</span>
           </TextSlider>
         </div>
         <div className={styles.smallestHeight}></div>
