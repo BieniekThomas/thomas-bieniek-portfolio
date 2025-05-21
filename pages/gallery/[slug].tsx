@@ -57,7 +57,6 @@ const Gallery = ({ gallery }: IGallery) => {
   const photoAmount = photos?.length;
   const { scrollYProgress } = useScroll();
   const { height: windowHeight } = useWindowDimensions();
-  console.log("🚀 ~ Gallery ~ windowHeight:", windowHeight);
   const [previewDivHeight, setPreviewDivHeight] = useState(0);
   const scrollSpring = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -75,7 +74,6 @@ const Gallery = ({ gallery }: IGallery) => {
   const setPreviewContainerHeight = () => {
     if (null == rightContainerRef.current) return;
     const { height } = rightContainerRef.current.getBoundingClientRect();
-    console.log("🚀 ~ useLayoutEffect ~ height:", height);
     setPreviewDivHeight(height);
   };
 
