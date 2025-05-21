@@ -1,9 +1,8 @@
-import { motion } from "framer-motion";
 import { FC, ReactNode } from "react";
-import { framer_default_variants } from "../../lib/framer";
 import Footer from "../Footer/Footer";
 import Navigation from "../Navigation/Navigation";
 import styles from "./Layout.module.scss";
+import { Stairs } from "./PageTransitions/Stairs/Stairs";
 
 interface ILayout {
   children: ReactNode | ReactNode[];
@@ -13,18 +12,11 @@ const Layout: FC<ILayout> = ({ children }) => {
   return (
     <>
       <Navigation />
-      <motion.main
-        initial="hidden"
-        animate="enter"
-        exit="exit"
-        variants={framer_default_variants}
-        transition={{ type: "linear" }}
-        className={styles.outer}
-      >
+      <Stairs>
         <div className={styles.spacer}></div>
         <div>{children}</div>
-      </motion.main>
-      <Footer />
+        <Footer />
+      </Stairs>
     </>
   );
 };

@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Cursor />
           <div id="main-container" className="scroll">
             <AnimatePresence
-              mode="sync"
+              mode="wait"
               onExitComplete={() => window.scrollTo(0, 0)}
             >
               <Component

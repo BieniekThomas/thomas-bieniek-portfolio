@@ -19,7 +19,7 @@ import Layout from "../../components/_Layout/Layout";
 
 interface IGallery {
   gallery: {
-    fields: IPhotoGalleryFields
+    fields: IPhotoGalleryFields;
   };
 }
 
@@ -32,6 +32,9 @@ const previewVariants = {
     transition: {
       staggerChildren: 0.1,
     },
+  },
+  exit: {
+    opacity: 0,
   },
 };
 
@@ -47,7 +50,7 @@ const previewChildVariants = {
 };
 
 const Gallery = ({ gallery }: IGallery) => {
-  const rightContainerRef = useRef<HTMLInputElement>(null)
+  const rightContainerRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { title, description, photos, slug } = gallery.fields;
   const photoAmount = photos?.length;
@@ -64,14 +67,14 @@ const Gallery = ({ gallery }: IGallery) => {
 
   const arrayRef = useCallback((node: HTMLElement | null) => {
     if (!rightContainerRef.current) return;
-    return node
+    return node;
   }, []);
 
   useLayoutEffect(() => {
     if (null == rightContainerRef.current) return;
-    const {height} = rightContainerRef.current.getBoundingClientRect();
+    const { height } = rightContainerRef.current.getBoundingClientRect();
     setPreviewDivHeight(height);
-  }, [arrayRef])
+  }, [arrayRef]);
 
   function onAnchorClick(anchor: string) {
     if (!lenisContext.lenis) return;
@@ -85,7 +88,7 @@ const Gallery = ({ gallery }: IGallery) => {
   const offsetPreviewHeight = useTransform(
     scrollSpring,
     [0, 1],
-    ["0px", `-${previewDivHeight - layoutContext.height / 2}px`]
+    ["0px", `-${previewDivHeight - layoutContext.height / 2}px`],
   );
 
   return (
@@ -106,6 +109,7 @@ const Gallery = ({ gallery }: IGallery) => {
             variants={previewVariants}
             initial="hidden"
             animate="visible"
+            exit="exit"
             style={{ translateY: offsetPreviewHeight }}
             ref={rightContainerRef}
           >
@@ -134,11 +138,15 @@ const Gallery = ({ gallery }: IGallery) => {
           {photos?.map((photo, index) => {
             if (!photo.fields.file?.url) return;
             return (
-              <motion.div key={`${photo.fields.file.url}`} id={`photo-${index}`}>
+              <motion.div
+                key={`${photo.fields.file.url}`}
+                id={`photo-${index}`}
+              >
                 <motion.div
                   className={styles.photoWrapper}
                   initial={{ opacity: 0, y: 80 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
                 >
                   <ContentfulImage data={photo} />
                 </motion.div>
@@ -195,7 +203,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   const gallery = photoGallery.find(
-    (gallery) => gallery.fields.slug == params.slug
+    (gallery) => gallery.fields.slug == params.slug,
   );
 
   return {

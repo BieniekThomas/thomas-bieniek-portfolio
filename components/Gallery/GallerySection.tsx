@@ -11,7 +11,7 @@ import { framer_default_variants } from "../../lib/framer";
 
 export interface IGallerySectionProps {
   galleries: {
-    fields: IPhotoGalleryFields
+    fields: IPhotoGalleryFields;
   }[];
 }
 
@@ -24,7 +24,7 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
         index={galleryIndex}
         setIndex={(index: number) => setGalleryIndex(index)}
       />
-      <motion.div 
+      <motion.div
         className={styles.outerWrapper}
         initial="hidden"
         exit="exit"
@@ -37,9 +37,9 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
           {
             <motion.div
               key={galleries[galleryIndex].fields.slug}
-              initial={{ y: 0, opacity: 0, }}
-              animate={{ y: 0, opacity: 1, }}
-              exit={{ y: 0, opacity: 0, }}
+              initial={{ y: 0, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 0, opacity: 0 }}
               transition={{ type: "spring" }}
             >
               <Gallery
