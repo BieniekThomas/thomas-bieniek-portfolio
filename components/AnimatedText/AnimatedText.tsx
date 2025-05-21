@@ -1,4 +1,4 @@
-import { motion, useInView } from "motion/react"
+import { motion, useInView } from "framer-motion"
 import { ReactNode, useRef } from "react";
 import styles from "./AnimatedText.module.scss";
 

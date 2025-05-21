@@ -5,7 +5,7 @@ import ContentfulImage from "../../components/Image/Image";
 import { PageHeadIndividual } from "../../components/PageHead/PageHead";
 import { fetchEntries } from "../../lib/api";
 import styles from "../../styles/Gallery.module.scss";
-import { motion, useSpring, useTransform, useScroll } from "motion/react";
+import { motion, useSpring, useTransform, useScroll } from "framer-motion";
 import { GalleryHeader } from "../../components/Gallery/GalleryModal";
 import Text from "../../components/Text/Text";
 import {

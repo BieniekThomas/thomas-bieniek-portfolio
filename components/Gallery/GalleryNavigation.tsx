@@ -18,7 +18,7 @@ export function GalleryNavigation({
     <div className={styles.outerWrapper}>
       <div className={styles.headline}>Galleries</div>
       <div className={styles.innerWrapper}>
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout">
         {galleries.map((gallery, i) => {
           return (
           <div style={{position: 'relative'}} key={gallery.fields.title}>
