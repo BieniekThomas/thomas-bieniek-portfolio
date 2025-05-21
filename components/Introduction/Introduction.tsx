@@ -46,7 +46,11 @@ export const Introduction: FC<IIntroduction> = ({ data }) => {
             </motion.div>
           </motion.div>
         )}
-        <h1>{biography && <AnimatedText text={biography} />}</h1>
+        <div>
+          <span className={styles.bigFont}>
+            {biography && <AnimatedText text={biography} />}
+          </span>
+        </div>
       </div>
     </>
   );

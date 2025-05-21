@@ -14,3 +14,12 @@
     overflow: hidden;
     background: var(--action-color)
 }
+
+.bigFont {
+  display: inline-block;
+  width: 100%;
+  padding-top: 8rem;
+  @include mixins.headline(5rem);
+  line-height: 5rem;
+  text-align: left;
+}
