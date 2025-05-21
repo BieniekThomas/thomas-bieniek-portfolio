@@ -13,7 +13,6 @@ interface IIntroduction {
 }
 
 export const Introduction: FC<IIntroduction> = ({ data }) => {
-    console.log("🚀 ~ data:", data)
     const {biography, name, profilePhoto} = data.fields
     const container = useRef(null)
     const {height} = useWindowDimensions()
