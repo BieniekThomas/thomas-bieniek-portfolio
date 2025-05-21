@@ -21,7 +21,7 @@ export function GalleryNavigation({
         <AnimatePresence mode="popLayout">
         {galleries.map((gallery, i) => {
           return (
-          <div style={{position: 'relative'}} key={gallery.fields.title}>
+          <div style={{position: 'relative', cursor: 'pointer'}} key={gallery.fields.title}>
             <NoScrollLink
               noLink
               key={gallery.fields.title}

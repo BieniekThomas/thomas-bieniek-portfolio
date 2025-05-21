@@ -43,7 +43,7 @@ const NoScrollLink: FC<INoScrollLink> = ({
   const Inner = () => (
     <div
       className={`
-          ${noStyling || styles.link} 
+          ${noStyling ?? styles.link} 
           ${blendMode ? styles.blendMode : ""}
           ${active ? styles.active : ""}
         `}

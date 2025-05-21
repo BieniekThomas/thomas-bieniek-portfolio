@@ -14,7 +14,7 @@ interface IGallery {
 
 export const Gallery: FC<IGallery> = ({ data }) => {
   const { title, description, coverImage, slug } = data.fields;
-  const imageRef = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -80,25 +80,26 @@ export const Gallery: FC<IGallery> = ({ data }) => {
             </>
           </div>
         </div>
-        <motion.div className={styles.right}
-          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-          //@ts-expect-error refs are dumb in typescript
-          ref={imageRef}
-          onMouseMove={e => handleMouseMove(e)}
-          onMouseLeave={handleMouseLeave}
-        >
-          {coverImage && (
-            <NoScrollLink
-              noStyling
-              cursor="withText"
-              cursorText="open gallery"
-              url={`/gallery/${slug}`}
-            >
-              <ContentfulImage data={coverImage} />
-            </NoScrollLink>
-          )}
+        <div className={styles.right}>
+          <motion.div
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            ref={imageRef}
+            onMouseMove={e => handleMouseMove(e)}
+            onMouseLeave={handleMouseLeave}
+          >
+            {coverImage && (
+              <NoScrollLink
+                noStyling
+                cursor="withText"
+                cursorText="open gallery"
+                url={`/gallery/${slug}`}
+              >
+                <ContentfulImage data={coverImage} />
+              </NoScrollLink>
+            )}
+          </motion.div>
+           </div>
         </motion.div>
-      </motion.div>
     </div>
   );
 };
