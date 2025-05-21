@@ -5,6 +5,7 @@ import { useScroll, useTransform, motion } from "framer-motion";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { BackgroundImage } from "../Image/BackgroundImage";
 import { AnimatedText } from "../AnimatedText/AnimatedText";
+import { framer_default_variants } from "../../lib/framer";
 
 interface IIntroduction {
     data: {
@@ -30,7 +31,20 @@ export const Introduction: FC<IIntroduction> = ({ data }) => {
         <div>
             <h1>{name && <AnimatedText text={name} />}</h1>
         </div>
-        {profilePhoto && <div className={styles.backgroundImage}><motion.div style={{y, opacity: opacity}}><BackgroundImage data={profilePhoto} /></motion.div></div>}
+        {profilePhoto && (
+            <motion.div 
+                className={styles.backgroundImage}
+                initial="hidden"
+                animate="enter"
+                exit="exit"
+                variants={framer_default_variants}
+                transition={{ type: "spring" }}
+            >
+                <motion.div style={{y, opacity: opacity}}>
+                    <BackgroundImage data={profilePhoto} />
+                </motion.div>
+            </motion.div>
+        )}
         <h1>{biography && <AnimatedText text={biography} />}</h1>
     </div>
     </>

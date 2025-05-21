@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import styles from "./GallerySection.module.scss";
 
 import { IPhotoGalleryFields } from "../../@types/generated/contentful";
+import { framer_default_variants } from "../../lib/framer";
 
 export interface IGallerySectionProps {
   galleries: {
@@ -23,7 +24,15 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
         index={galleryIndex}
         setIndex={(index: number) => setGalleryIndex(index)}
       />
-      <div className={styles.outerWrapper}>
+      <motion.div 
+        className={styles.outerWrapper}
+        initial="hidden"
+        exit="exit"
+        variants={framer_default_variants}
+        whileInView={"enter"}
+        viewport={{ once: true }}
+        transition={{ type: "spring" }}
+      >
         <AnimatePresence mode="popLayout">
           {
             <motion.div
@@ -31,6 +40,7 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
               initial={{ y: 0, opacity: 0, }}
               animate={{ y: 0, opacity: 1, }}
               exit={{ y: 0, opacity: 0, }}
+              transition={{ type: "spring" }}
             >
               <Gallery
                 key={galleries[galleryIndex].fields.slug}
@@ -39,7 +49,7 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
             </motion.div>
           }
         </AnimatePresence>
-      </div>
+      </motion.div>
     </>
   );
 }
