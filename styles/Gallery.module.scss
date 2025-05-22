@@ -43,6 +43,9 @@
   @include mixins.inner-space;
   padding-bottom: 50px;
   padding-top: 50px;
+  a {
+    color: var(--background-color)
+  }
 }
 
 .photoContainer {
