@@ -17,6 +17,7 @@ import {
   IPhotoGalleryFields,
 } from "../@types/generated/contentful";
 import styles from "../styles/Home.module.scss";
+import { Contact } from "../components/Contact/Contact";
 
 interface IHome {
   photoGallery: {
@@ -60,7 +61,7 @@ const Home: FC<IHome> = ({
         <div className={styles.smallestHeight}></div>
         <Section
           number={1}
-          headline="Photography"
+          headline="Fotografie"
           subHeadline="capturing emotions"
         />
         <Description data={photoDesc} />
@@ -94,6 +95,13 @@ const Home: FC<IHome> = ({
             </span>
           </TextSlider>
         </div>
+        <div className={styles.smallestHeight}></div>
+        <Section
+          number={4}
+          headline="Kontakt und Links"
+          subHeadline="Foto/Multi-Media/VJ/Coding/DJ"
+        />
+        <Contact />
         <div className={styles.smallestHeight}></div>
       </div>
     </Layout>

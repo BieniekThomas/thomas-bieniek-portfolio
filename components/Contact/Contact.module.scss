@@ -1,0 +1,19 @@
+@use '../../styles/mixins';
+
+.outerWrapper {
+    @include mixins.inner-space
+}
+
+.innerWrapper {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    justify-content: center;
+    text-align: justify;
+}
+
+.link {
+    @include mixins.headline(3rem);
+    > div{
+        padding-bottom: 40px;
+    }
+}

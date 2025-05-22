@@ -23,7 +23,7 @@ export const Introduction: FC<IIntroduction> = ({ data }) => {
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [-h / 2, h / 3]);
+  const y = useTransform(scrollYProgress, [0, 1], [-h, h / 5]);
   const opacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
 
   return (
@@ -41,7 +41,7 @@ export const Introduction: FC<IIntroduction> = ({ data }) => {
             variants={framer_default_variants}
             transition={{ type: "spring" }}
           >
-            <motion.div style={{ y, opacity: opacity }}>
+            <motion.div style={{ y, opacity }}>
               <BackgroundImage data={profilePhoto} />
             </motion.div>
           </motion.div>
