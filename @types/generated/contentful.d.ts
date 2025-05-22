@@ -49,6 +49,9 @@ export interface IHomeFields {
 
   /** parallaxGallery */
   parallaxGallery?: Entry<{ [fieldId: string]: unknown }> | undefined;
+
+  /** MultiMediaGallery */
+  multiMediaGallery?: Entry<{ [fieldId: string]: unknown }>[] | undefined;
 }
 
 export interface IHome extends Entry<IHomeFields> {
@@ -61,6 +64,66 @@ export interface IHome extends Entry<IHomeFields> {
     contentType: {
       sys: {
         id: "home";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
+export interface IMultiMediaGalleryFields {
+  /** Title */
+  title: string;
+
+  /** Slug */
+  slug?: string | undefined;
+
+  /** Cover Image */
+  coverImage?: Asset | undefined;
+
+  /** Description */
+  description?: Document | undefined;
+
+  /** photos */
+  photos?: Asset[] | undefined;
+
+  /** Tags */
+  tags?: string[] | undefined;
+}
+
+export interface IMultiMediaGallery extends Entry<IMultiMediaGalleryFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "multiMediaGallery";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
+export interface IMultiMediaGalleryDescriptionFields {
+  /** Description */
+  description?: Document | undefined;
+}
+
+export interface IMultiMediaGalleryDescription
+  extends Entry<IMultiMediaGalleryDescriptionFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "multiMediaGalleryDescription";
         linkType: "ContentType";
         type: "Link";
       };
@@ -127,13 +190,46 @@ export interface IPhotoGallery extends Entry<IPhotoGalleryFields> {
   };
 }
 
+export interface IPhotoGalleryDescriptionFields {
+  /** Description */
+  description?: Document | undefined;
+}
+
+export interface IPhotoGalleryDescription
+  extends Entry<IPhotoGalleryDescriptionFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "photoGalleryDescription";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
 export type CONTENT_TYPE =
   | "author"
   | "home"
+  | "multiMediaGallery"
+  | "multiMediaGalleryDescription"
   | "parallaxGallery"
-  | "photoGallery";
+  | "photoGallery"
+  | "photoGalleryDescription";
 
-export type IEntry = IAuthor | IHome | IParallaxGallery | IPhotoGallery;
+export type IEntry =
+  | IAuthor
+  | IHome
+  | IMultiMediaGallery
+  | IMultiMediaGalleryDescription
+  | IParallaxGallery
+  | IPhotoGallery
+  | IPhotoGalleryDescription;
 
 export type LOCALE_CODE = "en-US";
 

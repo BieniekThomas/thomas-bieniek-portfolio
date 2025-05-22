@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "contentful-typescript-codegen": "env-cmd --file .env contentful-typescript-codegen --output @types/generated/contentful.d.ts",
+    "generate-types": "env-cmd --file .env contentful-typescript-codegen --output @types/generated/contentful.d.ts",
     "setup": "env-cmd node ./contentful/setup.js",
     "contentful-export": "contentful space export --config contentful-config.json",
     "prepare": "husky install"

@@ -17,6 +17,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager";
 import Layout from "../../components/_Layout/Layout";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { Entry, EntrySkeletonType } from "contentful";
 
 interface IGallery {
   gallery: {
@@ -183,26 +184,43 @@ export default Gallery;
 
 // NextJs Stuff
 const PHOTO_GALLERY_ID = "photoGallery";
+const MULTI_MEDIA_ID = "multiMediaGallery";
 export async function getStaticPaths() {
   const photoGalleries = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
+  const multiMediaGalleries = await fetchEntries({
+    content_type: MULTI_MEDIA_ID,
+  });
 
   const paths = photoGalleries?.map((gallery) => {
     return `/gallery/${gallery.fields.slug}`;
   });
 
+  const multiMediaPaths = multiMediaGalleries?.map((gallery) => {
+    return `/gallery/${gallery.fields.slug}`;
+  });
+
+  if (multiMediaPaths) paths?.push(...multiMediaPaths);
+
   return { paths, fallback: false };
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const galleries: Entry<EntrySkeletonType, undefined, string>[] = [];
   const photoGallery = await fetchEntries({ content_type: PHOTO_GALLERY_ID });
+  const multiMediaGallery = await fetchEntries({
+    content_type: MULTI_MEDIA_ID,
+  });
   if (!photoGallery || !params) {
     console.error("photogallery not available");
     return {
       props: {},
     };
   }
-
-  const gallery = photoGallery.find(
+  galleries.push(...photoGallery);
+  if (multiMediaGallery) {
+    galleries.push(...multiMediaGallery);
+  }
+  const gallery = galleries.find(
     (gallery) => gallery.fields.slug == params.slug,
   );
 

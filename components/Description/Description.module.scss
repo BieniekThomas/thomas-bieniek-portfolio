@@ -1,0 +1,14 @@
+@use '../../styles/mixins';
+
+.outerWrapper {
+    @include mixins.inner-space; 
+    margin-top: -80px;
+    margin-bottom: 50px;
+}
+
+.innerWrapper {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    justify-content: center;
+    text-align: justify;
+}

@@ -1,11 +1,11 @@
 @use './variables.module.scss';
 
 @mixin inner-space {
-  padding: 20px 80px;
+  padding: 20px 120px;
 }
 
 @mixin inner-space-small {
-  padding: 20px 80px;
+  padding: 20px 120px;
   max-width: 80%;
 }
 

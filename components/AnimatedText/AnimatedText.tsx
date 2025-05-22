@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion"
+import { motion, useInView } from "framer-motion";
 import { ReactNode, useRef } from "react";
 import styles from "./AnimatedText.module.scss";
 
@@ -41,7 +41,7 @@ export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
   const inViewRef = useRef<HTMLElement>(null);
   const isInView = useInView(inViewRef, {
     margin: "0px",
-    once: true
+    once: true,
   });
 
   const containerVariant = {
@@ -54,7 +54,7 @@ export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
   };
 
   return (
-    <span ref={inViewRef}>
+    <motion.span ref={inViewRef}>
       {words.map((word, index) => {
         if (!word || !isInView) return <p key={index}></p>;
         return (
@@ -86,7 +86,7 @@ export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
           </span>
         );
       })}
-    </span>
+    </motion.span>
   );
 };
 
@@ -113,20 +113,14 @@ interface IAnimatedTextBlock {
   children: ReactNode[] | ReactNode;
 }
 export const AnimatedTextBlock = ({ children }: IAnimatedTextBlock) => {
-  const inViewRef = useRef(null);
-  const isInView = useInView(inViewRef, {
-    margin: "0px",
-  });
-
   return (
-    <div ref={inViewRef}>
-      <motion.div
-        variants={TextBlockVariant}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
-        {children}
-      </motion.div>
-    </div>
+    <motion.div
+      variants={TextBlockVariant}
+      initial="hidden"
+      whileInView={"visible"}
+      viewport={{ once: true }}
+    >
+      {children}
+    </motion.div>
   );
 };

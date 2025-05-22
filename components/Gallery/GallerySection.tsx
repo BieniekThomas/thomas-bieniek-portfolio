@@ -13,9 +13,10 @@ export interface IGallerySectionProps {
   galleries: {
     fields: IPhotoGalleryFields;
   }[];
+  nameKey: string;
 }
 
-export function GallerySection({ galleries }: IGallerySectionProps) {
+export function GallerySection({ galleries, nameKey }: IGallerySectionProps) {
   const [galleryIndex, setGalleryIndex] = useState(0);
   return (
     <>
@@ -23,6 +24,7 @@ export function GallerySection({ galleries }: IGallerySectionProps) {
         galleries={galleries}
         index={galleryIndex}
         setIndex={(index: number) => setGalleryIndex(index)}
+        nameKey={nameKey}
       />
       <motion.div
         className={styles.outerWrapper}
