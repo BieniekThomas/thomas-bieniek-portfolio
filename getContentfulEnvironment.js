@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const contentfulManagement = require("contentful-management")
 
 module.exports = function () {
