@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "generate-types": "env-cmd --file .env contentful-typescript-codegen --output @types/generated/contentful.d.ts",
     "setup": "env-cmd node ./contentful/setup.js",
     "contentful-export": "contentful space export --config contentful-config.json",
