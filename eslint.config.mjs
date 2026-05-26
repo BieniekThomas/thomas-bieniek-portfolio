@@ -15,6 +15,7 @@ const eslintConfig = [
         'next/typescript',
     ],
   }),
+  // ignorePatterns: ['node_modules', 'dist', 'build', '.next'],
 ]
  
 export default eslintConfig
