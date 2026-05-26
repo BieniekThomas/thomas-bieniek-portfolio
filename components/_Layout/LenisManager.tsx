@@ -1,4 +1,4 @@
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 import { createContext, ReactNode, useContext, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "react-use";
 
@@ -44,7 +44,7 @@ export const LenisManager = ({ children }: IChildren) => {
   }, []);
 
   if (!lenis.current) {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
   return (
