@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useCursorContext } from "../Cursor/CursorManager";
 import { useRouter } from "next/router";
 
@@ -16,21 +16,19 @@ export function Icon({
   const { setSize, setText } = useCursorContext();
   const router = useRouter();
 
-  const onLeave = () => {
+  const onLeave = useCallback(() => {
     setSize("small");
     setText("");
-  };
+  }, [setSize, setText]);
 
   useEffect(() => {
-    onLeave()
-  }, [router.asPath])
+    onLeave();
+  }, [router.asPath, onLeave]);
 
-  const onHover = () => {
+  const onHover = useCallback(() => {
     setSize(cursorText ? "withText" : "big");
-    if(cursorText) setText(cursorText);
-  };
-
-  
+    if (cursorText) setText(cursorText);
+  }, [setSize, setText, cursorText]);
 
   return (
     <span
