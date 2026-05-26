@@ -1,8 +1,8 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import { ReactNode, useRef } from "react";
 import styles from "./AnimatedText.module.scss";
 
-const variant = {
+const variant: Variants = {
   hidden: {
     y: "200%",
     transition: {
@@ -44,7 +44,7 @@ export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
     once: true,
   });
 
-  const containerVariant = {
+  const containerVariant: Variants = {
     hidden: {},
     visible: {
       transition: {
@@ -90,7 +90,7 @@ export const AnimatedText = ({ text, noStagger }: IAnimatedText) => {
   );
 };
 
-const TextBlockVariant = {
+const TextBlockVariant: Variants = {
   hidden: {
     y: "20%",
     opacity: 0,
