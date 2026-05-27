@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { AnimatePresence } from "framer-motion";
 import { GalleryNavigation } from "./GalleryNavigation";
 import Gallery from "./Gallery";
