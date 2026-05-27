@@ -6,14 +6,18 @@ import Gallery from "./Gallery";
 import { motion } from "framer-motion";
 import styles from "./GallerySection.module.scss";
 
-import { IPhotoGalleryFields } from "../../@types/generated/contentful";
+import {
+  IMultiMediaGalleryFields,
+  IPhotoGalleryFields,
+} from "../../@types/generated/contentful";
 import { framer_default_variants } from "../../lib/framer";
+import { IGalleryNameKeys } from "../../pages";
 
 export interface IGallerySectionProps {
   galleries: {
-    fields: IPhotoGalleryFields;
+    fields: IPhotoGalleryFields | IMultiMediaGalleryFields;
   }[];
-  nameKey: string;
+  nameKey: IGalleryNameKeys;
 }
 
 export function GallerySection({ galleries, nameKey }: IGallerySectionProps) {

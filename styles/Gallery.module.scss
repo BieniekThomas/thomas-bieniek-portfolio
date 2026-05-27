@@ -75,3 +75,34 @@
   margin-right: 200px;
   margin-left: 200px;
 }
+
+.previewSpacer {
+  height: 80vh;
+}
+
+.previewContainer {
+  position: relative;
+  top:-100px;
+  left: 0;
+  z-index: 5;
+  height: 100vh;
+  width: 100%;
+  padding-top: 80vh;
+
+  youtube-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .noClickWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+}

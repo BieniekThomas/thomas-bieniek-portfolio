@@ -106,6 +106,8 @@
   width: 100%;
   height: 80px;
   @include mixins.inner-space;
+  mix-blend-mode: difference;
+    color: var(--background-color);
 
   .galleryTitle {
     display: flex;

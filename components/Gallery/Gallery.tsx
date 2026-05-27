@@ -8,7 +8,7 @@ import Text from "../Text/Text";
 
 interface IGallery {
   data: {
-    fields: IPhotoGalleryFields
+    fields: IPhotoGalleryFields;
   };
 }
 
@@ -30,12 +30,21 @@ export const Gallery: FC<IGallery> = ({ data }) => {
     restDelta: 0.001,
   });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["-13.5deg", "13.5deg"])
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-13.5deg", "13.5deg"])
+  const rotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    ["-13.5deg", "13.5deg"],
+  );
+  const rotateY = useTransform(
+    mouseXSpring,
+    [-0.5, 0.5],
+    ["-13.5deg", "13.5deg"],
+  );
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!imageRef.current) return;
-    const { width, height, left, top } = imageRef.current.getBoundingClientRect();
+    const { width, height, left, top } =
+      imageRef.current.getBoundingClientRect();
     const mouseX = e.clientX - left;
     const mouseY = e.clientY - top;
 
@@ -44,12 +53,12 @@ export const Gallery: FC<IGallery> = ({ data }) => {
 
     x.set(xPct);
     y.set(yPct);
-  }
+  };
 
   const handleMouseLeave = () => {
     x.set(0);
-    y.set(0)
-  }
+    y.set(0);
+  };
 
   return (
     <div className={styles.outerWrapper} id={slug}>
@@ -84,7 +93,7 @@ export const Gallery: FC<IGallery> = ({ data }) => {
           <motion.div
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             ref={imageRef}
-            onMouseMove={e => handleMouseMove(e)}
+            onMouseMove={(e) => handleMouseMove(e)}
             onMouseLeave={handleMouseLeave}
           >
             {coverImage && (
@@ -98,8 +107,8 @@ export const Gallery: FC<IGallery> = ({ data }) => {
               </NoScrollLink>
             )}
           </motion.div>
-           </div>
-        </motion.div>
+        </div>
+      </motion.div>
     </div>
   );
 };

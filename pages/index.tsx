@@ -19,6 +19,8 @@ import {
 import styles from "../styles/Home.module.scss";
 import { Contact } from "../components/Contact/Contact";
 
+export type IGalleryNameKeys = "photo" | "multiMedia";
+
 interface IHome {
   photoGallery: {
     fields: IPhotoGalleryFields;

@@ -23,6 +23,7 @@
     "next": "^15.4.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-player": "^3.4.0",
     "react-use": "^17.6.0"
   },
   "devDependencies": {
@@ -32,7 +33,7 @@
     "@types/node": "^22.15.19",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
-     "contentful-cli": "^3.8.8",
+    "contentful-cli": "^3.8.8",
     "contentful-import": "^9.4.101",
     "contentful-typescript-codegen": "^3.4.0",
     "env-cmd": "^11.0.0",

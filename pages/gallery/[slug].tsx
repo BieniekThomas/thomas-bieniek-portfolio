@@ -1,6 +1,10 @@
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { IPhotoGalleryFields } from "../../@types/generated/contentful";
+import {
+  IMultiMediaGalleryFields,
+  IPhotoGalleryFields,
+  IYoutubeLinkFields,
+} from "../../@types/generated/contentful";
 import ContentfulImage from "../../components/Image/Image";
 import { PageHeadIndividual } from "../../components/PageHead/PageHead";
 import { fetchEntries } from "../../lib/api";
@@ -18,10 +22,11 @@ import { useLayoutManagerContext } from "../../components/_Layout/LayoutManager"
 import Layout from "../../components/_Layout/Layout";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Entry, EntrySkeletonType } from "contentful";
+import ReactPlayer from "react-player";
 
 interface IGallery {
   gallery: {
-    fields: IPhotoGalleryFields;
+    fields: IMultiMediaGalleryFields;
   };
 }
 
@@ -52,9 +57,11 @@ const previewChildVariants = {
 };
 
 const Gallery = ({ gallery }: IGallery) => {
+  console.log("🚀 ~ Gallery ~ gallery:", gallery);
   const rightContainerRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { title, description, photos, slug } = gallery.fields;
+  const { title, description, photos, slug, youtubeLinks } = gallery.fields;
+  console.log("🚀 ~ Gallery ~ youtubeLinks:", youtubeLinks);
   const photoAmount = photos?.length;
   const { scrollYProgress } = useScroll();
   const { height: windowHeight } = useWindowDimensions();
@@ -93,90 +100,118 @@ const Gallery = ({ gallery }: IGallery) => {
     ["0px", `-${previewDivHeight - layoutContext.height / 2}px`],
   );
 
+  const firstYoutubeLink =
+    youtubeLinks && youtubeLinks.length > 0
+      ? (youtubeLinks[0].fields as IYoutubeLinkFields)
+      : null;
+
   return (
-    <Layout>
-      <PageHeadIndividual
-        pageTitle={`Gallery — ${title}`}
-        keyName={slug ?? "gallery"}
-        pageDescription={`Gallery with ${photoAmount} pictures on the theme ${title}`}
-      />
-      <GalleryHeader
-        onClose={onClose}
-        title={title}
-        photoAmount={photos?.length}
-      />
-      <div className={styles.photoContainer}>
-        <div className={styles.leftContainer}>
-          <motion.div
-            variants={previewVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            style={{ translateY: offsetPreviewHeight }}
-            ref={rightContainerRef}
-            onAnimationComplete={() => setPreviewContainerHeight()}
-          >
+    <>
+      <Layout>
+        {firstYoutubeLink?.link && (
+          <>
+            <div className={styles.previewContainer}>
+              <div className={styles.noClickWrapper}></div>
+              <ReactPlayer
+                src={firstYoutubeLink.link}
+                autoPlay
+                muted
+                loop
+                controls={false}
+                width="100%"
+                height="100%"
+                config={{
+                  youtube: {
+                    cc_load_policy: 0, // Forces closed captions off
+                  },
+                }}
+              />
+            </div>
+          </>
+        )}
+        <PageHeadIndividual
+          pageTitle={`Gallery — ${title}`}
+          keyName={slug ?? "gallery"}
+          pageDescription={`Gallery with ${photoAmount} pictures on the theme ${title}`}
+        />
+        <GalleryHeader
+          onClose={onClose}
+          title={title}
+          photoAmount={photos?.length}
+        />
+        <div className={styles.photoContainer}>
+          <div className={styles.leftContainer}>
+            <motion.div
+              variants={previewVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              style={{ translateY: offsetPreviewHeight }}
+              ref={rightContainerRef}
+              onAnimationComplete={() => setPreviewContainerHeight()}
+            >
+              {photos?.map((photo, index) => {
+                if (!photo.fields.file?.url) return;
+                return (
+                  <motion.div
+                    variants={previewChildVariants}
+                    key={`preview-${photo.fields.file?.url}`}
+                  >
+                    <a
+                      className={styles.photoPreviewWrapper}
+                      href={`#photo-${index}`}
+                      onClick={() => onAnchorClick(`#photo-${index}`)}
+                    >
+                      <ContentfulImage data={photo} maxDimensionInPx={150} />
+                    </a>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+          <div className={styles.rightContainer}>
             {photos?.map((photo, index) => {
               if (!photo.fields.file?.url) return;
               return (
                 <motion.div
-                  variants={previewChildVariants}
-                  key={`preview-${photo.fields.file?.url}`}
+                  key={`${photo.fields.file.url}`}
+                  id={`photo-${index}`}
                 >
-                  <a
-                    className={styles.photoPreviewWrapper}
-                    href={`#photo-${index}`}
-                    onClick={() => onAnchorClick(`#photo-${index}`)}
+                  <motion.div
+                    className={styles.photoWrapper}
+                    initial={{ opacity: 0, y: 80 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
                   >
-                    <ContentfulImage data={photo} maxDimensionInPx={150} />
-                  </a>
+                    <ContentfulImage data={photo} />
+                  </motion.div>
                 </motion.div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
-        <div className={styles.rightContainer}>
-          {photos?.map((photo, index) => {
-            if (!photo.fields.file?.url) return;
-            return (
-              <motion.div
-                key={`${photo.fields.file.url}`}
-                id={`photo-${index}`}
-              >
-                <motion.div
-                  className={styles.photoWrapper}
-                  initial={{ opacity: 0, y: 80 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <ContentfulImage data={photo} />
-                </motion.div>
-              </motion.div>
-            );
-          })}
+        <div className={styles.progressWrapper}>
+          <motion.div
+            className={styles.progress}
+            style={{ height: scrollPercent }}
+          />
         </div>
-      </div>
-      <div className={styles.progressWrapper}>
-        <motion.div
-          className={styles.progress}
-          style={{ height: scrollPercent }}
-        />
-      </div>
-      <div className={styles.galleryFooter}>
-        <div className={styles.galleryFooterWrapper}>
-          <h1>
-            <AnimatedText text={title} />
-          </h1>
-          {description && (
-            <div className={styles.description}>
-              <AnimatedTextBlock>
-                {Text({ text: description })}
-              </AnimatedTextBlock>
-            </div>
-          )}
+        <div className={styles.galleryFooter}>
+          <div className={styles.galleryFooterWrapper}>
+            <h1>
+              <AnimatedText text={title} />
+            </h1>
+            {description && (
+              <div className={styles.description}>
+                <AnimatedTextBlock>
+                  {Text({ text: description })}
+                </AnimatedTextBlock>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 
