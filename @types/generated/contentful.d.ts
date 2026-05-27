@@ -87,6 +87,9 @@ export interface IMultiMediaGalleryFields {
   /** photos */
   photos?: Asset[] | undefined;
 
+  /** youtube-links */
+  youtubeLinks?: IYoutubeLink[] | undefined;
+
   /** Tags */
   tags?: string[] | undefined;
 }
@@ -113,8 +116,7 @@ export interface IMultiMediaGalleryDescriptionFields {
   description?: Document | undefined;
 }
 
-export interface IMultiMediaGalleryDescription
-  extends Entry<IMultiMediaGalleryDescriptionFields> {
+export interface IMultiMediaGalleryDescription extends Entry<IMultiMediaGalleryDescriptionFields> {
   sys: {
     id: string;
     type: string;
@@ -195,8 +197,7 @@ export interface IPhotoGalleryDescriptionFields {
   description?: Document | undefined;
 }
 
-export interface IPhotoGalleryDescription
-  extends Entry<IPhotoGalleryDescriptionFields> {
+export interface IPhotoGalleryDescription extends Entry<IPhotoGalleryDescriptionFields> {
   sys: {
     id: string;
     type: string;
@@ -213,6 +214,31 @@ export interface IPhotoGalleryDescription
   };
 }
 
+export interface IYoutubeLinkFields {
+  /** Title */
+  title?: string | undefined;
+
+  /** link */
+  link: string;
+}
+
+export interface IYoutubeLink extends Entry<IYoutubeLinkFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "youtubeLink";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
 export type CONTENT_TYPE =
   | "author"
   | "home"
@@ -220,7 +246,8 @@ export type CONTENT_TYPE =
   | "multiMediaGalleryDescription"
   | "parallaxGallery"
   | "photoGallery"
-  | "photoGalleryDescription";
+  | "photoGalleryDescription"
+  | "youtubeLink";
 
 export type IEntry =
   | IAuthor
@@ -229,7 +256,8 @@ export type IEntry =
   | IMultiMediaGalleryDescription
   | IParallaxGallery
   | IPhotoGallery
-  | IPhotoGalleryDescription;
+  | IPhotoGalleryDescription
+  | IYoutubeLink;
 
 export type LOCALE_CODE = "en-US";
 
