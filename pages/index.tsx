@@ -18,6 +18,7 @@ import {
 } from "../@types/generated/contentful";
 import styles from "../styles/Home.module.scss";
 import { Contact } from "../components/Contact/Contact";
+import useLocalstorageState from "../hooks/useLocalStorageState";
 
 export type IGalleryNameKeys = "photo" | "multiMedia";
 
@@ -50,6 +51,13 @@ const Home: FC<IHome> = ({
   photoDesc,
   multiMediaDesc,
 }) => {
+  const [photoGalleryIndex, setPhotoGalleryIndex] = useLocalstorageState(
+    "photoGalleryIndex",
+    0,
+  );
+  const [multiMediaGalleryIndex, setMultiMediaGalleryIndex] =
+    useLocalstorageState("multiMediaGalleryIndex", 0);
+
   return (
     <Layout>
       <PageHead site="home" />
@@ -67,6 +75,8 @@ const Home: FC<IHome> = ({
           <GallerySection
             galleries={multiMediaGallery}
             nameKey={"multiMedia"}
+            currentIndex={multiMediaGalleryIndex}
+            onIndexChange={setMultiMediaGalleryIndex}
           />
         </div>
         <div className={styles.smallestHeight}></div>
@@ -77,7 +87,12 @@ const Home: FC<IHome> = ({
         />
         <Description data={photoDesc} />
         <div className={styles.minHeight}>
-          <GallerySection galleries={photoGallery} nameKey={"photo"} />
+          <GallerySection
+            galleries={photoGallery}
+            nameKey={"photo"}
+            currentIndex={photoGalleryIndex}
+            onIndexChange={setPhotoGalleryIndex}
+          />
         </div>
         <div className={styles.smallestHeight}></div>
         <Section

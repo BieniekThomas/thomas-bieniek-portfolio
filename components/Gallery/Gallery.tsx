@@ -10,6 +10,8 @@ interface IGallery {
   data: {
     fields: IPhotoGalleryFields;
   };
+  currentIndex?: number;
+  onIndexChange?: (index: number) => void;
 }
 
 export const Gallery: FC<IGallery> = ({ data }) => {

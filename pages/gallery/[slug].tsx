@@ -26,7 +26,7 @@ import ReactPlayer from "react-player";
 
 interface IGallery {
   gallery: {
-    fields: IMultiMediaGalleryFields;
+    fields: IMultiMediaGalleryFields | IPhotoGalleryFields;
   };
 }
 
@@ -59,7 +59,7 @@ const previewChildVariants = {
 const Gallery = ({ gallery }: IGallery) => {
   const rightContainerRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { title, description, photos, slug, youtubeLinks } = gallery.fields;
+  const { title, description, photos, slug } = gallery.fields;
   const photoAmount = photos?.length;
   const { scrollYProgress } = useScroll();
   const { height: windowHeight } = useWindowDimensions();
@@ -97,6 +97,9 @@ const Gallery = ({ gallery }: IGallery) => {
     [0, 1],
     ["0px", `-${previewDivHeight - layoutContext.height / 2}px`],
   );
+
+  const youtubeLinks =
+    "youtubeLinks" in gallery.fields ? gallery.fields.youtubeLinks : undefined;
 
   const firstYoutubeLink =
     youtubeLinks && youtubeLinks.length > 0

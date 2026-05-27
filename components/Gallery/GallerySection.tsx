@@ -18,16 +18,25 @@ export interface IGallerySectionProps {
     fields: IPhotoGalleryFields | IMultiMediaGalleryFields;
   }[];
   nameKey: IGalleryNameKeys;
+  readonly currentIndex?: number;
+  readonly onIndexChange?: (index: number) => void;
 }
 
-export function GallerySection({ galleries, nameKey }: IGallerySectionProps) {
-  const [galleryIndex, setGalleryIndex] = useState(0);
+export function GallerySection({
+  galleries,
+  nameKey,
+  currentIndex,
+  onIndexChange,
+}: IGallerySectionProps) {
+  // const [galleryIndex, setGalleryIndex] = useState(currentIndex ?? 0);
   return (
     <>
       <GalleryNavigation
         galleries={galleries}
-        index={galleryIndex}
-        setIndex={(index: number) => setGalleryIndex(index)}
+        index={currentIndex}
+        setIndex={(index: number) => {
+          onIndexChange?.(index);
+        }}
         nameKey={nameKey}
       />
       <motion.div
@@ -42,15 +51,15 @@ export function GallerySection({ galleries, nameKey }: IGallerySectionProps) {
         <AnimatePresence mode="popLayout">
           {
             <motion.div
-              key={galleries[galleryIndex].fields.slug}
+              key={galleries[currentIndex].fields.slug}
               initial={{ y: 0, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 0, opacity: 0 }}
               transition={{ type: "spring" }}
             >
               <Gallery
-                key={galleries[galleryIndex].fields.slug}
-                data={galleries[galleryIndex]}
+                key={galleries[currentIndex].fields.slug}
+                data={galleries[currentIndex]}
               />
             </motion.div>
           }
