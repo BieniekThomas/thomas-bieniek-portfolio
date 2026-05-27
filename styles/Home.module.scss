@@ -19,6 +19,11 @@
   min-height: 25vh;
 }
 
+.smallerSmallestHeight {
+  width: 100%;
+  min-height: 7vh;
+}
+
 .bigFont {
   @include mixins.headline(7rem);
 }

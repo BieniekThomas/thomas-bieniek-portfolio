@@ -66,7 +66,7 @@ const Home: FC<IHome> = ({
         <div className={styles.smallHeight}>
           <Introduction data={author} />
         </div>
-        <div className={styles.smallestHeight}></div>
+        <div className={styles.smallerSmallestHeight}></div>
         <ParallaxGallery data={parallaxGallery} />
         <div className={styles.smallestHeight}></div>
         <Section number={1} headline="Multi-Media" subHeadline="new worlds" />
