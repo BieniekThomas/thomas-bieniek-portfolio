@@ -23,8 +23,7 @@
     "next": "^15.4.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-player": "^3.4.0",
-    "react-use": "^17.6.0"
+    "react-player": "^3.4.0"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.15.11",

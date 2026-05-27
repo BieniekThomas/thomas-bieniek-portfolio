@@ -1,6 +1,12 @@
 import Lenis from "lenis";
-import { createContext, ReactNode, useContext, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "react-use";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface ILenis {
   lenis: Lenis | undefined;
@@ -18,7 +24,7 @@ export const LenisManager = ({ children }: IChildren) => {
   const [ready, setReady] = useState(false);
   const lenis = useRef<Lenis>(null);
 
-  useIsomorphicLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (ready && lenis.current) return;
     lenis.current = new Lenis({
       duration: 1.3,

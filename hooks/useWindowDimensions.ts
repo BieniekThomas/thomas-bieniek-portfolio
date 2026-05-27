@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useIsomorphicLayoutEffect } from 'react-use';
+import { useLayoutEffect, useState } from "react";
 
 type WindowDimensions = {
   width: number | undefined;
@@ -11,7 +10,7 @@ const useWindowDimensions = (): WindowDimensions => {
     width: undefined,
     height: undefined,
   });
-  useIsomorphicLayoutEffect(() => {
+  useLayoutEffect(() => {
     function handleResize(): void {
       setWindowDimensions({
         width: window.innerWidth,
@@ -19,8 +18,8 @@ const useWindowDimensions = (): WindowDimensions => {
       });
     }
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return (): void => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return (): void => window.removeEventListener("resize", handleResize);
   }, []); // Empty array ensures that effect is only run on mount
 
   return windowDimensions;

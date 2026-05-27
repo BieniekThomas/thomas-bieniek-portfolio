@@ -61,8 +61,17 @@ const Home: FC<IHome> = ({
         <div className={styles.smallestHeight}></div>
         <ParallaxGallery data={parallaxGallery} />
         <div className={styles.smallestHeight}></div>
+        <Section number={1} headline="Multi-Media" subHeadline="new worlds" />
+        <Description data={multiMediaDesc} />
+        <div className={styles.minHeight}>
+          <GallerySection
+            galleries={multiMediaGallery}
+            nameKey={"multiMedia"}
+          />
+        </div>
+        <div className={styles.smallestHeight}></div>
         <Section
-          number={1}
+          number={2}
           headline="Fotografie"
           subHeadline="capturing emotions"
         />
@@ -71,14 +80,6 @@ const Home: FC<IHome> = ({
           <GallerySection galleries={photoGallery} nameKey={"photo"} />
         </div>
         <div className={styles.smallestHeight}></div>
-        <Section number={2} headline="Multi-Media" subHeadline="new worlds" />
-        <Description data={multiMediaDesc} />
-        <div className={styles.minHeight}>
-          <GallerySection
-            galleries={multiMediaGallery}
-            nameKey={"multiMedia"}
-          />
-        </div>
         <Section
           number={3}
           headline="Software-Developer"

@@ -57,11 +57,9 @@ const previewChildVariants = {
 };
 
 const Gallery = ({ gallery }: IGallery) => {
-  console.log("🚀 ~ Gallery ~ gallery:", gallery);
   const rightContainerRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { title, description, photos, slug, youtubeLinks } = gallery.fields;
-  console.log("🚀 ~ Gallery ~ youtubeLinks:", youtubeLinks);
   const photoAmount = photos?.length;
   const { scrollYProgress } = useScroll();
   const { height: windowHeight } = useWindowDimensions();
